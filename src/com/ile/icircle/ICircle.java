@@ -24,7 +24,6 @@ public class ICircle extends Activity {
 				startActivity(intent);
 				finish();
 				break;
-
 			default:
 				break;
 			}   

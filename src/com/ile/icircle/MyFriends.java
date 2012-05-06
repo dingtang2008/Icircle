@@ -28,7 +28,7 @@ public class MyFriends extends Activity  implements OnClickListener {
 	EditText search;
 	private ListView friendslist;
 	private int userId;
-	
+	private boolean isSelectAll = false;
 
 	private TextView friendsCount;
 	private ImageView selectAll;
@@ -56,6 +56,8 @@ public class MyFriends extends Activity  implements OnClickListener {
 		search = (EditText) findViewById(R.id.searchBoxEditText);
 		search.setHint("校园十大歌手");
 		search.setOnClickListener(this);
+		TextView mtitle = (TextView) mTitle.findViewById(R.id.act_title);
+		mtitle.setText(getString(R.string.frirends));
 		
 		friendslist = (ListView) findViewById(R.id.myfriends_list);
 
@@ -186,10 +188,20 @@ public class MyFriends extends Activity  implements OnClickListener {
 		case R.id.act_extend:
 			break;
 		case R.id.select_all_checkbox:
-			for (int i = 0; i < isFriendsChecked.length; i++) {
-				isFriendsChecked[i] = true;
-				friendslist.setAdapter(new LiveListAdapter(this));
+			if (isSelectAll) {
+				selectAll.setBackgroundResource(R.drawable.checkbox_unselected);
+				for (int i = 0; i < isFriendsChecked.length; i++) {
+					isFriendsChecked[i] = false;
+				}
+				isSelectAll = false;
+			} else {
+				isSelectAll = true;
+				selectAll.setBackgroundResource(R.drawable.checkbox_selected);
+				for (int i = 0; i < isFriendsChecked.length; i++) {
+					isFriendsChecked[i] = true;
+				}
 			}
+			friendslist.setAdapter(new LiveListAdapter(this));
 			break;
 		case R.id.btn_confirm:
 			//Do confirm on services

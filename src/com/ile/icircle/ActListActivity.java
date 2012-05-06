@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -22,6 +23,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
@@ -103,6 +106,7 @@ public class ActListActivity extends Activity implements OnSeekBarChangeListener
 		listview = (ListView) findViewById(R.id.listView1);
 		img = (ImageButton) findViewById(R.id.btn_cal);
 		listview.addFooterView(list_footer);
+		listview.setOnItemClickListener(mOnItemClickListener);
 		seekbar.setOnSeekBarChangeListener(this);
 		img.setOnClickListener(this);
 		((PullToRefreshListView) listview)
@@ -141,6 +145,27 @@ public class ActListActivity extends Activity implements OnSeekBarChangeListener
 		executorService.submit(new GetHomeTimeLineThread());// 耗时操作,开启一个新线程获取数据
 		progressDialog.show();
 	}
+
+	private ContentValues mCulValue;
+	OnItemClickListener mOnItemClickListener = new OnItemClickListener(){
+
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
+			mCulValue = new ContentValues();
+			mCulValue.put("classifytitle", "test");
+			mCulValue.put("classify", "test");
+			mCulValue.put("location", "test");
+			mCulValue.put("time", "test");
+			mCulValue.put("state", "test");
+			Intent intent = new Intent(ActListActivity.this, DetailActActivity.class);
+			intent.putExtra(UtilString.ACTTITLE, getString(R.string.btn_detail));
+			intent.putExtra(UtilString.ACTID, arg2);
+			intent.putExtra(UtilString.ACVALUES, mCulValue);
+			startActivity(intent);
+		}
+		
+	};
 
 	private class GetDataTask extends
 			AsyncTask<Void, Void, List<Map<String, Object>>> {

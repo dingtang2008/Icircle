@@ -173,21 +173,13 @@ public class HotActivity extends Activity implements OnClickListener{
 		Bitmap bitmap=null;
 		try{
 			myFileURL = new URL(url);
-			//���l��
 			HttpURLConnection conn=(HttpURLConnection)myFileURL.openConnection();
-			//���ó�ʱʱ��Ϊ6000���룬conn.setConnectionTiem(0);��ʾû��ʱ������
 			conn.setConnectTimeout(6000);
-			//l�����û�������
 			conn.setDoInput(true);
-			//��ʹ�û���
 			conn.setUseCaches(false);
-			//�����п��ޣ�û��Ӱ��
 			//conn.connect();
-			//�õ������
 			InputStream is = conn.getInputStream();
-			//����õ�ͼƬ
 			bitmap = BitmapFactory.decodeStream(is);
-			//�ر������
 			is.close();
 		}catch(Exception e){
 			e.printStackTrace();
