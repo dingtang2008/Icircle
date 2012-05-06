@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="mTheme" parent="android:Theme">
+        <item name="android:background">@drawable/green</item>
+        
+    </style>
+
+    <style name="XTheme" parent="android:Theme">
+
+        <!-- Window attributes -->
+        <item name="android:windowTitleBackgroundStyle">@style/WindowTitleBackground</item>
+    </style>
+
+</resources>

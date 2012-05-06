@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dip"
+    android:gravity="center_vertical"
+    android:orientation="horizontal" >
+
+    <include
+        android:id="@+id/intersetpeople1"
+        layout="@layout/people_content" />
+
+    <include
+        android:id="@+id/intersetpeople2"
+        layout="@layout/people_content" />
+
+    <include
+        android:id="@+id/intersetpeople3"
+        layout="@layout/people_content" />
+
+    <include
+        android:id="@+id/intersetpeople4"
+        layout="@layout/people_content" />
+
+    <include
+        android:id="@+id/intersetpeople5"
+        layout="@layout/people_content" />
+
+</LinearLayout>

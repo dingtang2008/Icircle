@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <resources  xmlns:android="http://schemas.android.com/apk/res/android">
+        <string-array name="act_classify">
+            <item >@string/str_act_all</item>
+            <item >@string/str_act_music</item>
+            <item >@string/str_act_welfare</item>
+            <item >@string/str_act_lecture</item>
+            <item >@string/str_act_life</item>
+            <item >@string/str_act_sport</item>
+            <item >@string/str_act_travel</item>
+            <item >@string/str_act_other</item>
+        </string-array>
+        <string-array name="all_activity">
+            <item >其他活动1</item>
+            <item >推荐活动2</item>
+            <item >其他活动3</item>
+            <item >活动4</item>
+            <item >推荐活动5</item>
+            <item >其他活动6</item>
+            <item >推荐活动7</item>
+            <item >推荐活动8</item>
+            <item >其他活动9</item>
+            <item >活动10</item>
+        </string-array>
+        <string-array name="hot_act_time_test">
+            <item >5月7日下午9点开始</item>
+            <item >2月2日下午2点开始</item>
+            <item >5月5日下午1点开始</item>
+            <item >5月7日下午5点开始</item>
+            <item >6月8日下午3点开始</item>
+            <item >5月9日下午2点开始</item>
+            <item >5月0日下午7点开始</item>
+        </string-array>
+        <string-array name="hot_act_location_test">
+            <item >食堂</item>
+            <item >教学楼a</item>
+            <item >教学楼b</item>
+            <item >教学楼v</item>
+            <item >教学楼b</item>
+            <item >教学楼e</item>
+            <item >教学楼d</item>
+        </string-array>
+        <string-array name="hot_act_classify_test">
+            <item >测试测试测试测试测试测试测试测试测试测试测试1</item>
+            <item >测试测试测试测试测试测试测试测试测试测试测试2</item>
+            <item >测试测试测试测试测试测试测试测试测试测试测试3</item>
+            <item >测试测试测试测试测试测试测试测试测试测试测试4</item>
+            <item >测试测试测试测试测试测试测试测试测试测试测试5</item>
+            <item >测试测试测试测试测试测试测试测试测试测试测试6</item>
+            <item >测试测试测试测试测试测试测试测试测试测试测试7</item>
+        </string-array>
+        <string-array name="hot_act_classify_title_test">
+            <item >讲座/展览</item>
+            <item >全部</item>
+            <item >生活/聚会</item>
+            <item >其他</item>
+            <item >生活/聚会</item>
+            <item >公益</item>
+            <item >音乐/演出</item>
+        </string-array>
+        <string-array name="hot_act_state_test">
+            <item >即将开始</item>
+            <item >已经开始</item>
+            <item >结束</item>
+            <item >即将开始</item>
+            <item >已经开始</item>
+            <item >结束</item>
+            <item >结束</item>
+        </string-array>
+    </resources>

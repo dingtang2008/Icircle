@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources  xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <color name="forbidden_list_bg">#00000000</color>
+    <drawable name="login_bg">#d1d1d1</drawable>
+	<drawable name="black">#000000</drawable>
+	<drawable name="brown">#444444</drawable>
+	
+    <drawable name="white">#ffffff</drawable>
+    <drawable name="green">#367b3c</drawable>
+    <drawable name="red">#ff0000</drawable>
+	<drawable name="grey">#829581</drawable>
+	<drawable name="bar_color">#cccccc</drawable>
+    <color name="white">#ffffff</color>
+	<color name="to_attend_color">#95d524</color>
+	<color name="to_intrest_color">#fec21f</color>
+
+</resources>

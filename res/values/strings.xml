@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, CirclesTabActivity!</string>
+    <string name="app_name">Icircles</string>
+    <string name="act_detail">活动详情</string>
+    <string name="act_live">活动现场</string>
+    <string name="act_classify">活动分类</string>
+    <string name="hot_activity">热门</string>
+    <string name="classify_activity">分类</string>
+    <string name="location_activity">周边</string>
+    <string name="user_center">个人</string>
+    <string name="message">消息</string>
+    <string name="time">时间:</string>
+    <string name="location">地点:</string>
+    <string name="progress">流程:</string>
+    <string name="by_classify">按分类</string>
+    <string name="by_location">按地点</string>
+    <string name="str_act_all">全部</string>
+    <string name="str_act_music">音乐/演出</string>
+    <string name="str_act_welfare">公益</string>
+    <string name="str_act_lecture">讲座/展览</string>
+    <string name="str_act_life">生活/聚会</string>
+    <string name="str_act_sport">体育</string>
+    <string name="str_act_travel">旅行</string>
+    <string name="str_act_other">其他</string>
+    <string name="default_search_hint">请输入</string>
+    <string name="search_button_description">搜索按钮</string>
+    <string name="interest_people">感兴趣的人：</string>
+    <string name="attend_people">参加的人：</string>
+    <string name="detail_interest_people">感兴趣</string>
+    <string name="detail_attend_people">参加</string>
+    <string name="detail_introduce">活动简介</string>
+    <string name="to_interstate">我感兴趣</string>
+    <string name="to_attend">我要参加</string>
+    <string name="btn_live">现场</string>
+    <string name="btn_detail">详情</string>
+    <string name="btn_send">发送</string>
+    <string name="title_editor">发布活动</string>
+    <string name="act_title_editor">标题：</string>
+    <string name="act_title_hint_editor">校园十大歌手</string>
+    <string name="act_introduce_editor">简介：</string>
+    <string name="act_introduce_hint_editor">校园十大歌手</string>
+    <string name="act_classify_editor">类型：</string>
+    <string name="act_timestart_editor">开始时间：</string>
+    <string name="act_timeend_editor">结束时间：</string>
+    <string name="act_location_editor">地点：</string>
+    <string name="act_poster_editor">海报：</string>
+    <string name="act_friends_editor">邀请好友：</string>
+    <string name="act_limit_editor">仅对邀请人公开</string>
+    <string name="act_publish_editor">发布</string>
+    <string name="act_confirm_editor">确定</string>
+    <string name="act_cancel_editor">取消</string>
+    <string name="start_time_select">选择开始时间</string>
+    <string name="end_time_select">选择结束时间</string>
+    <string name="data_select">选择日期</string>
+    <string name="time_select">选择时间</string>
+    <string name="default_hint_editor">点击箭头选择</string>
+    <string name="get_location">选择地点</string>
+    <string name="get_pic">添加图片</string>
+    <string name="take_photo">相机拍摄</string>
+    <string name="local_gallery">本地相册</string>
+    <string name="gps_location">gps 定位</string>
+    <string name="gps_locationing">gps 正在定位中</string>
+    <string name="err_no_sdcard">没有SD卡</string>
+    <string name="err_no_network">网络不支持，请手动输入</string>
+    <string name="err_no_gps">gps设备未打开</string>
+
+    <string name="select_all">全选</string>
+    
+    <string name="welcom_slogan">ICircle,欢迎加入我的圈子</string>
+    <string name="choose_school_title">选择学校</string>
+    <string name="choose_school_hint">请输入你所在的学校</string>
+    <string name="search">搜索</string>
+    <string name="locate_current_school">定位附近学校</string>
+    <string name="locating">正在定位中......</string>
+    <string name="locating_fail">定位失败，请点击重试</string>
+    <string name="gps_provide_request">请打开定位设备</string>
+    <string name="location_start">点击进行定位</string>
+    <string name="empty_nearby_school">亲，周围没有学校哦</string>
+    <string name="search_nearby_school">正在获取周边学校......</string>
+    <string name="favorite_school_title">热门学校</string>
+    
+    <string name="pull_to_refresh_pull_label">下拉刷新...</string>
+    <string name="pull_to_refresh_release_label">松开刷新...</string>
+    <string name="pull_to_refresh_refreshing_label">加载中...</string>
+    <string name="pull_to_refresh_tap_label">点击刷新...</string>
+    <string name="set_portrait_pic">设置照片头像</string>
+    
+    
+    
+    <string name="default_school_1">浙江大学（紫金港校区）</string>
+    <string name="default_school_2">浙江大学（玉泉校区）</string>
+    <string name="default_school_3">浙江大学（西溪校区）</string>
+    <string name="default_school_4">浙江大学（宁波校区）</string>
+    <string name="default_school_5">浙江工业大学</string>
+    <string name="default_school_6">浙江工商大学</string>
+    <string name="default_school_7">浙江教育学院</string>
+    <string name="test_location">浙大软件学院</string>
+    <string name="user_info">个人详情</string>
+</resources>

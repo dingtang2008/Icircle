@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/activity_bg"
+    android:baselineAligned="true"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="0dip"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
+    <include
+        android:id="@+id/searchbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        layout="@layout/searchbox" >
+    </include>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="30dip"
+        android:background="@drawable/title_bg"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dip"
+        android:text="@string/locate_current_school"
+        android:textColor="#ffffff" />
+
+    <RelativeLayout
+        android:id="@+id/location_status"
+        android:layout_width="fill_parent"
+        android:layout_height="35dip"
+        android:background="@drawable/bar_selector" >
+
+        <TextView
+            android:id="@+id/location_status_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dip"
+            android:clickable="true"
+            android:text="@string/locating"
+            android:textColor="#367b3c" />
+
+        <ProgressBar
+            android:id="@+id/location_progressbar"
+            android:layout_width="30dip"
+            android:layout_height="30dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dip" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/school_around_list"
+        android:layout_width="fill_parent"
+        android:layout_height="90dip"
+        android:cacheColorHint="#00000000"
+        android:divider="@null"
+        android:visibility="gone" >
+    </ListView>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="30dip"
+        android:background="@drawable/title_bg"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dip"
+        android:text="@string/favorite_school_title"
+        android:textColor="#ffffff" />
+
+    <ListView
+        android:id="@+id/favorite_school_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:cacheColorHint="#00000000"
+        android:divider="@null"
+        android:listSelector="@drawable/divider" >
+    </ListView>
+
+    <com.baidu.mapapi.MapView
+        android:id="@+id/map_View"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:clickable="true"
+        android:visibility="gone" >
+    </com.baidu.mapapi.MapView>
+
+    <!--
+    <ImageView />
+    
+    <TextView />
+    -->
+
+</LinearLayout>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/activity_bg"
+    android:gravity="center_vertical"
+    android:orientation="horizontal" >
+
+    <include
+        android:id="@+id/attendpeople1"
+        layout="@layout/people_content" />
+
+    <include
+        android:id="@+id/attendpeople2"
+        layout="@layout/people_content" />
+
+    <include
+        android:id="@+id/attendpeople3"
+        layout="@layout/people_content" />
+
+    <include
+        android:id="@+id/attendpeople4"
+        layout="@layout/people_content" />
+
+    <include
+        android:id="@+id/attendpeople5"
+        layout="@layout/people_content" />
+
+    <include
+        android:id="@+id/attendpeople6"
+        layout="@layout/people_content" />
+
+    <Button
+        android:id="@+id/detail_attend_more"
+        style="@style/contentText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/more_act_selector"/>
+
+</LinearLayout>

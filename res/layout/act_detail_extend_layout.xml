@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/activity_bg"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/subtitle" />
+
+    <GridView
+        android:id="@+id/peopel_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:horizontalSpacing="1dip"
+        android:numColumns="6"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="1dip" />
+</LinearLayout>

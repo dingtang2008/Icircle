@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/activity_bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:weightSum="1.0" >
+
+    <include
+        android:id="@id/title"
+        layout="@layout/subtitle" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingBottom="60.0dip"
+            android:paddingLeft="10.0dip"
+            android:paddingRight="10.0dip"
+            android:paddingTop="10.0dip" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <TableLayout
+                    android:id="@+id/MorePageTableLayout_Favorite"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TableRow
+                        android:id="@+id/more_page_row0"
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="2.0dip"
+                        android:layout_marginRight="2.0dip"
+                        android:background="@drawable/more_item_press" >
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dip"
+                            android:background="@drawable/touxiang_bg"
+                            android:gravity="center_horizontal|center_vertical" >
+
+                            <ImageView
+                                android:id="@+id/touxiang_img"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_default3" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="45dip"
+                            android:includeFontPadding="false"
+                            android:paddingLeft="27.0dip"
+                            android:text="@string/set_portrait_pic"
+                            style="@style/ContentTextGreen" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dip"
+                            android:layout_marginTop="35dip"
+                            android:background="@drawable/btn_more_normal" />
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dip" >
+
+                <TableLayout
+                    android:id="@+id/MorePageTableLayout_Follow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:paddingLeft="1.0dip" >
+
+                    <TableRow
+                        android:id="@+id/more_page_row1"
+                        android:layout_width="fill_parent"
+                        android:layout_marginLeft="2.0dip"
+                        android:layout_marginRight="2.0dip"
+                        android:background="@drawable/more_itemtop_press"
+                        android:paddingBottom="10.0dip"
+                        android:paddingTop="10.0dip" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:gravity="center_vertical"
+                            android:includeFontPadding="false"
+                            android:paddingLeft="17.0dip"
+                            android:text="名字 ： junny"
+                            style="@style/ContentTextGreen"  />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="20dip"
+                            android:layout_gravity="right"
+                            android:background="@drawable/btn_more_normal"
+                            android:gravity="center_vertical"
+                            android:paddingRight="20.0dip" />
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/more_page_row2"
+                        android:layout_width="fill_parent"
+                        android:layout_marginLeft="2.0dip"
+                        android:layout_marginRight="2.0dip"
+                        android:background="@drawable/more_itemmiddle_press"
+                        android:paddingBottom="10.0dip"
+                        android:paddingTop="10.0dip" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:gravity="center_vertical"
+                            android:includeFontPadding="false"
+                            android:paddingLeft="17.0dip"
+                            android:text="性别 ： 女"
+                            style="@style/ContentTextGreen"  />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="20dip"
+                            android:layout_gravity="right"
+                            android:background="@drawable/btn_more_normal"
+                            android:gravity="center_vertical"
+                            android:paddingRight="20.0dip" />
+                    </TableRow>
+                    <TableRow
+                        android:id="@+id/more_page_row6"
+                        android:layout_width="fill_parent"
+                        android:layout_marginLeft="2.0dip"
+                        android:layout_marginRight="2.0dip"
+                        android:background="@drawable/more_itemmiddle_press"
+                        android:paddingBottom="10.0dip"
+                        android:paddingTop="10.0dip" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:gravity="center_vertical"
+                            android:includeFontPadding="false"
+                            android:paddingLeft="17.0dip"
+                            android:text="性别 ： 女"
+                            android:textColor="@drawable/green"
+                            style="@style/ContentTextGreen"  />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="20dip"
+                            android:layout_gravity="right"
+                            android:background="@drawable/btn_more_normal"
+                            android:gravity="center_vertical"
+                            android:paddingRight="20.0dip" />
+                    </TableRow>
+                    <TableRow
+                        android:id="@+id/more_page_row3"
+                        android:layout_width="fill_parent"
+                        android:layout_marginLeft="2.0dip"
+                        android:layout_marginRight="2.0dip"
+                        android:background="@drawable/more_itembottom_press"
+                        android:paddingBottom="16.0dip"
+                        android:paddingTop="16.0dip" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:includeFontPadding="false"
+                            android:paddingLeft="17.0dip"
+                            android:text="签名 ："
+                            style="@style/contentTextTitle" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:includeFontPadding="false"
+                            android:text="The Pursuit of Happiness"
+                            style="@style/ContentTextGreen" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="15dip"
+                            android:layout_gravity="right"
+                            android:background="@drawable/btn_more_normal"
+                            android:paddingRight="5.0dip" />
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <TableLayout
+                    android:id="@+id/MorePageTableLayout_Client"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dip"
+                    android:paddingLeft="1.0dip" >
+
+                    <TableRow
+                        android:id="@+id/more_page_row5"
+                        android:layout_width="fill_parent"
+                        android:layout_marginLeft="2.0dip"
+                        android:layout_marginRight="2.0dip"
+                        android:background="@drawable/more_item_press"
+                        android:paddingBottom="16.0dip"
+                        android:paddingTop="16.0dip" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:includeFontPadding="false"
+                            android:paddingLeft="17.0dip"
+                            android:text="签名 ："
+                            android:textColor="@drawable/grey"
+                            android:textSize="16.0sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:includeFontPadding="false"
+                            android:text="The Pursuit of Happiness"
+                            style="@style/ContentTextGreen"  />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="15dip"
+                            android:layout_gravity="right"
+                            android:background="@drawable/btn_more_normal"
+                            android:paddingRight="5.0dip" />
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

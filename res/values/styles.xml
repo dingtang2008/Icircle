@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="iCircleTheme" parent="@android:style/Theme.Light">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    
+    <style name="WindowTitleBackground">
+        <item name="android:background">@drawable/title_bg</item>
+    </style>
+
+    <style name="my_edittext_style" parent="@android:style/Widget.EditText">
+        <item name="android:background">@drawable/my_edittext</item>
+    </style>
+    
+    <style name="contentText">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@drawable/grey</item>
+    </style>
+    
+    <style name="contentTextTitle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@drawable/grey</item>
+    </style>
+    
+    <style name="titleText">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@drawable/white</item>
+    </style>
+    
+    <style name="contentTextLarge">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@drawable/green</item>
+    </style>
+    
+    <style name="detailContentText">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@drawable/bar_color</item>
+    </style>
+    
+    <style name="ContentTextGreen">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@drawable/green</item>
+    </style>
+    
+    <style name="TimeBarStyle">
+        <item name="android:focusable">true</item>
+        <item name="android:maxHeight">29.0dip</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:indeterminateDrawable">@drawable/timebar_indeterminate</item>
+        <item name="android:progressDrawable">@drawable/timebar_indeterminate</item>
+        <item name="android:minHeight">29.0dip</item>
+        <item name="android:thumb">@drawable/seek_thumb</item>
+        <item name="android:thumbOffset">8.0dip</item>
+    </style>
+    
+
+</resources>

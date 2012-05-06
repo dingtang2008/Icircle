@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/classify_item_bg"
+    android:paddingLeft="10dip"
+    android:paddingRight="10dip"
+    android:paddingBottom="15dip"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/ItemImage"
+        android:layout_width="wrap_content"
+        android:layout_height="100dip"
+        android:layout_marginLeft="1dip"
+        android:layout_marginTop="-2dip"
+        android:layout_marginBottom="-5dip"  >
+    </ImageView>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/ItemText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/ItemCount"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+        </TextView>
+    </RelativeLayout>
+
+</LinearLayout>

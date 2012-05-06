@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <!--
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/bar"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:background="@drawable/locate" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dip"
+            android:text="中国浙江省鄞州区西湖大街浙大路50号"
+            android:textColor="@drawable/green" />
+
+        <Button
+            android:id="@+id/detail_interset_more"
+            style="@style/contentText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dip"
+            android:layout_weight="1"
+            android:background="@drawable/more_act_selector" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/bar"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:background="@drawable/tel" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dip"
+            android:text="0574-876456227"
+            android:textColor="@drawable/green" />
+
+        <Button
+            android:id="@+id/detail_interset_more"
+            style="@style/contentText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dip"
+            android:layout_weight="1"
+            android:background="@drawable/more_act_selector" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/bar"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:background="@drawable/email" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dip"
+            android:text="zhedatushuguan@gmail.com"
+            android:textColor="@drawable/green" />
+
+        <Button
+            android:id="@+id/detail_interset_more"
+            style="@style/contentText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dip"
+            android:layout_weight="1"
+            android:background="@drawable/more_act_selector" />
+    </LinearLayout>
+    -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TableLayout
+            android:id="@+id/addteltable"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:shrinkColumns="0"
+            android:stretchColumns="0" >
+
+            <TableRow
+                android:id="@+id/more_page_row1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bar_bg_normal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:drawableLeft="@drawable/location_act_selector"
+                    android:drawablePadding="5.0dip"
+                    android:gravity="center_vertical"
+                    android:includeFontPadding="false"
+                    android:paddingLeft="12.0dip"
+                    android:text="中国浙江省鄞州区西湖大街浙大路50号"
+                    android:textColor="#ff333333"
+                    android:textSize="13.0sp" />
+
+                <Button
+                    android:id="@+id/detail_interset_more"
+                    style="@style/contentText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="20dip"
+                    android:background="@drawable/more_act_selector"
+                    android:gravity="center_vertical" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/more_page_row2"
+                android:layout_width="wrap_content"
+                android:background="@drawable/bar_selector" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:drawableLeft="@drawable/tel"
+                    android:drawablePadding="5.0dip"
+                    android:gravity="center_vertical"
+                    android:includeFontPadding="false"
+                    android:paddingLeft="12.0dip"
+                    android:text="0574-876456227"
+                    android:textColor="#ff333333"
+                    android:textSize="16.0sp" />
+
+                <Button
+                    android:id="@+id/detail_interset_more"
+                    style="@style/contentText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="20dip"
+                    android:background="@drawable/more_act_selector"
+                    android:gravity="center_vertical" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/more_page_row3"
+                android:layout_width="wrap_content"
+                android:background="@drawable/bar_selector" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:drawableLeft="@drawable/email"
+                    android:drawablePadding="5.0dip"
+                    android:gravity="center_vertical"
+                    android:includeFontPadding="false"
+                    android:paddingLeft="12.0dip"
+                    android:text="zhedatushuguan@gmail.com"
+                    android:textColor="#ff333333"
+                    android:textSize="16.0sp" />
+
+                <Button
+                    android:id="@+id/detail_interset_more"
+                    style="@style/contentText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="20dip"
+                    android:background="@drawable/more_act_selector"
+                    android:gravity="center_vertical" />
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+
+</LinearLayout>
