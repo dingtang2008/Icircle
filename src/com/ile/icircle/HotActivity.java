@@ -78,7 +78,7 @@ public class HotActivity extends Activity implements OnClickListener{
 	}
 
 	private void init() {
-		mScrollLayout = (ScrollLayout) findViewById(R.id.ScrollLayout);
+		mScrollLayout = (ScrollLayout) findViewById(R.id.scrollLayout);
 		mCulValue = new ContentValues();
 		mViewCount = mScrollLayout.getChildCount();
 		mCurSel = 0;

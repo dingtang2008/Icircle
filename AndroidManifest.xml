@@ -39,75 +39,90 @@
             android:name="CirclesTabActivity"
             android:label="@string/app_name"
             android:theme="@style/iCircleTheme"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ClassifyActivity"
             android:theme="@style/iCircleTheme"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" >
         </activity>
         <activity
             android:name="HotActivity"
             android:theme="@style/iCircleTheme"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" >
         </activity>
         <activity
             android:name="UserCenter"
             android:theme="@style/iCircleTheme"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" >
         </activity>
         <activity
             android:name="LocationActivity"
             android:theme="@style/iCircleTheme"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" >
         </activity>
         <activity
             android:name="MessageActivity"
             android:theme="@style/iCircleTheme"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" >
         </activity>
         <activity
             android:name="DetailActActivity"
             android:theme="@style/iCircleTheme"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" >
         </activity>
         <activity
             android:name="DetailActExtendActivity"
             android:theme="@style/iCircleTheme"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" >
         </activity>
         <activity
             android:name="LiveActActivity"
             android:theme="@style/iCircleTheme"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" >
         </activity>
         <activity
             android:name="EditActActivity"
             android:theme="@style/iCircleTheme"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" >
         </activity>
         <activity
             android:name="MyFriends"
             android:theme="@style/iCircleTheme"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" >
         </activity>
         <activity
             android:name="nearbyActivity"
             android:theme="@style/iCircleTheme"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" >
         </activity>
         <activity
             android:name=".MyLocation"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/iCircleTheme" >
         </activity>
         <activity
             android:name=".ActListActivity"
             android:theme="@style/iCircleTheme"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" >
         </activity>
         <activity
             android:name=".UserInfoActivity"
             android:theme="@style/iCircleTheme"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" >
         </activity>
     </application>

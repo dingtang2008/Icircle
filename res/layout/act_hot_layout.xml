@@ -1,86 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/activity_bg"
     android:gravity="center"
     android:orientation="vertical" >
 
     <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
         android:orientation="vertical" >
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <com.ile.icircle.ScrollLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/scrollLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="43dip" >
+
+                <include
+                    android:id="@+id/hot_act1"
+                    layout="@layout/act_hot_layout_item" />
+
+                <include
+                    android:id="@+id/hot_act2"
+                    layout="@layout/act_hot_layout_item" />
+
+                <include
+                    android:id="@+id/hot_act3"
+                    layout="@layout/act_hot_layout_item" />
+
+                <include
+                    android:id="@+id/hot_act4"
+                    layout="@layout/act_hot_layout_item" />
+
+                <include
+                    android:id="@+id/hot_act5"
+                    layout="@layout/act_hot_layout_item" />
+
+                <include
+                    android:id="@+id/hot_act6"
+                    layout="@layout/act_hot_layout_item" />
+
+                <include
+                    android:id="@+id/hot_act7"
+                    layout="@layout/act_hot_layout_item" />
+            </com.ile.icircle.ScrollLayout>
+        </RelativeLayout>
+
         <include
             android:id="@+id/title"
             layout="@layout/title_hot_act" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="213dip" >
+            android:layout_height="match_parent" >
 
             <include
                 android:id="@+id/guide"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="213dip"
                 layout="@layout/guide_layout" />
-        </LinearLayout>
-
-        <com.ile.icircle.ScrollLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/ScrollLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="43dip" >
-
-            <include
-                android:id="@+id/hot_act1"
-                layout="@layout/act_hot_layout_item" />
-
-            <include
-                android:id="@+id/hot_act2"
-                layout="@layout/act_hot_layout_item" />
-
-            <include
-                android:id="@+id/hot_act3"
-                layout="@layout/act_hot_layout_item" />
-
-            <include
-                android:id="@+id/hot_act4"
-                layout="@layout/act_hot_layout_item" />
-
-            <include
-                android:id="@+id/hot_act5"
-                layout="@layout/act_hot_layout_item" />
-
-            <include
-                android:id="@+id/hot_act6"
-                layout="@layout/act_hot_layout_item" />
-
-            <include
-                android:id="@+id/hot_act7"
-                layout="@layout/act_hot_layout_item" />
-        </com.ile.icircle.ScrollLayout>
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="43dip"
-            android:background="@drawable/shadow" />
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="190dip" >
+            android:layout_height="match_parent" >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="43dip"
+                android:background="@drawable/shadow" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
 
             <TextView
                 android:id="@+id/act_state"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_marginTop="190dip"
                 android:background="@drawable/ic_act_state"
                 android:gravity="center"
+                android:paddingLeft="10dip"
                 android:textColor="@drawable/white" />
         </RelativeLayout>
     </FrameLayout>
@@ -94,13 +108,13 @@
 
         <Button
             android:id="@+id/btn_act_detail"
-            android:textColor="@color/white"
-            android:textSize="15sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dip"
             android:background="@drawable/btn_selector"
-            android:text="@string/act_detail" />
+            android:text="@string/act_detail"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -120,9 +134,9 @@
             <TextView
                 android:id="@+id/interest_count"
                 style="@style/contentText"
-                android:textColor="@drawable/red"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@drawable/red" />
 
             <TextView
                 android:id="@+id/attend"
@@ -135,9 +149,9 @@
             <TextView
                 android:id="@+id/attend_count"
                 style="@style/contentText"
-                android:textColor="@drawable/red"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@drawable/red" />
         </LinearLayout>
     </LinearLayout>
 
