@@ -91,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="190dip"
+                android:layout_marginTop="190.5dip"
                 android:background="@drawable/ic_act_state"
                 android:gravity="center"
                 android:paddingLeft="10dip"

@@ -9,6 +9,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -31,14 +32,14 @@ public class UserInfoActivity extends Activity {
 	private PictureGet mPictureGet;
 	private RelativeLayout mTitle;
 	public ImageButton btsetting, btaccountmanagement, btbrowsmode,
-			btofficeweibo, btfreeback, bttestversion, btabout;
+	btofficeweibo, btfreeback, bttestversion, btabout;
 
 	private TableRow more_page_row0, more_page_row1,more_page_row2,more_page_row3, more_page_row5,
-			more_page_row6, more_page_row7;
+	more_page_row6, more_page_row7;
 	public RelativeLayout rLayout1;
 
 	ImageView touxiangimg;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -54,25 +55,25 @@ public class UserInfoActivity extends Activity {
 		mTitle.findViewById(R.id.act_back).setOnClickListener(new btclick());
 		TextView mtitle = (TextView) mTitle.findViewById(R.id.act_title);
 		mtitle.setText(R.string.user_info);
-		
+
 		more_page_row0 = (TableRow) this.findViewById(R.id.more_page_row0);// 设置头像
 		more_page_row0.setOnClickListener(new btclick());
-		
+
 		more_page_row1 = (TableRow) this.findViewById(R.id.more_page_row1);// 账号管理
 		more_page_row1.setOnClickListener(new btclick());
 
 		more_page_row2 = (TableRow) this.findViewById(R.id.more_page_row2);// 我的微薄
 		more_page_row2.setOnClickListener(new btclick());
-		
+
 		more_page_row3 = (TableRow) this.findViewById(R.id.more_page_row3);// 我的微薄
 		more_page_row3.setOnClickListener(new btclick());
-		
+
 		more_page_row5 = (TableRow) this.findViewById(R.id.more_page_row5);// 意见反馈
 		more_page_row5.setOnClickListener(new btclick());
-		
+
 		touxiangimg = (ImageView) findViewById(R.id.touxiang_img);
 	}
-	
+
 	public void refleshView(){
 		touxiangimg.setImageBitmap(mUserBitmap);
 	}
@@ -92,7 +93,7 @@ public class UserInfoActivity extends Activity {
 				break;
 			case R.id.more_page_row5:
 				break;
-				
+
 			default:
 				break;
 			}
@@ -120,7 +121,7 @@ public class UserInfoActivity extends Activity {
 		}
 		return dialog; 
 	}
-	
+
 	DialogInterface.OnClickListener  getPicOnClick = new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int which) { 
 			dialog.dismiss();  
@@ -152,32 +153,55 @@ public class UserInfoActivity extends Activity {
 				/* 使用Intent.ACTION_GET_CONTENT这个Action */  
 				intent.setAction(Intent.ACTION_GET_CONTENT);  
 				/* 取得相片后返回本画面 */  
+				intent.putExtra("crop", "true");
+				intent.putExtra("aspectX", 1);
+				intent.putExtra("aspectY", 1);
+				intent.putExtra("outputX", 121);
+				intent.putExtra("outputX", 121);
+				intent.putExtra("return-data", true);
 				startActivityForResult(intent, PictureGet.PHOTO_WITH_DATA);  
 				break;  
 			}  
 		}
 	};
-	
+
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {  
 			switch (requestCode) {  
 			case PictureGet.PHOTO_WITH_CAMERA://获取拍摄的文件  
-				mUserBitmap = mPictureGet.getPic(mPictureGet.capturefile.getAbsolutePath());
+				//mUserBitmap = mPictureGet.getPic(mPictureGet.capturefile.getAbsolutePath());
+				Intent intent = new Intent();  
+				Uri uri = Uri.fromFile(mPictureGet.capturefile);
+				intent.setAction("com.android.camera.action.CROP");
+				intent.setDataAndType(uri, "image/*");  
+				intent.putExtra("crop", "true");
+				intent.putExtra("aspectX", 1);
+				intent.putExtra("aspectY", 1);
+				intent.putExtra("outputX", 81);
+				intent.putExtra("outputX", 81);
+				intent.putExtra("scale", true);
+				intent.putExtra("return-data", true);
+				startActivityForResult(intent, PictureGet.PHOTO_WITH_DATA);  
 				break;  
 
 			case PictureGet.PHOTO_WITH_DATA://获取从图库选择的文件  
-				Uri uri = data.getData();  
-				String scheme = uri.getScheme();  
-				if (scheme.equalsIgnoreCase("file")) {
-					mUserBitmap = mPictureGet.getPic(uri.getPath());
-				} else if (scheme.equalsIgnoreCase("content")) {
-					mUserBitmap = mPictureGet.getPicFromDatabase(uri);
-				}  
+				mUserBitmap = data.getParcelableExtra("data");
+				Log.i("test", "mUserBitmap = "+mUserBitmap);
+//				if (mUserBitmap == null) {
+//					uri = data.getData();  
+//					String scheme = uri.getScheme();  
+//					if (scheme.equalsIgnoreCase("file")) {
+//						mUserBitmap = BitmapFactory.decodeFile(uri.getPath());
+//					} else if (scheme.equalsIgnoreCase("content")) {
+//						mUserBitmap = mPictureGet.getPicFromDatabase(uri);
+//					}  
+//
+//				}
 				break;  
 			}  
 		}
 		if (mUserBitmap != null){
-			mUserBitmap = mPictureGet.resizeBitmap(mUserBitmap, 122, 122);
+			mUserBitmap = mPictureGet.resizeBitmap(mUserBitmap, 121, 121);
 			Log.i("test", "actPoster = " + mUserBitmap);
 		}
 		refleshView();

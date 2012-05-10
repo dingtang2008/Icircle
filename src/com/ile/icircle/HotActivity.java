@@ -204,6 +204,9 @@ public class HotActivity extends Activity implements OnClickListener{
 			startActivity(intent);
 			break;
 		case R.id.act_title:
+			intent = new Intent(this, MyLocation.class);
+			startActivity(intent);
+			finish();
 			break;
 		default:
 			break;

@@ -30,7 +30,7 @@
 
     <RelativeLayout
         android:id="@+id/location_status"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="35dip"
         android:background="@drawable/bar_selector" >
 
@@ -56,8 +56,9 @@
 
     <ListView
         android:id="@+id/school_around_list"
-        android:layout_width="fill_parent"
-        android:layout_height="90dip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:listSelector="@drawable/list_item_selector"
         android:cacheColorHint="#00000000"
         android:divider="@null"
         android:visibility="gone" >
@@ -76,9 +77,9 @@
         android:id="@+id/favorite_school_list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:listSelector="@drawable/list_item_selector"
         android:cacheColorHint="#00000000"
-        android:divider="@null"
-        android:listSelector="@drawable/divider" >
+        android:divider="@null" >
     </ListView>
 
     <com.baidu.mapapi.MapView

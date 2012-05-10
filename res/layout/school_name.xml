@@ -6,4 +6,4 @@
     android:background="@drawable/bar_selector"
     android:gravity="center_vertical"
     android:paddingLeft="10dip"
-    android:textColor="#367b3c" />
+    android:textColor="@drawable/green" />
