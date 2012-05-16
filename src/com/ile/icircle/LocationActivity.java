@@ -29,7 +29,6 @@ public class LocationActivity extends Activity implements OnClickListener {
 	private RelativeLayout mTitle;
 	private ListView locationlist;
 	
-	ArrayList<HashMap<String, Object>> lstImageItem;
 	ArrayList<HashMap<String, Object>> alllocations;
 	
 	@Override
@@ -62,7 +61,7 @@ public class LocationActivity extends Activity implements OnClickListener {
 			user.put("useraddress", "中国浙江省杭州区西湖路浙大" + (i + 1) + "号");
 			alllocations.add(user);
 		}
-		locationlist.setAdapter(new LiveListAdapter(this));
+		locationlist.setAdapter(new LocationListAdapter(this));
 		locationlist.setOnItemClickListener(listener);
 	}
 
@@ -85,11 +84,11 @@ public class LocationActivity extends Activity implements OnClickListener {
 		int position;
 	}
 
-	private class LiveListAdapter extends BaseAdapter {
+	private class LocationListAdapter extends BaseAdapter {
 		Context mContext;
 		private LayoutInflater mInflater;
 
-		public LiveListAdapter(Context context) {
+		public LocationListAdapter(Context context) {
 			mInflater = LayoutInflater.from(context);
 			mContext = context;
 		}

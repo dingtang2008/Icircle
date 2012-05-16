@@ -21,4 +21,5 @@ public class UtilString {
 	public static final int MSG_MY_LOCATION = 1;
 	public static final int MSG_LOCATION_FAIL = 2;
 	public static final String SCHOOLNAME = "SchoolName";
+	public static final String MSG_SHAREDPREFERENCES = "msg_SharedPreferences";
 }

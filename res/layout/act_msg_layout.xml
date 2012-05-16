@@ -1,10 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/testlayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/test_msg"
-    android:gravity="center_vertical"
-    android:orientation="horizontal" >
+    android:layout_height="match_parent"
+    android:background="@drawable/activity_bg"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/title" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/msg_notify"
+            android:layout_width="100dip"
+            android:layout_height="wrap_content"
+            android:src="@drawable/msg_notify_selector"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@style/contentText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:text="@string/msg_notify" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/msg_notify_counter"
+                style="@style/messageTextSPEC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:text="@string/msg_notify" >
+            </TextView>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/msg_personal"
+            android:layout_width="100dip"
+            android:layout_height="wrap_content"
+            android:src="@drawable/msg_personal_selector"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/personal"
+                style="@style/contentText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="5dip"
+                android:text="@string/msg_personal" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/msg_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/personal"
+                android:background="@drawable/msg_number_bg"
+                android:gravity="center"
+                android:textColor="@drawable/white"
+                android:textSize="8sp" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/msg_personal_counter"
+                style="@style/messageTextSPEC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginTop="5dip"
+                android:layout_toRightOf="@+id/personal"
+                android:text="@string/msg_notify" >
+            </TextView>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/message_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:listSelector="@drawable/list_item_selector" />
+
+    <ListView
+        android:id="@+id/notification_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:listSelector="@drawable/list_item_selector" />
 
 </LinearLayout>

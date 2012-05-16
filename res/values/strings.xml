@@ -98,5 +98,8 @@
     <string name="default_school_7">浙江教育学院</string>
     <string name="test_location">浙大软件学院</string>
     <string name="user_info">个人详情</string>
-    <string name="frirends">frirends</string>
+    <string name="frirends">朋友</string>
+    
+    <string name="msg_notify">通知</string>
+    <string name="msg_personal">私信</string>
 </resources>

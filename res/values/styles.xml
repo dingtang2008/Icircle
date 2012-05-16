@@ -18,6 +18,11 @@
         <item name="android:textColor">@drawable/grey</item>
     </style>
     
+    <style name="messageTextSPEC">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@drawable/grey</item>
+    </style>
+    
     <style name="contentTextTitle">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@drawable/grey</item>
@@ -41,6 +46,11 @@
     <style name="ContentTextGreen">
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">@drawable/green</item>
+    </style>
+    
+    <style name="ContentTextSmall">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@drawable/grey</item>
     </style>
     
     <style name="TimeBarStyle">
