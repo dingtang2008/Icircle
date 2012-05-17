@@ -68,8 +68,8 @@ public class MessageActivity extends Activity implements OnClickListener {
 			id = this.getResources().getIdentifier("test" + (i + 1), "drawable", "com.ile.icircle");
 			Log.i("test", "id = "+ id);
 			HashMap<String, Object> user = new HashMap<String, Object>();
-			user.put("notificationsender", "ĞÒ¸£Ğ¡±¦±´");
-			user.put("notificationcontent", "ÑûÇëÄã²Î¼Ó¡°½ÚÄÜÒ»Ğ¡Ê±¡±»î¶¯" + (i + 1));
+			user.put("notificationsender", "å¹¸ç¦å°å®è´");
+			user.put("notificationcontent", "é‚€è¯·ä½ å‚åŠ â€œèŠ‚èƒ½ä¸€å°æ—¶â€æ´»åŠ¨" + (i + 1));
 			user.put("notificationtime", "10:20AM" + (i + 1));
 			allNotification.add(user);
 		}
@@ -80,8 +80,8 @@ public class MessageActivity extends Activity implements OnClickListener {
 			Log.i("test", "id = "+ id);
 			HashMap<String, Object> user = new HashMap<String, Object>();
 			user.put("msgsenderportrait", R.drawable.ic_default4);
-			user.put("msgsender", "ĞÒ¸£Ğ¡±¦±´" + (i + 1));
-			user.put("msgcontent", "½ñÌìÌìÆøÕæºÃ£¬Ò»ÆğÈ¥ÅÀÉ½°É" + (i + 1));
+			user.put("msgsender", "å¹¸ç¦å°å®è´" + (i + 1));
+			user.put("msgcontent", "ä»Šå¤©å¤©æ°”çœŸå¥½ï¼Œä¸€èµ·å»çˆ¬å±±å§" + (i + 1));
 			user.put("msgtime", "10:20AM" + (i + 1));
 			allPersonalMessages.add(user);
 		}
