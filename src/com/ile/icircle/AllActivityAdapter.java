@@ -24,19 +24,16 @@ public class AllActivityAdapter extends BaseAdapter {
 		mData = getData();
 	}
 
-	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
 		return mData.size();
 	}
 
-	@Override
 	public Object getItem(int arg0) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public long getItemId(int arg0) {
 		// TODO Auto-generated method stub
 		return 0;
@@ -51,7 +48,6 @@ public class AllActivityAdapter extends BaseAdapter {
 		public ImageView ic_status;
 	}
 
-	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
 		ViewHolder holder = null;

@@ -89,7 +89,6 @@ public class ClassifyActivity extends Activity implements OnClickListener {
 	}
 	OnItemClickListener mOnItemClickListener = new OnItemClickListener(){
 
-		@Override
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
 			Intent intent = new Intent(ClassifyActivity.this,ActListActivity.class);
@@ -103,7 +102,6 @@ public class ClassifyActivity extends Activity implements OnClickListener {
 	};
 	
 	
-	@Override
 	public void onClick(View v) {
 		Intent intent;
 		switch (v.getId()) {

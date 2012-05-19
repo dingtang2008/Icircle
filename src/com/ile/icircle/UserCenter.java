@@ -25,7 +25,6 @@ public class UserCenter extends Activity  implements OnClickListener {
 
 	int count = 0;
 
-	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.testimg:

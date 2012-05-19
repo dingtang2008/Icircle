@@ -90,7 +90,6 @@ public class MyFriends extends Activity  implements OnClickListener {
 	}
 	
 	OnItemClickListener listener = new OnItemClickListener(){
-		@Override
 		public void onItemClick(AdapterView<?> listview, View view, int position, long arg3) {
 			Log.i("test", "listener isFriendsChecked[ " + position + "] = " + isFriendsChecked[position]);
 			if (isFriendsChecked[position]){
@@ -122,23 +121,19 @@ public class MyFriends extends Activity  implements OnClickListener {
 			mContext = context;
 		}
 
-		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
 			return allfriends.size();
 		}
 
-		@Override
 		public Object getItem(int position) {
 			return position;
 		}
 
-		@Override
 		public long getItemId(int position) {
 			return position;
 		}
 
-		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder;
 			if (convertView == null) {
@@ -180,7 +175,6 @@ public class MyFriends extends Activity  implements OnClickListener {
 		}
 	}
 	
-	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.searchBoxEditText:

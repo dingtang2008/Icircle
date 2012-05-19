@@ -13,6 +13,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="10dip"
         android:gravity="center"
         android:orientation="horizontal" >
 
@@ -20,9 +21,9 @@
             android:id="@+id/msg_notify"
             android:layout_width="100dip"
             android:layout_height="wrap_content"
-            android:src="@drawable/msg_notify_selector"
             android:gravity="center"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:src="@drawable/msg_notify_selector" >
 
             <TextView
                 style="@style/contentText"
@@ -46,9 +47,9 @@
             android:id="@+id/msg_personal"
             android:layout_width="100dip"
             android:layout_height="wrap_content"
-            android:src="@drawable/msg_personal_selector"
             android:gravity="center"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:src="@drawable/msg_personal_selector" >
 
             <TextView
                 android:id="@+id/personal"
@@ -68,6 +69,7 @@
                 android:layout_toRightOf="@+id/personal"
                 android:background="@drawable/msg_number_bg"
                 android:gravity="center"
+                android:padding="2dip"
                 android:textColor="@drawable/white"
                 android:textSize="8sp" >
             </TextView>
@@ -89,12 +91,14 @@
         android:id="@+id/message_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:divider="@null"
         android:listSelector="@drawable/list_item_selector" />
 
     <ListView
         android:id="@+id/notification_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:divider="@null"
         android:listSelector="@drawable/list_item_selector" />
 
 </LinearLayout>

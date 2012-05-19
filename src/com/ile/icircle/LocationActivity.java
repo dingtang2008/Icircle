@@ -66,7 +66,6 @@ public class LocationActivity extends Activity implements OnClickListener {
 	}
 
 	OnItemClickListener listener = new OnItemClickListener(){
-		@Override
 		public void onItemClick(AdapterView<?> listview, View view, int position, long arg3) {
 			Intent intent = new Intent(LocationActivity.this, nearbyActivity.class);
 			intent.putExtra(UtilString.LOCATIONID, position);
@@ -93,23 +92,19 @@ public class LocationActivity extends Activity implements OnClickListener {
 			mContext = context;
 		}
 
-		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
 			return alllocations.size();
 		}
 
-		@Override
 		public Object getItem(int position) {
 			return position;
 		}
 
-		@Override
 		public long getItemId(int position) {
 			return position;
 		}
 
-		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder;
 			if (convertView == null) {
@@ -150,7 +145,6 @@ public class LocationActivity extends Activity implements OnClickListener {
 		}
 	}
 	
-	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.searchBoxEditText:

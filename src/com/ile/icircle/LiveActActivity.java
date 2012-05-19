@@ -143,23 +143,19 @@ public class LiveActActivity extends Activity implements OnClickListener{
 			this.mActId = mActId;
 		}
 
-		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
 			return allliveuser.size();
 		}
 
-		@Override
 		public Object getItem(int position) {
 			return position;
 		}
 
-		@Override
 		public long getItemId(int position) {
 			return position;
 		}
 
-		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder;
 			if (convertView == null) {
@@ -228,7 +224,6 @@ public class LiveActActivity extends Activity implements OnClickListener{
 		}
 	}
 
-	@Override
 	public void onClick(View v) {
 		Intent intent;
 		switch (v.getId()) {

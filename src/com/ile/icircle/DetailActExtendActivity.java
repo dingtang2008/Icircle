@@ -104,7 +104,7 @@ public class DetailActExtendActivity extends Activity  implements OnClickListene
 
 	boolean isAttent = false;
 	boolean isInterest = false;
-	@Override
+
 	public void onClick(View v) {
 		Intent intent;
 		switch (v.getId()) {

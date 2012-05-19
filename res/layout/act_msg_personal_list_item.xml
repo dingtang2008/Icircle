@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bar_selector"
+    android:src="@drawable/bar_selector"
     android:gravity="center"
     android:orientation="horizontal"
     android:paddingLeft="10dip" >
@@ -32,29 +32,29 @@
 
         <TextView
             android:id="@+id/msg_sender"
-            style="@style/contentTextLarge"
+            style="@style/ContentTextGreen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
             android:singleLine="true" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dip"
             android:orientation="horizontal" >
 
             <TextView
                 android:id="@+id/msg_content"
-                style="@style/ContentTextSmall"
-                android:layout_width="wrap_content"
+                style="@style/contentText"
+                android:layout_width="150dip"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_marginRight="10dip"
+                android:layout_marginRight="5dip"
                 android:singleLine="true" />
 
             <TextView
                 android:id="@+id/msg_time"
-                style="@style/ContentTextSmall"
+                style="@style/messageTextSPEC"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

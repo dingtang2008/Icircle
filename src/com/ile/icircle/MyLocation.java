@@ -164,7 +164,6 @@ public class MyLocation extends MapActivity {
 
 		locationStatusText.setOnClickListener(new Button.OnClickListener()
 		{
-			@Override
 			public void onClick(View v){
 				if(mLocationStatus == LOCATION_FAILUE)
 				{
@@ -190,7 +189,6 @@ public class MyLocation extends MapActivity {
 	private AdapterView.OnItemClickListener mSchoolListClickHandler = 
 			new AdapterView.OnItemClickListener() {
 
-		@Override
 		public void onItemClick(AdapterView parent, View v,
 				int position, long id) {
 			//locationStatusText.setText(position);
@@ -453,25 +451,21 @@ public class MyLocation extends MapActivity {
 
 	public class MySearchListener implements MKSearchListener {
 
-		@Override
 		public void onGetAddrResult(MKAddrInfo addrInfo, int iError) {
 			// TODO Auto-generated method stub
 			Toast.makeText(getApplicationContext(), addrInfo.strAddr, 1000).show();
 		}
 
-		@Override
 		public void onGetBusDetailResult(MKBusLineResult arg0, int arg1) {
 			// TODO Auto-generated method stub
 
 		}
 
-		@Override
 		public void onGetDrivingRouteResult(MKDrivingRouteResult arg0, int arg1) {
 			// TODO Auto-generated method stub
 
 		}
 
-		@Override
 		public void onGetPoiResult(MKPoiResult result, int type, int iError) {
 			if (result == null) {
 				return;
@@ -508,13 +502,11 @@ public class MyLocation extends MapActivity {
 			pb.setVisibility(View.GONE);
 		}
 
-		@Override
 		public void onGetTransitRouteResult(MKTransitRouteResult arg0, int arg1) {
 			// TODO Auto-generated method stub
 
 		}
 
-		@Override
 		public void onGetWalkingRouteResult(MKWalkingRouteResult arg0, int arg1) {
 			// TODO Auto-generated method stub
 

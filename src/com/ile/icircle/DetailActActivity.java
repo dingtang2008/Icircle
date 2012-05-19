@@ -176,7 +176,7 @@ public class DetailActActivity extends Activity implements OnClickListener{
 
 	boolean isAttent = false;
 	boolean isInterest = false;
-	@Override
+	
 	public void onClick(View v) {
 		Intent intent;
 		switch (v.getId()) {

@@ -87,7 +87,6 @@ public class HotActivity extends Activity implements OnClickListener{
 		mImageViews = new ImageView[mViewCount];
 
 		mScrollLayout.SetOnViewChangeListener(new OnViewChangeListener(){
-			@Override
 			public void OnViewChange(int view) {
 				setCurPoint(view);
 			}
@@ -187,7 +186,6 @@ public class HotActivity extends Activity implements OnClickListener{
 		return bitmap;
 	}
 
-	@Override
 	public void onClick(View v) {
 		Intent intent;
 		switch (v.getId()) {

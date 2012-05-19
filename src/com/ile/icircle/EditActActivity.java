@@ -198,16 +198,13 @@ public class EditActActivity extends Activity implements OnClickListener {
 
 		titleEditor = (EditText) findViewById(R.id.title_editor);
 		titleEditor.addTextChangedListener(new TextWatcher(){
-			@Override
 			public void afterTextChanged(Editable arg0) {
 			}
 
-			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
 			}
 
-			@Override
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
 				actTitle = s.toString();
@@ -216,16 +213,13 @@ public class EditActActivity extends Activity implements OnClickListener {
 
 		introduceEditor = (EditText) findViewById(R.id.introduce_editor);
 		introduceEditor.addTextChangedListener(new TextWatcher(){
-			@Override
 			public void afterTextChanged(Editable arg0) {
 			}
 
-			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
 			}
 
-			@Override
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
 				actIntroduce = s.toString();
@@ -234,16 +228,13 @@ public class EditActActivity extends Activity implements OnClickListener {
 
 		locationEditor = (EditText) findViewById(R.id.location_editor);
 		introduceEditor.addTextChangedListener(new TextWatcher(){
-			@Override
 			public void afterTextChanged(Editable arg0) {
 			}
 
-			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
 			}
 
-			@Override
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
 				actLocation = s.toString();
@@ -280,14 +271,12 @@ public class EditActActivity extends Activity implements OnClickListener {
 	}
 
 	OnItemSelectedListener spinnerOnItemSelectedListener = new OnItemSelectedListener(){
-		@Override
 		public void onItemSelected(AdapterView<?> adapter, View view, int position,
 				long id) {
 			actClassify = mStrings[position];
 
 		}
 
-		@Override
 		public void onNothingSelected(AdapterView<?> arg0) {
 			// TODO Auto-generated method stub
 
@@ -325,31 +314,31 @@ public class EditActActivity extends Activity implements OnClickListener {
 			switch (which) {  
 			case 0: {  
 				String status = Environment.getExternalStorageState();  
-				if (status.equals(Environment.MEDIA_MOUNTED)) {// ÅÐ¶ÏÊÇ·ñÓÐSD¿¨  
+				if (status.equals(Environment.MEDIA_MOUNTED)) {// ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½SDï¿½ï¿½  
 					Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);  
 					mPictureGet.capturefile = new File(PictureGet.PHOTO_DIR, mPictureGet.getPhotoFileName());  
 					try {  
 						mPictureGet.capturefile.createNewFile();  
 						i.putExtra(MediaStore.EXTRA_OUTPUT,  
-								Uri.fromFile(mPictureGet.capturefile));//½«ÅÄÉãµÄÕÕÆ¬ÐÅÏ¢´æµ½capturefileÖÐ  
+								Uri.fromFile(mPictureGet.capturefile));//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¬ï¿½ï¿½Ï¢ï¿½æµ½capturefileï¿½ï¿½  
 					} catch (IOException e) {  
 						// TODO Auto-generated catch block  
 						e.printStackTrace();  
 					}  
 
-					startActivityForResult(i, PictureGet.PHOTO_WITH_CAMERA);// ÓÃ»§µã»÷ÁË´ÓÕÕÏà»ú»ñÈ¡  
+					startActivityForResult(i, PictureGet.PHOTO_WITH_CAMERA);// ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Ë´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡  
 				} else {  
 					Toast.makeText(EditActActivity.this, getString(R.string.err_no_sdcard), Toast.LENGTH_LONG);  
 				}  
 				break;  
 			}  
-			case 1:// ´ÓÏà²áÖÐÈ¥»ñÈ¡  
+			case 1:// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¥ï¿½ï¿½È¡  
 				Intent intent = new Intent();  
-				/* ¿ªÆôPictures»­ÃæTypeÉè¶¨Îªimage */  
+				/* ï¿½ï¿½ï¿½ï¿½Picturesï¿½ï¿½ï¿½ï¿½Typeï¿½è¶¨Îªimage */  
 				intent.setType("image/*");  
-				/* Ê¹ÓÃIntent.ACTION_GET_CONTENTÕâ¸öAction */  
+				/* Ê¹ï¿½ï¿½Intent.ACTION_GET_CONTENTï¿½ï¿½ï¿½Action */  
 				intent.setAction(Intent.ACTION_GET_CONTENT);  
-				/* È¡µÃÏàÆ¬ºó·µ»Ø±¾»­Ãæ */  
+				/* È¡ï¿½ï¿½ï¿½ï¿½Æ¬ï¿½ó·µ»Ø±ï¿½ï¿½ï¿½ï¿½ï¿½ */  
 				startActivityForResult(intent, PictureGet.PHOTO_WITH_DATA);  
 				break;  
 			}  
@@ -380,7 +369,7 @@ public class EditActActivity extends Activity implements OnClickListener {
 			dialog = builder.create();  
 			break;
 		case DATE_DIALOG:
-			Log.i("test", "ÄúÑ¡Ôñ");
+			Log.i("test", "ï¿½ï¿½Ñ¡ï¿½ï¿½");
 			Calendar c = Calendar.getInstance();
 			dialog = new DatePickerDialog(
 					this,
@@ -399,13 +388,13 @@ public class EditActActivity extends Activity implements OnClickListener {
 							} else if (time_dialog_type == 1){
 								actEndDate= formatDate;
 							}
-							Log.i("test", "ÄúÑ¡ÔñÁË£º" + formatDate);
+							Log.i("test", "ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½Ë£ï¿½" + formatDate);
 							reflashViews();
 						}
 					},
-					c.get(Calendar.YEAR), // ´«ÈëÄê·Ý
-					c.get(Calendar.MONTH), // ´«ÈëÔÂ·Ý
-					c.get(Calendar.DAY_OF_MONTH) // ´«ÈëÌìÊý
+					c.get(Calendar.YEAR), // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+					c.get(Calendar.MONTH), // ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½
+					c.get(Calendar.DAY_OF_MONTH) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					);
 			break;
 		case TIME_DIALOG:
@@ -425,7 +414,7 @@ public class EditActActivity extends Activity implements OnClickListener {
 							} else if (time_dialog_type == 1){
 								actEndTime= formatTime;
 							}
-							Log.i("test", "ÄúÑ¡ÔñÁË£º" + formatTime);
+							Log.i("test", "ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½Ë£ï¿½" + formatTime);
 							reflashViews();
 						}
 					},
@@ -455,7 +444,6 @@ public class EditActActivity extends Activity implements OnClickListener {
 		return dialog; 
 	}
 
-	@Override
 	public void onClick(View v) {
 		Intent intent;
 		switch (v.getId()) {
@@ -502,16 +490,16 @@ public class EditActActivity extends Activity implements OnClickListener {
 	}  
 
 	/* 
-	 * Ñ¡ÔñÍ¼Æ¬µÄ»Ø´«´¦Àí 
+	 * Ñ¡ï¿½ï¿½Í¼Æ¬ï¿½Ä»Ø´ï¿½ï¿½ï¿½ï¿½ï¿½ 
 	 */  
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {  
 			switch (requestCode) {  
-			case PictureGet.PHOTO_WITH_CAMERA://»ñÈ¡ÅÄÉãµÄÎÄ¼þ  
+			case PictureGet.PHOTO_WITH_CAMERA://ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½  
 				actPoster = mPictureGet.getPic(mPictureGet.capturefile.getAbsolutePath());
 				break;  
 
-			case PictureGet.PHOTO_WITH_DATA://»ñÈ¡´ÓÍ¼¿âÑ¡ÔñµÄÎÄ¼þ  
+			case PictureGet.PHOTO_WITH_DATA://ï¿½ï¿½È¡ï¿½ï¿½Í¼ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½  
 				Uri uri = data.getData();  
 				String scheme = uri.getScheme();  
 				if (scheme.equalsIgnoreCase("file")) {

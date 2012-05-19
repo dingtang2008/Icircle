@@ -94,7 +94,6 @@ public class ActListActivity extends Activity implements OnSeekBarChangeListener
 		act_back = (Button) findViewById(R.id.act_back);
 		act_back.setOnClickListener(new View.OnClickListener() {
 
-			@Override
 			public void onClick(View v) {
 				finish();
 
@@ -111,7 +110,6 @@ public class ActListActivity extends Activity implements OnSeekBarChangeListener
 		img.setOnClickListener(this);
 		((PullToRefreshListView) listview)
 				.setOnRefreshListener(new OnRefreshListener() {
-					@Override
 					public void onRefresh() {
 						// Do work to refresh the list here.
 						new GetDataTask().execute();
@@ -127,7 +125,6 @@ public class ActListActivity extends Activity implements OnSeekBarChangeListener
 		mDay = c.get(Calendar.DAY_OF_MONTH);
 		tv_msg.setOnClickListener(new OnClickListener() {
 
-			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				// executorService.submit(new GetHomeTimeLineThread());
@@ -149,7 +146,6 @@ public class ActListActivity extends Activity implements OnSeekBarChangeListener
 	private ContentValues mCulValue;
 	OnItemClickListener mOnItemClickListener = new OnItemClickListener(){
 
-		@Override
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
 			mCulValue = new ContentValues();
@@ -207,20 +203,17 @@ public class ActListActivity extends Activity implements OnSeekBarChangeListener
 		}
 	}
 
-	@Override
 	public void onProgressChanged(SeekBar seekBar, int progress,
 			boolean fromUser) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
 	public void onStartTrackingTouch(SeekBar seekBar) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
 	public void onStopTrackingTouch(SeekBar mSeekBar) {
 		// TODO Auto-generated method stub
 		int seekProgress = mSeekBar.getProgress();
@@ -244,7 +237,6 @@ public class ActListActivity extends Activity implements OnSeekBarChangeListener
 		mSeekBar.setProgress(currentrogress);
 	}
 
-	@Override
 	public void onClick(View arg0) {
 		showDialog(0);
 	}

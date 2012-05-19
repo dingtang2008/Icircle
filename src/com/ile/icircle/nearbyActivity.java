@@ -111,7 +111,6 @@ public class nearbyActivity extends Activity implements OnClickListener{
 		}
 	}
 
-	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.act_back:

@@ -80,7 +80,6 @@ public class UserInfoActivity extends Activity {
 
 	public class btclick implements OnClickListener {
 
-		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.act_back:

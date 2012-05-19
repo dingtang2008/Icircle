@@ -114,7 +114,6 @@ public class CirclesTabActivity extends TabActivity implements OnTabChangeListen
 		return tabView;
 	}
 	
-	@Override
 	public void onTabChanged(String tabId) {
 		for (int i =0; i < tabWidget.getChildCount(); i++) {
 			View tabview = tabWidget.getChildAt(i);
