@@ -16,6 +16,9 @@ import com.baidu.mapapi.MKSearchListener;
 import com.baidu.mapapi.MKTransitRouteResult;
 import com.baidu.mapapi.MKWalkingRouteResult;
 import com.baidu.mapapi.MapActivity;
+import com.ile.icircle.CircleContract.School;
+
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -83,7 +86,7 @@ public class MyLocation extends MapActivity {
 	private Timer mTimer;
 	private TimerTask locationtask;
 
-	private mSqlLiteHelper mDbHelper = null;
+	//private mSqlLiteHelper mDbHelper = null;
 
 	private ArrayAdapter<String> mFavoriteSchoolsArrayAdapter;
 
@@ -582,24 +585,29 @@ public class MyLocation extends MapActivity {
 		String[] values = new String[1];
 		values[0] = schoolname;
 
-		if(mDbHelper == null)
-		{
-			mDbHelper = new mSqlLiteHelper(this);
-			mDbHelper.open();
-		}
-
-		mDbHelper.insert(mSqlLiteHelper.SCHOOLNEARBYTABLE,values);
+		//		if(mDbHelper == null)
+		//		{
+		//			mDbHelper = new mSqlLiteHelper(this);
+		//			mDbHelper.open();
+		//		}
+		//
+		//		mDbHelper.insert(mSqlLiteHelper.SCHOOLNEARBYTABLE,values);
+		ContentValues initialValues = new ContentValues();
+		initialValues.put(School.NAME, values[0]);
+		getContentResolver().insert(School.CONTENT_URI, initialValues);
 	}
 
 	private boolean isEmptyNearBySchool(){
-		if(mDbHelper == null)
-		{
-			mDbHelper = new mSqlLiteHelper(this);
-			mDbHelper.open();
-		}
-
-		Cursor mNearBySchoolCursor;
-		mNearBySchoolCursor = mDbHelper.getAllInfos(mSqlLiteHelper.SCHOOLNEARBYTABLE);
+		//		if(mDbHelper == null)
+		//		{
+		//			mDbHelper = new mSqlLiteHelper(this);
+		//			mDbHelper.open();
+		//		}
+		//
+		//		Cursor mNearBySchoolCursor;
+		//		mNearBySchoolCursor = mDbHelper.getAllInfos(mSqlLiteHelper.SCHOOLNEARBYTABLE);
+		Cursor mNearBySchoolCursor = getContentResolver().query(School.CONTENT_URI, new String[] {School._ID, School.NAME },
+				null, null, null);
 
 		if(mNearBySchoolCursor!=null && mNearBySchoolCursor.getCount() > 0)
 		{
@@ -610,18 +618,23 @@ public class MyLocation extends MapActivity {
 	}
 
 	private void deleteAllFromDB(){
-		if(mDbHelper == null)
-		{
-			mDbHelper = new mSqlLiteHelper(this);
-			mDbHelper.open();
-		}
+		//		if(mDbHelper == null)
+		//		{
+		//			mDbHelper = new mSqlLiteHelper(this);
+		//			mDbHelper.open();
+		//		}
+		//		mDbHelper.deleteAll(mSqlLiteHelper.SCHOOLNEARBYTABLE);
 
-		mDbHelper.deleteAll(mSqlLiteHelper.SCHOOLNEARBYTABLE);
+		getContentResolver().delete(School.CONTENT_URI, null, null);
 	}
 
 	private void displayNearBySchool(){
-		Cursor mNearBySchoolCursor;
-		mNearBySchoolCursor = mDbHelper.getAllInfos(mSqlLiteHelper.SCHOOLNEARBYTABLE);
+		//		Cursor mNearBySchoolCursor;
+		//		mNearBySchoolCursor = mDbHelper.getAllInfos(mSqlLiteHelper.SCHOOLNEARBYTABLE);
+
+		Cursor mNearBySchoolCursor = getContentResolver().query(School.CONTENT_URI, new String[] {School._ID, School.NAME }, 
+				null, null, null);
+
 		if(mNearBySchoolCursor!=null && mNearBySchoolCursor.getCount() > 0)
 		{
 			startManagingCursor(mNearBySchoolCursor);

@@ -91,7 +91,7 @@ public class DetailActActivity extends Activity implements OnClickListener{
 		actState = (TextView) findViewById(R.id.act_state);
 
 		classifyTitle.setText(mValue.getAsString("classifytitle"));
-		classifyContent.setText(mValue.getAsString("classify"));
+		classifyContent.setText(mValue.getAsString("classifyintroduce"));
 		timeContent.setText(mValue.getAsString("time"));
 		locationContent.setText(mValue.getAsString("location") + "\n 测试食堂1" + "\n 测试食堂2" + "\n 测试食堂3" + "\n 测试食堂4");
 		actState.setText(mValue.getAsString("state"));

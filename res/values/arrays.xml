@@ -23,13 +23,13 @@
             <item >活动10</item>
         </string-array>
         <string-array name="hot_act_time_test">
-            <item >5月7日下午9点开始</item>
-            <item >2月2日下午2点开始</item>
-            <item >5月5日下午1点开始</item>
-            <item >5月7日下午5点开始</item>
-            <item >6月8日下午3点开始</item>
-            <item >5月9日下午2点开始</item>
-            <item >5月0日下午7点开始</item>
+            <item >5/7/14:00</item>
+            <item >5/7/14:00</item>
+            <item >5月5日下午1点</item>
+            <item >5月7日下午5点</item>
+            <item >6月8日下午3点</item>
+            <item >5月9日下午2点</item>
+            <item >5月0日下午7点</item>
         </string-array>
         <string-array name="hot_act_location_test">
             <item >食堂</item>
@@ -40,7 +40,7 @@
             <item >教学楼e</item>
             <item >教学楼d</item>
         </string-array>
-        <string-array name="hot_act_classify_test">
+        <string-array name="hot_act_classify_introduce_test">
             <item >测试测试测试测试测试测试测试测试测试测试测试1</item>
             <item >测试测试测试测试测试测试测试测试测试测试测试2</item>
             <item >测试测试测试测试测试测试测试测试测试测试测试3</item>

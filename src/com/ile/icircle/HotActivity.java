@@ -8,17 +8,27 @@ import com.ile.icircle.ScrollLayout;
 import com.ile.icircle.ScrollLayout.OnViewChangeListener;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -63,13 +73,20 @@ public class HotActivity extends Activity implements OnClickListener{
 	private Integer[] mAttendCountTest = { 123,22, 33,12,5,44,65};
 	private String mSchool;
 
+	private static final int REFRESH_DATA = 0;
+	private boolean firsttime = false;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.act_hot_layout);
+		mCulValue = new ContentValues();
 		SharedPreferences sharedata = getSharedPreferences(UtilString.SCHOOLNAME, 0);
-		mSchool = sharedata.getString(UtilString.SCHOOLNAME, ""); 
+		mSchool = sharedata.getString(UtilString.SCHOOLNAME, "");
+		Intent intent = new Intent(this, CircleServices.class);
+		startService(intent);
+		testdata();
 		init();
 	}
 
@@ -79,7 +96,6 @@ public class HotActivity extends Activity implements OnClickListener{
 
 	private void init() {
 		mScrollLayout = (ScrollLayout) findViewById(R.id.scrollLayout);
-		mCulValue = new ContentValues();
 		mViewCount = mScrollLayout.getChildCount();
 		mCurSel = 0;
 
@@ -115,10 +131,11 @@ public class HotActivity extends Activity implements OnClickListener{
 			mImageViews[i].setEnabled(false);
 			mImageViews[i].setTag(i);
 		}
-		refreshView();
+		//refreshView(null);
+		mHandler.sendEmptyMessage(REFRESH_DATA);
 	}
 
-	private void refreshView() {
+	private void refreshView(Cursor cursor) {
 		mCurView = (LinearLayout)findViewById(hot_act_view_id[mCurSel]);
 
 		ImageView mCurHotImg = (ImageView)mCurView.findViewById(R.id.act_img);
@@ -126,29 +143,46 @@ public class HotActivity extends Activity implements OnClickListener{
 		TextView mCurHotLocation = (TextView)mCurView.findViewById(R.id.location_content);
 		TextView mCurHotClassifyContent = (TextView)mCurView.findViewById(R.id.classify_content);
 		TextView mCurHotClassifyTitle = (TextView)mCurView.findViewById(R.id.classify_title);
-		mCurHotImg.setBackgroundResource(hot_act_img_test_id[mCurSel]);
+		//mCurHotImg.setBackgroundResource(hot_act_img_test_id[mCurSel]);
 		//Bitmap bitmap = getHttpBitmap(hot_act_img_url[mCurSel]);
 		//mCurHotImg.setImageBitmap(hot_act_img_test_id[mCurSel]);
 
-		String[] actTimeStrings = getResources().getStringArray(R.array.hot_act_time_test);
-		String[] actLocationStrings = getResources().getStringArray(R.array.hot_act_location_test);
-		String[] actClassifyContentStrings = getResources().getStringArray(R.array.hot_act_classify_test);
-		String[] actClassifyTitleStrings = getResources().getStringArray(R.array.hot_act_classify_title_test);
-		String[] actStateStrings = getResources().getStringArray(R.array.hot_act_state_test);
-
-		mCurHotTime.setText(actTimeStrings[mCurSel]);
-		mCurHotLocation.setText(actLocationStrings[mCurSel]);
-		mCurHotClassifyContent.setText(actClassifyContentStrings[mCurSel]);
-		mCurHotClassifyTitle.setText(actClassifyTitleStrings[mCurSel]);
-		mCulValue.put("classifytitle", actClassifyTitleStrings[mCurSel]);
-		mCulValue.put("classify", actClassifyContentStrings[mCurSel]);
-		mCulValue.put("location", actLocationStrings[mCurSel]);
-		mCulValue.put("time", actTimeStrings[mCurSel]);
-		mCulValue.put("state", actStateStrings[mCurSel]);
-
-		mState.setText(actStateStrings[mCurSel]);
-		mInterestPeople.setText(mInterestCountTest[mCurSel].toString());
-		mAttendPeople.setText(mAttendCountTest[mCurSel].toString());
+		//		String[] actTimeStrings = getResources().getStringArray(R.array.hot_act_time_test);
+		//		String[] actLocationStrings = getResources().getStringArray(R.array.hot_act_location_test);
+		//		String[] actClassifyIntroduceStrings = getResources().getStringArray(R.array.hot_act_classify_introduce_test);
+		//		String[] actClassifyTitleStrings = getResources().getStringArray(R.array.hot_act_classify_title_test);
+		//		String[] actStateStrings = getResources().getStringArray(R.array.hot_act_state_test);
+		//
+		//		mCurHotTime.setText(actTimeStrings[mCurSel]);
+		//		mCurHotLocation.setText(actLocationStrings[mCurSel]);
+		//		mCurHotClassifyTitle.setText(actClassifyTitleStrings[mCurSel]);
+		//		mCurHotClassifyContent.setText(actClassifyIntroduceStrings[mCurSel]);
+		//		mCulValue.put("classifyintroduce", actClassifyIntroduceStrings[mCurSel]);
+		//		mCulValue.put("classifytitle", actClassifyTitleStrings[mCurSel]);
+		//		mCulValue.put("classify", actClassifyContentStrings[mCurSel]);
+		//		mCulValue.put("location", actLocationStrings[mCurSel]);
+		//		mCulValue.put("time", actTimeStrings[mCurSel]);
+		//		mCulValue.put("state", actStateStrings[mCurSel]);
+		//
+		//		mState.setText(actStateStrings[mCurSel]);
+		//		mInterestPeople.setText(mInterestCountTest[mCurSel].toString());
+		//		mAttendPeople.setText(mAttendCountTest[mCurSel].toString());
+		if (cursor != null && cursor.moveToPosition(mCurSel)) {
+			Log.i("test", "cursor getCount = " + cursor.getCount());
+			Log.i("test", "cursor.getInt(UtilString.hotActIdIndex) = " + cursor.getInt(UtilString.hotActIdIndex));
+			Log.i("test", "cursor.getString(UtilString.hotActLocationIndex) = " + cursor.getString(UtilString.hotActLocationIndex));
+			Log.i("test", "cursor.getInt(UtilString.hotActHotTagIndex) = " + cursor.getInt(UtilString.hotActHotTagIndex));
+			if (cursor.getInt(UtilString.hotActHotTagIndex) == 1) {
+				mCurHotTime.setText(cursor.getString(UtilString.hotActStartTimeIndex) + "-" + cursor.getString(UtilString.hotActEndTimeIndex));
+				mCurHotLocation.setText(cursor.getString(UtilString.hotActLocationIndex));
+				mCurHotClassifyTitle.setText(cursor.getString(UtilString.hotActClassidyTitleIndex));
+				mCurHotClassifyContent.setText(cursor.getString(UtilString.hotActClassifyIntroduceIndex));
+				mCurHotImg.setBackgroundResource(cursor.getInt(UtilString.hotActPosterURLIndex));
+				mState.setText(cursor.getString(UtilString.hotActStateIndex));
+				mInterestPeople.setText(cursor.getString(UtilString.hotInterestPeopleIndex));
+				mAttendPeople.setText(cursor.getString(UtilString.hotAttendPeopleIndex));
+			}
+		}
 
 		mImageViews[mCurSel].setEnabled(true);
 	}
@@ -159,11 +193,27 @@ public class HotActivity extends Activity implements OnClickListener{
 		}
 		mImageViews[mCurSel].setEnabled(false);
 		mCurSel = index;
-		refreshView();
+		mHandler.sendEmptyMessage(REFRESH_DATA);
 	}
 
+	Handler mHandler = new Handler(){
+
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case REFRESH_DATA:
+				HotActTask mHotActTask = new HotActTask(HotActivity.this);
+				mHotActTask.execute(null);
+				break;
+
+			default:
+				break;
+			}
+		}
+
+	};
+
 	/*
-	 * ��ȡ����ͼƬ��Դ
 	 * @param url
 	 * @return
 	 */
@@ -211,4 +261,60 @@ public class HotActivity extends Activity implements OnClickListener{
 		}
 	}
 
+	public void testdata(){
+		if (firsttime) {
+			return;
+		}
+		Log.i("test", "testdata");
+		String[] actTimeStrings = getResources().getStringArray(R.array.hot_act_time_test);
+		String[] actLocationStrings = getResources().getStringArray(R.array.hot_act_location_test);
+		String[] actClassifyIntroduceStrings = getResources().getStringArray(R.array.hot_act_classify_introduce_test);
+		String[] actClassifyTitleStrings = getResources().getStringArray(R.array.hot_act_classify_title_test);
+		String[] actStateStrings = getResources().getStringArray(R.array.hot_act_state_test);
+		for (int i = 0; i < hot_act_view_id.length;i ++){
+			mCulValue.put(CircleContract.Activity.CLASSIFY_TITLE, actClassifyTitleStrings[i]);
+			mCulValue.put(CircleContract.Activity.CLASSIFY_INTRODUCE, actClassifyIntroduceStrings[i]);
+			mCulValue.put(CircleContract.Activity.LOCATION, actLocationStrings[i]);
+			mCulValue.put(CircleContract.Activity.START_TIME, actTimeStrings[i]);
+			mCulValue.put(CircleContract.Activity.END_TIME, actTimeStrings[i]);
+			mCulValue.put(CircleContract.Activity.STATE, actStateStrings[i]);
+			mCulValue.put(CircleContract.Activity.HOTTAG, 1);
+			mCulValue.put(CircleContract.Activity.INTEREST_PEOPLE, mInterestCountTest[i]);
+			mCulValue.put(CircleContract.Activity.ATTEND_PEOPLE, mAttendCountTest[i]);
+			mCulValue.put(CircleContract.Activity.POSTERURL, hot_act_img_test_id[i]);
+			Uri count = getContentResolver().insert(CircleContract.Activity.CONTENT_URI, mCulValue);
+			Log.i("test", "count = "+count);
+		}
+		firsttime = true;
+	}
+
+	ProgressDialog pd;
+	class HotActTask extends AsyncTask<Cursor, Integer, Cursor> {
+
+		public HotActTask(Context context){
+			if (!firsttime) {
+				pd = new ProgressDialog(context); 
+				pd.show();
+			}
+		}
+
+		@Override
+		protected Cursor doInBackground(Cursor... cursors) {
+			String selection = CircleContract.Activity.HOTTAG + "=1";
+			Cursor cursor = getContentResolver().query(CircleContract.Activity.CONTENT_URI, UtilString.hotActProjection, 
+					selection, null, null);
+			return cursor;
+		}
+
+		@Override
+		protected void onPostExecute(Cursor cursor) {
+			// TODO Auto-generated method stub
+			if (pd != null) {
+				pd.dismiss();
+				pd = null;
+			}
+			refreshView(cursor);
+		}
+
+	}
 }

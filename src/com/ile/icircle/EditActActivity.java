@@ -314,31 +314,28 @@ public class EditActActivity extends Activity implements OnClickListener {
 			switch (which) {  
 			case 0: {  
 				String status = Environment.getExternalStorageState();  
-				if (status.equals(Environment.MEDIA_MOUNTED)) {// �ж��Ƿ���SD��  
+				if (status.equals(Environment.MEDIA_MOUNTED)) {
 					Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);  
 					mPictureGet.capturefile = new File(PictureGet.PHOTO_DIR, mPictureGet.getPhotoFileName());  
 					try {  
 						mPictureGet.capturefile.createNewFile();  
 						i.putExtra(MediaStore.EXTRA_OUTPUT,  
-								Uri.fromFile(mPictureGet.capturefile));//���������Ƭ��Ϣ�浽capturefile��  
+								Uri.fromFile(mPictureGet.capturefile));
 					} catch (IOException e) {  
 						// TODO Auto-generated catch block  
 						e.printStackTrace();  
 					}  
 
-					startActivityForResult(i, PictureGet.PHOTO_WITH_CAMERA);// �û�����˴�������ȡ  
+					startActivityForResult(i, PictureGet.PHOTO_WITH_CAMERA);
 				} else {  
 					Toast.makeText(EditActActivity.this, getString(R.string.err_no_sdcard), Toast.LENGTH_LONG);  
 				}  
 				break;  
 			}  
-			case 1:// �������ȥ��ȡ  
+			case 1:
 				Intent intent = new Intent();  
-				/* ����Pictures����Type�趨Ϊimage */  
 				intent.setType("image/*");  
-				/* ʹ��Intent.ACTION_GET_CONTENT���Action */  
-				intent.setAction(Intent.ACTION_GET_CONTENT);  
-				/* ȡ����Ƭ�󷵻ر����� */  
+				intent.setAction(Intent.ACTION_GET_CONTENT); 
 				startActivityForResult(intent, PictureGet.PHOTO_WITH_DATA);  
 				break;  
 			}  
@@ -369,7 +366,6 @@ public class EditActActivity extends Activity implements OnClickListener {
 			dialog = builder.create();  
 			break;
 		case DATE_DIALOG:
-			Log.i("test", "��ѡ��");
 			Calendar c = Calendar.getInstance();
 			dialog = new DatePickerDialog(
 					this,
@@ -388,13 +384,12 @@ public class EditActActivity extends Activity implements OnClickListener {
 							} else if (time_dialog_type == 1){
 								actEndDate= formatDate;
 							}
-							Log.i("test", "��ѡ���ˣ�" + formatDate);
 							reflashViews();
 						}
 					},
-					c.get(Calendar.YEAR), // �������
-					c.get(Calendar.MONTH), // �����·�
-					c.get(Calendar.DAY_OF_MONTH) // ��������
+					c.get(Calendar.YEAR), 
+					c.get(Calendar.MONTH), 
+					c.get(Calendar.DAY_OF_MONTH)
 					);
 			break;
 		case TIME_DIALOG:
@@ -414,7 +409,6 @@ public class EditActActivity extends Activity implements OnClickListener {
 							} else if (time_dialog_type == 1){
 								actEndTime= formatTime;
 							}
-							Log.i("test", "��ѡ���ˣ�" + formatTime);
 							reflashViews();
 						}
 					},
@@ -495,11 +489,11 @@ public class EditActActivity extends Activity implements OnClickListener {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {  
 			switch (requestCode) {  
-			case PictureGet.PHOTO_WITH_CAMERA://��ȡ������ļ�  
+			case PictureGet.PHOTO_WITH_CAMERA:
 				actPoster = mPictureGet.getPic(mPictureGet.capturefile.getAbsolutePath());
 				break;  
 
-			case PictureGet.PHOTO_WITH_DATA://��ȡ��ͼ��ѡ����ļ�  
+			case PictureGet.PHOTO_WITH_DATA:
 				Uri uri = data.getData();  
 				String scheme = uri.getScheme();  
 				if (scheme.equalsIgnoreCase("file")) {
