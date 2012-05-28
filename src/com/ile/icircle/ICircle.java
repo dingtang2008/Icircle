@@ -22,6 +22,8 @@ public class ICircle extends Activity {
 //				Intent intent = new Intent(ICircle.this,CirclesTabActivity.class);
 //				intent.putExtra(UtilString.SCHOOLNAME, getString(R.string.test_location));
 				startActivity(intent);
+				Intent broadcast = new Intent("com.ile.icircle.LOCAL_SERVICES");
+				sendBroadcast(broadcast);
 				finish();
 				break;
 			default:

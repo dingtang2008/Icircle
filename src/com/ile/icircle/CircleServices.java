@@ -1,8 +1,15 @@
 package com.ile.icircle;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.Uri;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.util.Log;
 
 public class CircleServices extends Service {
@@ -15,16 +22,16 @@ public class CircleServices extends Service {
 
 	@Override
 	public void onCreate() {
-		// TODO Auto-generated method stub
-		Log.i("test", "services onCreate");
 		super.onCreate();
 	}
 
 	@Override
 	public void onStart(Intent intent, int startId) {
-		Log.i("test", "services onStart");
-		// TODO Auto-generated method stub
 		super.onStart(intent, startId);
 	}
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+	}
 }

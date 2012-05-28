@@ -133,10 +133,14 @@
             android:syncable="false" />
 
         <service android:name=".CircleServices" >
+        </service>
+        
+        <receiver android:name=".CircleBroadCastReceiver">
             <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="com.ile.icircle.LOCAL_SERVICES" />
             </intent-filter>
-        </service>
+        </receiver>
     </application>
 
 </manifest>
