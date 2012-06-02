@@ -14,10 +14,10 @@
         android:id="@+id/classify_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="15dip"
-        android:layout_marginTop="5dip"
         android:layout_marginLeft="15dip"
-        android:orientation="vertical" >
+        android:layout_marginTop="5dip"
+        android:orientation="vertical"
+        android:paddingTop="15dip" >
 
         <TextView
             android:id="@+id/classify_title"
@@ -30,56 +30,30 @@
             style="@style/contentTextLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxLines="2"
-            android:layout_margin="10dip" />
+            android:layout_margin="10dip"
+            android:maxLines="2" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/time"
+    <TextView
+        android:id="@+id/time_content"
+        style="@style/contentText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dip"
-        android:paddingBottom="3dip"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:layout_marginBottom="5dip"
+        android:drawableLeft="@drawable/ic_time"
+        android:drawablePadding="5dip"
+        android:singleLine="true" />
 
-        <ImageView
-            android:id="@+id/time_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_time" />
-
-        <TextView
-            android:id="@+id/time_content"
-            style="@style/contentText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dip"
-            android:singleLine="true" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/location"
+    <TextView
+        android:id="@+id/location_content"
+        style="@style/contentText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="3dip"
         android:layout_marginLeft="15dip"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
-
-        <ImageView
-            android:id="@+id/location_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_location" />
-
-        <TextView
-            android:id="@+id/location_content"
-            style="@style/contentText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dip"
-            android:singleLine="true" />
-    </LinearLayout>
+        android:layout_marginBottom="5dip"
+        android:drawableLeft="@drawable/ic_location"
+        android:drawablePadding="5dip"
+        android:singleLine="true" />
 
 </LinearLayout>

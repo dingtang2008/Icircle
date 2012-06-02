@@ -1,6 +1,8 @@
 package com.ile.icircle;
 
+import com.ile.icircle.CircleContract.ActPeople;
 import com.ile.icircle.CircleContract.Activity;
+import com.ile.icircle.CircleContract.People;
 
 import android.text.TextUtils;
 
@@ -37,20 +39,66 @@ public class UtilString {
 		Activity.HOTTAG,
 		Activity.INTEREST_PEOPLE,
 		Activity.ATTEND_PEOPLE,
-		Activity.POSTERURL
+		Activity.POSTER,
+		Activity.TAG_ID
 	};
-	public static final int hotActIdIndex = 0;
-	public static final int hotActClassidyTitleIndex = 1;
-	public static final int hotActClassifyIntroduceIndex = 2;
-	public static final int hotActLocationIndex = 3;
-	public static final int hotActStartTimeIndex = 4;
-	public static final int hotActEndTimeIndex = 5;
-	public static final int hotActStateIndex = 6;
-	public static final int hotActHotTagIndex = 7;
-	public static final int hotInterestPeopleIndex = 8;
-	public static final int hotAttendPeopleIndex = 9;
-	public static final int hotActPosterURLIndex = 10;
 
+	public static final String[] detailActProjection = {
+		Activity._ID,
+		Activity.CLASSIFY_TITLE,
+		Activity.CLASSIFY_INTRODUCE,
+		Activity.LOCATION,
+		Activity.START_TIME,
+		Activity.END_TIME,
+		Activity.STATE,
+		Activity.HOTTAG,
+		Activity.INTEREST_PEOPLE,
+		Activity.ATTEND_PEOPLE,
+		Activity.POSTER,
+		Activity.TAG_ID,
+		Activity.ACT_INTRODUCE,
+		Activity.PUBLISH_TIME
+	};
+	
+	public static final int actIdIndex = 0;
+	public static final int actClassidyTitleIndex = 1;
+	public static final int actClassifyIntroduceIndex = 2;
+	public static final int actLocationIndex = 3;
+	public static final int actStartTimeIndex = 4;
+	public static final int actEndTimeIndex = 5;
+	public static final int actStateIndex = 6;
+	public static final int actHotTagIndex = 7;
+	public static final int actInterestPeopleIndex = 8;
+	public static final int actAttendPeopleIndex = 9;
+	public static final int actPosterIndex = 10;
+	public static final int actTagIdIndex = 11;
+	public static final int actIntroduceIndex = 12;
+	public static final int actPublishTimeIndex = 13;
+
+
+	public static final String[] peopleActProjection = {
+		ActPeople._ID,
+		ActPeople.PEOPLE_ID,
+		ActPeople.INTREST_ACT_TAGID,
+		ActPeople.ATTEND_ACT_TAGID
+	};
+	public static final int actPeopleIdIndex = 0;
+	public static final int actPeoplePeopleIdIndex = 1;
+	public static final int actPeopleIntersetIdIndex = 2;
+	public static final int actPeopleAttendIdIndex = 3;
+	
+	public static final String[] peopleProjection = {
+		People._ID,
+		People.PEOPLE_ID,
+		People.NAME,
+		People.PROTRAIT
+	};
+	
+	public static final int peopleIdIndex = 0;
+	public static final int peoplePeopleIdIndex = 1;
+	public static final int peopleNameIndex = 2;
+	public static final int peopleProtraitIndex = 3;
+	
     /**
      * Appends one set of selection args to another. This is useful when adding a selection
      * argument to a user provided set.
