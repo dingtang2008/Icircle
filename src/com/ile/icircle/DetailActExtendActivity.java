@@ -8,9 +8,12 @@ import com.ile.icircle.DetailActActivity.QueryHandler;
 import com.ile.icircle.ScrollLayout.OnViewChangeListener;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.AsyncQueryHandler;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -32,6 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DetailActExtendActivity extends Activity  implements OnClickListener, OnItemClickListener{
 
@@ -58,18 +62,16 @@ public class DetailActExtendActivity extends Activity  implements OnClickListene
 	};
 
 
-	QueryHandler mQueryHandler;
+	private QueryHandler mQueryHandler;
 	private static final int ACT_INTERESTPEOPLE_QUERY_TOKEN = 101;
 	private static final int ACT_ATTENDPEOPLE_QUERY_TOKEN = 102;
-	private static final int PEOPLE_QUERY_TOKEN = 103;
-
-	private int[] actInterestPeopleId;
-	private int[] actAttendPeopleId;
 
 	public int tryloadtimes = 0;
 
 	private PictureGet mPictureGet;
 	private mCursorAdapter mAdapter;
+
+	private final static int DIALOG_REFRESH_DATA = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -89,9 +91,8 @@ public class DetailActExtendActivity extends Activity  implements OnClickListene
 		}
 		mQueryHandler.removeCallbacksAndMessages(ACT_INTERESTPEOPLE_QUERY_TOKEN);
 		mQueryHandler.removeCallbacksAndMessages(ACT_ATTENDPEOPLE_QUERY_TOKEN);
-		mQueryHandler.removeCallbacksAndMessages(PEOPLE_QUERY_TOKEN);
 		mCircleHandle.removeMessages(CircleHandle.LOADER_DATA);
-		mCircleHandle.removeMessages(CircleHandle.MSG_REFLESH_ACTPEOPLE);
+		mCircleHandle.removeMessages(CircleHandle.MSG_REFRESH_ACTPEOPLE);
 		mCircleHandle.removeMessages(CircleHandle.MSG_START_QUERY);
 	}
 
@@ -138,21 +139,21 @@ public class DetailActExtendActivity extends Activity  implements OnClickListene
 		//mtitle.setOnClickListener(this);
 
 		peopleView = (GridView) findViewById(R.id.peopel_view);
-		peopleImageItem = new ArrayList<HashMap<String, Object>>();
-		for (int i = 0; i < 36; i++) {
-			//mImageIds[i] = R.drawable.portrait_default;
-			HashMap<String, Object> map = new HashMap<String, Object>();
-
-			map.put(PANEL_CONTENT_IMAGE_KEY, R.drawable.portrait_default);
-			map.put(PANEL_CONTENT_TEXT_KEY, mStrings[i]);
-			peopleImageItem.add(map);
-		}
-		SimpleAdapter mPeopleActAdapter = new SimpleAdapter(
-				this,
-				peopleImageItem,
-				R.layout.people_grid_item,
-				new String[] {PANEL_CONTENT_IMAGE_KEY, PANEL_CONTENT_TEXT_KEY},
-				new int[] {R.id.ItemImage, R.id.ItemText});
+//		peopleImageItem = new ArrayList<HashMap<String, Object>>();
+//		for (int i = 0; i < 36; i++) {
+//			//mImageIds[i] = R.drawable.portrait_default;
+//			HashMap<String, Object> map = new HashMap<String, Object>();
+//
+//			map.put(PANEL_CONTENT_IMAGE_KEY, R.drawable.portrait_default);
+//			map.put(PANEL_CONTENT_TEXT_KEY, mStrings[i]);
+//			peopleImageItem.add(map);
+//		}
+//		SimpleAdapter mPeopleActAdapter = new SimpleAdapter(
+//				this,
+//				peopleImageItem,
+//				R.layout.people_grid_item,
+//				new String[] {PANEL_CONTENT_IMAGE_KEY, PANEL_CONTENT_TEXT_KEY},
+//				new int[] {R.id.ItemImage, R.id.ItemText});
 		//peopleView.setAdapter(mPeopleActAdapter);
 		peopleView.setAdapter(mAdapter);
 		peopleView.setOnItemClickListener(this);
@@ -164,8 +165,8 @@ public class DetailActExtendActivity extends Activity  implements OnClickListene
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 			switch(msg.what){
-			case CircleHandle.MSG_REFLESH_ACTPEOPLE:
-				Log.i("test", this.toString() + "MSG_REFLESH_ACTPEOPLE");
+			case CircleHandle.MSG_REFRESH_ACTPEOPLE:
+				Log.i("test", this.toString() + "MSG_REFRESH_ACTPEOPLE");
 				mCircleHandle.refreshActPeople();
 				mCircleHandle.refreshPeople();
 				mCircleHandle.sendEmptyMessage(CircleHandle.LOADER_DATA);
@@ -222,11 +223,45 @@ public class DetailActExtendActivity extends Activity  implements OnClickListene
 		} else if (tryloadtimes == 0){
 			Log.i("test", "loadActPeopleFromDB tryloadtimes = " + tryloadtimes);
 			tryloadtimes ++;
-			mCircleHandle.sendEmptyMessage(CircleHandle.MSG_REFLESH_ACTPEOPLE);
+			showDialog(DIALOG_REFRESH_DATA);
+			//mCircleHandle.sendEmptyMessage(CircleHandle.MSG_REFRESH_ACTPEOPLE);
 		}  else {
 			//error message no data
+			Toast.makeText(this, R.string.dialog_data_empty_title, 0);
 		}
 	}
+
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		AlertDialog dialog = null;  
+		switch (id) {
+		case DIALOG_REFRESH_DATA:
+			AlertDialog.Builder mbuilder = new AlertDialog.Builder(this);  
+			mbuilder.setTitle(getString(R.string.dialog_data_empty_title));  
+			mbuilder.setMessage(R.string.dialog_data_empty);
+			mbuilder.setPositiveButton(R.string.act_confirm_editor, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					mCircleHandle.sendEmptyMessage(CircleHandle.MSG_REFRESH_ACTPEOPLE);
+				}
+			});
+			mbuilder.setNegativeButton(R.string.act_cancel_editor, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					if (dialog != null) {
+						dialog.dismiss();
+					}
+				}
+			});
+			dialog = mbuilder.create();
+			break;
+
+		default:
+			break;
+		}
+		return dialog;
+	}
+
 
 	public void onClick(View v) {
 		Intent intent;
@@ -298,7 +333,11 @@ public class DetailActExtendActivity extends Activity  implements OnClickListene
 						name = peopleCursor.getString(UtilString.peopleNameIndex);
 						mPortraitBitmap = BitmapFactory.decodeResource(getResources(), portraitImg);
 						mPortraitBitmap = mPictureGet.resizeBitmap(mPortraitBitmap, 56, 56);
-						holder.portrait.setImageBitmap(mPortraitBitmap);
+						if (mPortraitBitmap != null) {
+							holder.portrait.setImageBitmap(mPortraitBitmap);
+						} else {
+							holder.portrait.setBackgroundResource(R.drawable.portrait_default);
+						}
 						holder.name.setText(name);
 					}
 					peopleCursor.close();

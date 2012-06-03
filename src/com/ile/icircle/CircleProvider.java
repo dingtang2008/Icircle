@@ -2,6 +2,7 @@ package com.ile.icircle;
 
 import java.util.HashMap;
 
+import com.ile.icircle.CircleContract.ActLive;
 import com.ile.icircle.CircleContract.ActPeople;
 import com.ile.icircle.CircleContract.Activity;
 import com.ile.icircle.CircleContract.People;
@@ -30,8 +31,9 @@ public class CircleProvider extends AbstractCircleProvider {
 
 	private static final int SCHOOL = 102;
 	private static final int ACTPEOPLE = 103;
-	private static final int PEOPLE = 104;
-	private static final int PERSONAL = 105;
+	private static final int ACTLIVE = 104;
+	private static final int PEOPLE = 105;
+	private static final int PERSONAL = 106;
 
 	protected static final String SQL_WHERE_ID = Activity._ID + "=?";
 
@@ -41,6 +43,7 @@ public class CircleProvider extends AbstractCircleProvider {
 	private static final HashMap<String, String> sSchoolProjectionMap;
 	private static final HashMap<String, String> sActPeopleProjectionMap;
 	private static final HashMap<String, String> sPeopleProjectionMap;
+	private static final HashMap<String, String> sActLiveProjectionMap;
 	private static final HashMap<String, String> sPersonalProjectionMap;
 
 	static {
@@ -50,6 +53,7 @@ public class CircleProvider extends AbstractCircleProvider {
 		MATCHER.addURI(auth, "activity", ACTIVITY);
 		MATCHER.addURI(auth, "activity/#", ACTIVITY_ID);
 		MATCHER.addURI(auth, "school", SCHOOL);
+		MATCHER.addURI(auth, "actlive", ACTLIVE);
 		MATCHER.addURI(auth, "actpeople", ACTPEOPLE);
 		MATCHER.addURI(auth, "people", PEOPLE);
 
@@ -78,7 +82,18 @@ public class CircleProvider extends AbstractCircleProvider {
 		sActPeopleProjectionMap.put(ActPeople._ID, ActPeople._ID);
 		sActPeopleProjectionMap.put(ActPeople.PEOPLE_ID, ActPeople.PEOPLE_ID);
 		sActPeopleProjectionMap.put(ActPeople.INTREST_ACT_TAGID, ActPeople.INTREST_ACT_TAGID);
+		sActPeopleProjectionMap.put(ActPeople.INTREST_ACT_TIME, ActPeople.INTREST_ACT_TIME);
 		sActPeopleProjectionMap.put(ActPeople.ATTEND_ACT_TAGID, ActPeople.ATTEND_ACT_TAGID);
+		sActPeopleProjectionMap.put(ActPeople.ATTEND_ACT_TIME, ActPeople.ATTEND_ACT_TIME);
+		
+		sActLiveProjectionMap = new HashMap<String, String>();
+		sActLiveProjectionMap.put(ActLive._ID, ActLive._ID);
+		sActLiveProjectionMap.put(ActLive.PEOPLE_ID, ActLive.PEOPLE_ID);
+		sActLiveProjectionMap.put(ActLive.ACTLIVE_ACT_ID, ActLive.ACTLIVE_ACT_ID);
+		sActLiveProjectionMap.put(ActLive.ACTLIVE_COMMENT_CONTENT, ActLive.ACTLIVE_COMMENT_CONTENT);
+		sActLiveProjectionMap.put(ActLive.ACTLIVE_COMMENT_TIME, ActLive.ACTLIVE_COMMENT_TIME);
+		sActLiveProjectionMap.put(ActLive.ACTLIVE_COMMENT_IMG, ActLive.ACTLIVE_COMMENT_IMG);
+		
 		
 		sPeopleProjectionMap = new HashMap<String, String>();
 		sPeopleProjectionMap.put(People._ID, People._ID);
@@ -117,6 +132,10 @@ public class CircleProvider extends AbstractCircleProvider {
 
 		case ACTPEOPLE: {
 			return ActPeople.CONTENT_TYPE;
+		}
+
+		case ACTLIVE: {
+			return ActLive.CONTENT_TYPE;
 		}
 
 		case PEOPLE: {
@@ -163,6 +182,12 @@ public class CircleProvider extends AbstractCircleProvider {
 			break;
 		}
 
+		case ACTLIVE: {
+			qb.setTables(ActLive.TABLE_NAME);
+			qb.setProjectionMap(sActLiveProjectionMap);
+			break;
+		}
+
 		case PEOPLE: {
 			qb.setTables(People.TABLE_NAME);
 			qb.setProjectionMap(sPeopleProjectionMap);
@@ -205,6 +230,11 @@ public class CircleProvider extends AbstractCircleProvider {
 
 		case ACTPEOPLE: {
 			id = db.insert(ActPeople.TABLE_NAME, null, values);
+			break;
+		}
+
+		case ACTLIVE: {
+			id = db.insert(ActLive.TABLE_NAME, null, values);
 			break;
 		}
 
@@ -255,6 +285,11 @@ public class CircleProvider extends AbstractCircleProvider {
 			break;
 		}
 
+		case ACTLIVE: {
+			count = db.update(ActLive.TABLE_NAME, values, selection, selectionArgs);
+			break;
+		}
+
 		case PEOPLE: {
 			count = db.update(People.TABLE_NAME, values, selection, selectionArgs);
 			break;
@@ -297,6 +332,11 @@ public class CircleProvider extends AbstractCircleProvider {
 
 		case ACTPEOPLE: {
 			count = db.delete(ActPeople.TABLE_NAME, selection, selectionArgs);
+			break;
+		}
+
+		case ACTLIVE: {
+			count = db.delete(ActLive.TABLE_NAME, selection, selectionArgs);
 			break;
 		}
 

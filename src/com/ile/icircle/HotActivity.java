@@ -31,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class HotActivity extends Activity implements OnClickListener{
 
@@ -95,7 +96,7 @@ public class HotActivity extends Activity implements OnClickListener{
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		mCircleHandle.removeMessages(CircleHandle.MSG_REFLESH_HOTACT);
+		mCircleHandle.removeMessages(CircleHandle.MSG_REFRESH_HOTACT);
 		mCircleHandle.removeMessages(CircleHandle.LOADER_DATA);
 		if (loaderpd != null) {
 			loaderpd.dismiss();
@@ -301,6 +302,7 @@ public class HotActivity extends Activity implements OnClickListener{
 		public HotActTask(Context context){
 			//			if (!isDataLoader) {
 			loaderpd = new ProgressDialog(context); 
+			loaderpd.setTitle(R.string.loading_data);
 			loaderpd.show();
 			//			}
 		}
@@ -344,14 +346,16 @@ public class HotActivity extends Activity implements OnClickListener{
 			}
 			cursor.close();
 			refreshView();
-		} else if (tryloadtimes < 3){
+		} else if (tryloadtimes == 0){
 			tryloadtimes ++;
 			isDataLoader = false;
 			if (loaderpd != null) {
 				loaderpd.dismiss();
 				loaderpd = null;
 			}
-			mCircleHandle.sendEmptyMessage(CircleHandle.MSG_REFLESH_HOTACT);
+			mCircleHandle.sendEmptyMessage(CircleHandle.MSG_REFRESH_HOTACT);
+		} else {
+			Toast.makeText(this, R.string.dialog_data_empty_title, 0);
 		}
 	}
 
@@ -360,8 +364,9 @@ public class HotActivity extends Activity implements OnClickListener{
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 			switch(msg.what){
-			case CircleHandle.MSG_REFLESH_HOTACT:
+			case CircleHandle.MSG_REFRESH_HOTACT:
 				refreshpd = new ProgressDialog(HotActivity.this); 
+				refreshpd.setTitle(R.string.refresh_data);
 				refreshpd.show();
 				mCircleHandle.refreshAct();
 				if (refreshpd != null) {

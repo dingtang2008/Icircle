@@ -1,5 +1,6 @@
 package com.ile.icircle;
 
+import com.ile.icircle.CircleContract.ActLive;
 import com.ile.icircle.CircleContract.ActPeople;
 import com.ile.icircle.CircleContract.Activity;
 import com.ile.icircle.CircleContract.People;
@@ -80,12 +81,16 @@ public class UtilString {
 		ActPeople._ID,
 		ActPeople.PEOPLE_ID,
 		ActPeople.INTREST_ACT_TAGID,
-		ActPeople.ATTEND_ACT_TAGID
+		ActPeople.ATTEND_ACT_TAGID,
+		ActPeople.INTREST_ACT_TIME,
+		ActPeople.ATTEND_ACT_TIME
 	};
 	public static final int actPeopleIdIndex = 0;
 	public static final int actPeoplePeopleIdIndex = 1;
 	public static final int actPeopleIntersetIdIndex = 2;
 	public static final int actPeopleAttendIdIndex = 3;
+	public static final int actcommentIntersetTimeIndex = 4;
+	public static final int actcommentAttendTimeIndex = 5;
 	
 	public static final String[] peopleProjection = {
 		People._ID,
@@ -98,6 +103,21 @@ public class UtilString {
 	public static final int peoplePeopleIdIndex = 1;
 	public static final int peopleNameIndex = 2;
 	public static final int peopleProtraitIndex = 3;
+	
+	public static final String[] commentProjection = {
+		ActLive._ID,
+		ActLive.PEOPLE_ID,
+		ActLive.ACTLIVE_ACT_ID,
+		ActLive.ACTLIVE_COMMENT_CONTENT,
+		ActLive.ACTLIVE_COMMENT_TIME,
+		ActLive.ACTLIVE_COMMENT_IMG
+	};
+	public static final int commentIdIndex = 0;
+	public static final int commentPeopleIdIndex = 1;
+	public static final int commentActIdIndex = 2;
+	public static final int commentContentIndex = 3;
+	public static final int commentTimeIndex = 4;
+	public static final int commentImgIndex = 5;
 	
     /**
      * Appends one set of selection args to another. This is useful when adding a selection

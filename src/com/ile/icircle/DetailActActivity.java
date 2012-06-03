@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DetailActActivity extends Activity implements OnClickListener{
 
@@ -285,9 +286,9 @@ public class DetailActActivity extends Activity implements OnClickListener{
 		mQueryHandler.removeCallbacksAndMessages(INTERESTPEOPLE_QUERY_TOKEN);
 		mQueryHandler.removeCallbacksAndMessages(ATTENDPEOPLE_QUERY_TOKEN);
 		mCircleHandle.removeMessages(CircleHandle.LOADER_DATA);
-		mCircleHandle.removeMessages(CircleHandle.MSG_REFLESH_ACTPEOPLE);
+		mCircleHandle.removeMessages(CircleHandle.MSG_REFRESH_ACTPEOPLE);
 		mCircleHandle.removeMessages(CircleHandle.MSG_START_QUERY);
-		Log.i("test", "onDestroy mCircleHandle.hasMessages(CircleHandle.MSG_REFLESH_ACTPEOPLE) = "+mCircleHandle.hasMessages(CircleHandle.MSG_REFLESH_ACTPEOPLE));
+		Log.i("test", "onDestroy mCircleHandle.hasMessages(CircleHandle.MSG_REFRESH_ACTPEOPLE) = "+mCircleHandle.hasMessages(CircleHandle.MSG_REFRESH_ACTPEOPLE));
 
 		interestLoadProgressbar.setVisibility(View.GONE);
 		attendLoadProgressbar.setVisibility(View.GONE);
@@ -306,38 +307,50 @@ public class DetailActActivity extends Activity implements OnClickListener{
 			overridePendingTransition(R.anim.enter_anim, R.anim.exit_anim);
 			break;
 		case R.id.to_attend_layout:
+			//Need check user login
+			toInterestLayout.setBackgroundDrawable(null);
+			toInterestImg.setBackgroundResource(R.drawable.ic_to_intest);
+			toInterest.setTextColor(toInterestColor);
+			isInterest = false;
+			mCircleHandle.deleteActAttendInterest(1, actTagId, UtilString.INTEREST);
 			if (!isAttent) {
 				toAttendLayout.setBackgroundResource(R.drawable.bottom_item_selected);
 				toAttendImg.setBackgroundResource(R.drawable.ic_to_selected);
 				toAttend.setTextColor(whiteColor);
 				isAttent = true;
+				mCircleHandle.insertActAttendInterest(1, actTagId, UtilString.ATTEND);
 			} else {
 				toAttendLayout.setBackgroundDrawable(null);
 				toAttend.setTextColor(toAttendColor);
 				toAttendImg.setBackgroundResource(R.drawable.ic_to_attend);
 				isAttent = false;
+				mCircleHandle.deleteActAttendInterest(1, actTagId, UtilString.ATTEND);
 			}
-			toInterestLayout.setBackgroundDrawable(null);
-			toInterestImg.setBackgroundResource(R.drawable.ic_to_intest);
-			toInterest.setTextColor(toInterestColor);
-			isInterest = false;
+			//mCircleHandle.sendEmptyMessage(CircleHandle.LOADER_DATA);
 			break;
 		case R.id.to_interest_layout:
+			//Need check user login
+			Log.i("test", "to_interest_layout");
+			Log.i("test", "isInterest = "+isInterest);
+			toAttendLayout.setBackgroundDrawable(null);
+			toAttend.setTextColor(toAttendColor);
+			toAttendImg.setBackgroundResource(R.drawable.ic_to_attend);
+			isAttent = false;
+			mCircleHandle.deleteActAttendInterest(1, actTagId, UtilString.ATTEND);
 			if (!isInterest) {
 				toInterestLayout.setBackgroundResource(R.drawable.bottom_item_selected);
 				toInterestImg.setBackgroundResource(R.drawable.ic_to_selected);
 				toInterest.setTextColor(whiteColor);
 				isInterest = true;
+				mCircleHandle.insertActAttendInterest(1, actTagId, UtilString.INTEREST);
 			} else {
 				toInterestLayout.setBackgroundDrawable(null);
 				toInterestImg.setBackgroundResource(R.drawable.ic_to_intest);
 				toInterest.setTextColor(toInterestColor);
 				isInterest = false;
+				mCircleHandle.deleteActAttendInterest(1, actTagId, UtilString.INTEREST);
 			}
-			toAttendLayout.setBackgroundDrawable(null);
-			toAttend.setTextColor(toAttendColor);
-			toAttendImg.setBackgroundResource(R.drawable.ic_to_attend);
-			isAttent = false;
+			//mCircleHandle.sendEmptyMessage(CircleHandle.LOADER_DATA);
 			break;
 		case R.id.detail_attend_more:
 			intent = new Intent(this, DetailActExtendActivity.class);
@@ -392,8 +405,8 @@ public class DetailActActivity extends Activity implements OnClickListener{
 				Log.i("test", "MSG_START_QUERY");
 				startQuery();
 				break;
-			case CircleHandle.MSG_REFLESH_ACTPEOPLE:
-				Log.i("test", "MSG_REFLESH_ACTPEOPLE");
+			case CircleHandle.MSG_REFRESH_ACTPEOPLE:
+				Log.i("test", "MSG_REFRESH_ACTPEOPLE");
 				mCircleHandle.refreshActPeople();
 				mCircleHandle.refreshPeople();
 				mCircleHandle.sendEmptyMessage(CircleHandle.LOADER_DATA);
@@ -517,7 +530,9 @@ public class DetailActActivity extends Activity implements OnClickListener{
 			attendLoadProgressbar.setVisibility(View.VISIBLE);
 			Log.i("test", "loadActPeopleFromDB tryloadtimes = " + tryloadtimes);
 			tryloadtimes ++;
-			mCircleHandle.sendEmptyMessage(CircleHandle.MSG_REFLESH_ACTPEOPLE);
+			mCircleHandle.sendEmptyMessage(CircleHandle.MSG_REFRESH_ACTPEOPLE);
+		} else {
+			Toast.makeText(this, R.string.dialog_data_empty_title, 0);
 		}
 	}
 
@@ -552,6 +567,8 @@ public class DetailActActivity extends Activity implements OnClickListener{
 				}
 			}
 			cursor.close();
+		} else {
+			Toast.makeText(this, R.string.dialog_data_empty_title, 0);
 		}
 	}
 }

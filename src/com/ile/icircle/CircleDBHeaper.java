@@ -59,7 +59,18 @@ public class CircleDBHeaper extends SQLiteOpenHelper {
 				ActPeople._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
 				ActPeople.PEOPLE_ID + " INTEGER," +
 				ActPeople.INTREST_ACT_TAGID +" INTEGER," +
-				ActPeople.ATTEND_ACT_TAGID +" INTEGER" +
+				ActPeople.INTREST_ACT_TIME +" DATATIME," +
+				ActPeople.ATTEND_ACT_TAGID +" INTEGER," +
+				ActPeople.ATTEND_ACT_TIME +" DATATIME" +
+				");");
+		
+		db.execSQL("CREATE TABLE " + ActLive.TABLE_NAME + " (" +
+				ActLive._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+				ActLive.PEOPLE_ID + " INTEGER NOT NULL," +
+				ActLive.ACTLIVE_ACT_ID +" INTEGER NOT NULL," +
+				ActLive.ACTLIVE_COMMENT_CONTENT +" TEXT NOT NULL DEFAULT \"\"," +
+				ActLive.ACTLIVE_COMMENT_TIME +" DATATIME," +
+				ActLive.ACTLIVE_COMMENT_IMG +" TEXT" +
 				");");
 		
 		db.execSQL("CREATE TABLE " + People.TABLE_NAME + " (" +

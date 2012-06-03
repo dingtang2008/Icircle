@@ -102,4 +102,10 @@
     
     <string name="msg_notify">通知</string>
     <string name="msg_personal">私信</string>
+    
+    <string name="error_send">发送失败，请输入内容或者添加图片</string>
+    <string name="loading_data">正在加载数据</string>
+    <string name="refresh_data">刷新数据</string>
+    <string name="dialog_data_empty_title">数据为空</string>
+    <string name="dialog_data_empty">数据为空，是否尝试刷新？</string>
 </resources>

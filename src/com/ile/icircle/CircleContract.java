@@ -82,7 +82,30 @@ public class CircleContract {
 		public static final String INTREST_ACT_TAGID = "interestActTagId";
 		public static final String INTREST_ACT_TIME = "interestActTime";
 		public static final String ATTEND_ACT_TAGID = "attendActTagId";
-		public static final String ATTEND_ACT_TIME = "interestActTime";
+		public static final String ATTEND_ACT_TIME = "attendActTime";
+	}
+
+	public static final class ActLive{
+
+		private ActLive() {}
+
+		/**
+		 * The content:// style URL for this table
+		 */
+		public static final Uri CONTENT_URI = AUTHORITY_URI.buildUpon().appendPath("actlive").build();
+
+		public static final String CONTENT_TYPE = "vnd.android.cursor.dir/actlive";
+
+		public static final String CONTENT_TYPE_ITEM = "vnd.android.cursor.item/actlive";
+
+		public static final String TABLE_NAME = "actlive";
+		
+		public static final String _ID = "_id";
+		public static final String PEOPLE_ID= "peopleId";
+		public static final String ACTLIVE_ACT_ID= "actLiveActId";
+		public static final String ACTLIVE_COMMENT_CONTENT= "actLiveCommentContent";
+		public static final String ACTLIVE_COMMENT_TIME = "actLiveCommentTime";
+		public static final String ACTLIVE_COMMENT_IMG = "actLiveCommentImg";
 	}
 
 	public static class People {
