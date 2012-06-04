@@ -10,6 +10,7 @@ import java.util.Date;
 import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
@@ -126,12 +127,9 @@ public class CircleHandle extends Handler {
 			mCulValue.put(CircleContract.ActLive.ACTLIVE_COMMENT_IMG, "");
 			mCulValue.put(CircleContract.ActLive.ACTLIVE_COMMENT_CONTENT, "test士大夫万民法女人几个不去哦官方一个人去哟辅导班hi阿布vhdboahbvhfboqbvuibrioqvbhuifpqeh" + i);
 
-			Calendar mCalendar = Calendar.getInstance();
-			Date myDate = mCalendar.getTime();
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");  
-			Log.i("test", "myDate = "+myDate.toString());
+			Date myDate = new Date(System.currentTimeMillis());  
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			String date = format.format(myDate);
-			Log.i("test", "date = "+date);
 			mCulValue.put(CircleContract.ActLive.ACTLIVE_COMMENT_TIME, date);
 
 			Uri count = mContext.getContentResolver().insert(CircleContract.ActLive.CONTENT_URI, mCulValue);
@@ -201,14 +199,11 @@ public class CircleHandle extends Handler {
 				R.drawable.test6,
 				R.drawable.test7
 		};
+		
 
-		Calendar mCalendar = Calendar.getInstance();
-		Date myDate = mCalendar.getTime();
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");  
-
-		Log.i("test", "myDate = "+myDate.toString());
-		String date = format.format(new Date());
-		Log.i("test", "date = "+date);
+		Date myDate = new Date(System.currentTimeMillis());  
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String date = format.format(myDate);
 
 		ContentValues mCulValue = new ContentValues();
 		for (int i = 0; i < 7;i ++){
@@ -221,7 +216,9 @@ public class CircleHandle extends Handler {
 			mCulValue.put(CircleContract.Activity.HOTTAG, 1);
 			mCulValue.put(CircleContract.Activity.INTEREST_PEOPLE, mInterestCountTest[i]);
 			mCulValue.put(CircleContract.Activity.ATTEND_PEOPLE, mAttendCountTest[i]);
-			mCulValue.put(CircleContract.Activity.POSTER, hot_act_img_test_id[i]);
+			Bitmap actPoster = BitmapFactory.decodeResource(mContext.getResources(), hot_act_img_test_id[i]);
+			String mSendBitmapUrl = PictureGet.saveBitmap(actPoster);
+			mCulValue.put(CircleContract.Activity.POSTER, mSendBitmapUrl);
 			mCulValue.put(CircleContract.Activity.TAG_ID, TagIdTest[i]);
 			mCulValue.put(CircleContract.Activity.ACT_INTRODUCE, actIntroduceTest[i]);
 			mCulValue.put(CircleContract.Activity.PUBLISH_TIME, date);
@@ -229,19 +226,47 @@ public class CircleHandle extends Handler {
 			Log.i("test", "count = "+count);
 		}
 	}
+	
+
+	public void refreshFriendShip() {
+		testFriendShipdata();
+	}
+	
+	private void testFriendShipdata() {
+		if (mContext == null) {
+			return;
+		}
+		Log.i("test", "testFriendShipdata");
+		ContentValues mCulValue = new ContentValues();
+		for (int i = 0; i < 10; i ++){
+			mCulValue.put(CircleContract.Friendship.FRIEND_ID, 1000 + i);
+			mCulValue.put(CircleContract.Friendship.PEOPLE_ID, 1);
+			Date myDate = new Date(System.currentTimeMillis());  
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			String date = format.format(myDate);
+			mCulValue.put(CircleContract.Friendship.TIME_MAKE_FRIEND, date);
+			Uri count = mContext.getContentResolver().insert(CircleContract.Friendship.CONTENT_URI, mCulValue);
+			Log.i("test", "count = "+count);
+		}
+	}
 
 
 
 
-	public void insertActLive(int peopleId, int actId, String bitmapUrl, String comment){
+
+
+
+
+
+
+	public void insertActLive(int peopleId, long actId, String bitmapUrl, String comment){
 		uploadLivedata(peopleId, actId, bitmapUrl, comment);
 	}
 
-	public void uploadLivedata(int peopleId, int actId, String bitmapUrl, String comment){
+	public void uploadLivedata(int peopleId, long actId, String bitmapUrl, String comment){
 		ContentValues mCulValue = new ContentValues();
 
-		Calendar mCalendar = Calendar.getInstance();
-		Date myDate = mCalendar.getTime();
+		Date myDate = new Date(System.currentTimeMillis());  
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		String date = format.format(myDate);
 
@@ -255,11 +280,12 @@ public class CircleHandle extends Handler {
 		Log.i("test", "count = "+count);
 	}
 
-	public void insertActAttendInterest(int peopleId, int actTagId, String type) {
+	public void insertActAttendInterest(int peopleId, long actTagId, String type) {
 		ContentValues mCulValue = new ContentValues();
 		
-		Calendar mCalendar = Calendar.getInstance();
-		Date myDate = mCalendar.getTime();
+//		Calendar mCalendar = Calendar.getInstance();
+//		Date myDate = mCalendar.getTime();
+		Date myDate = new Date(System.currentTimeMillis());  
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		String date = format.format(myDate);
 		
@@ -277,7 +303,7 @@ public class CircleHandle extends Handler {
 		Log.i("test", "count = "+count);
 	}
 
-	public void deleteActAttendInterest(int peopleId, int actTagId, String type) {
+	public void deleteActAttendInterest(int peopleId, long actTagId, String type) {
 		String[] selectionArgs = {String.valueOf(peopleId), String.valueOf(actTagId)};
 		String selection = CircleContract.ActPeople.PEOPLE_ID + "= ?";
 		if (type.equals(UtilString.ATTEND)){
@@ -290,5 +316,14 @@ public class CircleHandle extends Handler {
 		
 		int count = mContext.getContentResolver().delete(CircleContract.ActPeople.CONTENT_URI, selection, selectionArgs);
 		Log.i("test", "count = "+count);
+	}
+
+	public void insertNewAct(ContentValues mValues) {
+		Uri count = mContext.getContentResolver().insert(CircleContract.Activity.CONTENT_URI, mValues);
+		Log.i("test", "count = "+count);
+	}
+
+	public void uploadPicture(Bitmap actPoster) {
+		
 	}
 }

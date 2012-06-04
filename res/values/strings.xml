@@ -108,4 +108,5 @@
     <string name="refresh_data">刷新数据</string>
     <string name="dialog_data_empty_title">数据为空</string>
     <string name="dialog_data_empty">数据为空，是否尝试刷新？</string>
+    <string name="act_publish_state">将要开始</string>
 </resources>

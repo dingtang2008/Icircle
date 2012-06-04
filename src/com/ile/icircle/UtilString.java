@@ -3,6 +3,7 @@ package com.ile.icircle;
 import com.ile.icircle.CircleContract.ActLive;
 import com.ile.icircle.CircleContract.ActPeople;
 import com.ile.icircle.CircleContract.Activity;
+import com.ile.icircle.CircleContract.Friendship;
 import com.ile.icircle.CircleContract.People;
 
 import android.text.TextUtils;
@@ -58,7 +59,8 @@ public class UtilString {
 		Activity.POSTER,
 		Activity.TAG_ID,
 		Activity.ACT_INTRODUCE,
-		Activity.PUBLISH_TIME
+		Activity.PUBLISH_TIME,
+		Activity.ACT_INVITER_PERSONAL
 	};
 	
 	public static final int actIdIndex = 0;
@@ -75,6 +77,7 @@ public class UtilString {
 	public static final int actTagIdIndex = 11;
 	public static final int actIntroduceIndex = 12;
 	public static final int actPublishTimeIndex = 13;
+	public static final int actInviterPersonalIndex = 14;
 
 
 	public static final String[] peopleActProjection = {
@@ -118,6 +121,17 @@ public class UtilString {
 	public static final int commentContentIndex = 3;
 	public static final int commentTimeIndex = 4;
 	public static final int commentImgIndex = 5;
+	
+	public static final String[] friendshipProjection = {
+		Friendship._ID,
+		Friendship.PEOPLE_ID,
+		Friendship.FRIEND_ID,
+		Friendship.TIME_MAKE_FRIEND
+	};
+	public static final int friendshipIdIndex = 0;
+	public static final int friendshipPeopleIdIndex = 1;
+	public static final int friendshipFriendIdIndex = 2;
+	public static final int friendshiptimeIndex = 3;
 	
     /**
      * Appends one set of selection args to another. This is useful when adding a selection

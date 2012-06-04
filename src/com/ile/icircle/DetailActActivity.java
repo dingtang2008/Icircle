@@ -43,7 +43,7 @@ public class DetailActActivity extends Activity implements OnClickListener{
 	private TextView actIntroduce;
 	private TextView detailInterstate;
 	private TextView detailAttend;
-	private int actTagId;
+	private long actTagId;
 	private ImageView mPoster;
 	private ContentValues mValue;
 
@@ -80,7 +80,7 @@ public class DetailActActivity extends Activity implements OnClickListener{
 		setContentView(R.layout.act_detail_layout);
 		mQueryHandler = new QueryHandler(this);
 		Intent mIntent = getIntent();
-		actTagId = mIntent.getIntExtra(UtilString.ACTID, -1);
+		actTagId = mIntent.getLongExtra(UtilString.ACTID, -1);
 		Log.i("test", "actTagId = "+actTagId);
 		mPictureGet = new PictureGet(this);
 
@@ -216,7 +216,13 @@ public class DetailActActivity extends Activity implements OnClickListener{
 		actState.setText(actStateString);
 		detailInterstate.setText(getString(R.string.detail_interest_people) +  "(" + mInterestCount + ")");
 		detailAttend.setText(getString(R.string.detail_attend_people) +  "(" + mAttendCount + ")");
-		Bitmap mPosterBitmap = BitmapFactory.decodeResource(getResources(), poster_img);
+		
+		Bitmap mPosterBitmap = null;
+		if(posterUrl.startsWith("http://")) {
+		} else if(posterUrl.startsWith("/mnt/sdcard/")) {
+			mPosterBitmap = mPictureGet.getPic(posterUrl);
+		}
+		//Bitmap mPosterBitmap = BitmapFactory.decodeResource(getResources(), poster_img);
 		mPosterBitmap = mPictureGet.resizeBitmap(mPosterBitmap, 202, 121);
 		if (mPosterBitmap != null) {
 			mPoster.setImageBitmap(mPosterBitmap);
@@ -247,7 +253,7 @@ public class DetailActActivity extends Activity implements OnClickListener{
 				//interestpeopleIcon.setBackgroundResource(interestPeoplePortrait[i]);
 				interestpeopleName.setText(interestPeopleName[i]);
 			}
-			interestLoadProgressbar.setVisibility(View.GONE);
+			dismissProgress(interestLoadProgressbar);
 		}
 	}
 
@@ -273,7 +279,8 @@ public class DetailActActivity extends Activity implements OnClickListener{
 				//attendpeopleIcon.setBackgroundResource(attendPeoplePortrait[i]);
 				attendpeopleName.setText(attendPeopleName[i]);
 			}
-			attendLoadProgressbar.setVisibility(View.GONE);
+			dismissProgress(attendLoadProgressbar);
+//			attendLoadProgressbar.setVisibility(View.GONE);
 		}
 	}
 
@@ -451,8 +458,9 @@ public class DetailActActivity extends Activity implements OnClickListener{
 	private int[] actAttendPeopleId = new int[6];
 
 	private int poster_img;
-	private String mInterestCount;
-	private String mAttendCount;
+	private String posterUrl;
+	private int mInterestCount;
+	private int mAttendCount;
 	private String actTimeString;
 	private String actLocationString;
 	private String actClassifyIntroduceString;
@@ -461,7 +469,7 @@ public class DetailActActivity extends Activity implements OnClickListener{
 
 	private String actIntroduceString;
 	private Date actPublishTime;
-	private int actTagIds;
+	private long actTagIds;
 	private PictureGet mPictureGet;
 
 	public void loadDetailDataFromDB(Cursor cursor) {
@@ -478,9 +486,10 @@ public class DetailActActivity extends Activity implements OnClickListener{
 			actClassifyIntroduceString = cursor.getString(UtilString.actClassifyIntroduceIndex);
 			actClassifyTitleString = cursor.getString(UtilString.actClassidyTitleIndex);
 			actStateString = cursor.getString(UtilString.actStateIndex);
-			mInterestCount = cursor.getString(UtilString.actInterestPeopleIndex);
-			mAttendCount = cursor.getString(UtilString.actAttendPeopleIndex);
-			poster_img = cursor.getInt(UtilString.actPosterIndex);
+			mInterestCount = cursor.getInt(UtilString.actInterestPeopleIndex);
+			mAttendCount = cursor.getInt(UtilString.actAttendPeopleIndex);
+//			poster_img = cursor.getInt(UtilString.actPosterIndex);
+			posterUrl = cursor.getString(UtilString.actPosterIndex);
 			actTagIds = cursor.getInt(UtilString.actTagIdIndex);
 
 			actIntroduceString = cursor.getString(UtilString.actIntroduceIndex);
@@ -526,8 +535,8 @@ public class DetailActActivity extends Activity implements OnClickListener{
 			}
 			cursor.close();
 		} else if (tryloadtimes == 0){
-			interestLoadProgressbar.setVisibility(View.VISIBLE);
-			attendLoadProgressbar.setVisibility(View.VISIBLE);
+			showProgress(interestLoadProgressbar);
+			showProgress(attendLoadProgressbar);
 			Log.i("test", "loadActPeopleFromDB tryloadtimes = " + tryloadtimes);
 			tryloadtimes ++;
 			mCircleHandle.sendEmptyMessage(CircleHandle.MSG_REFRESH_ACTPEOPLE);
@@ -553,22 +562,33 @@ public class DetailActActivity extends Activity implements OnClickListener{
 							interestPeopleName[i] = cursor.getString(UtilString.peopleNameIndex);
 							Log.i("test", "interestPeoplePortrait = "+interestPeoplePortrait[i]);
 							Log.i("test", "interestPeopleName = "+interestPeopleName[i]);
-							refreshInterestPeopleView();
 						}
 					}
+					refreshInterestPeopleView();
 				} else if (queryToken == ATTENDPEOPLE_QUERY_TOKEN) {
 					for (int i = 0; i < 6; i++) {
 						if (peopleId == actAttendPeopleId[i]) {
 							attendPeoplePortrait[i] = cursor.getInt(UtilString.peopleProtraitIndex);
 							attendPeopleName[i] = cursor.getString(UtilString.peopleNameIndex);
-							refreshAttendPeopleView();
 						}
 					}
+					refreshAttendPeopleView();
 				}
 			}
 			cursor.close();
 		} else {
 			Toast.makeText(this, R.string.dialog_data_empty_title, 0);
+		}
+	}
+	
+
+	
+	private void showProgress(ProgressBar pb){
+		pb.setVisibility(View.VISIBLE);
+	}
+	private void dismissProgress(ProgressBar pb){
+		if (pb != null) {
+			pb.setVisibility(View.GONE);
 		}
 	}
 }

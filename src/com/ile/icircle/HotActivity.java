@@ -68,16 +68,16 @@ public class HotActivity extends Activity implements OnClickListener{
 	private TextView mAttendPeople;
 	//private ContentValues mCulValue;
 
-	private int[] hot_act_img_url = new int[7];
+	private String[] hot_act_img_url = new String[7];
 
-	private String[] mInterestCountTest = new String[7];
-	private String[] mAttendCountTest = new String[7];
+	private int[] mInterestCountTest = new int[7];
+	private int[] mAttendCountTest = new int[7];
 	private String[] actTimeStrings = new String[7];
 	private String[] actLocationStrings = new String[7];
 	private String[] actClassifyIntroduceStrings = new String[7];
 	private String[] actClassifyTitleStrings = new String[7];
 	private String[] actStateStrings = new String[7];
-	private int[] actTagIds = new int[7];
+	private long[] actTagIds = new long[7];
 
 	private String mSchool;
 	private boolean isDataLoader = false;
@@ -171,7 +171,14 @@ public class HotActivity extends Activity implements OnClickListener{
 		String[] actClassifyTitleStrings = getResources().getStringArray(R.array.hot_act_classify_title_test);
 		String[] actStateStrings = getResources().getStringArray(R.array.hot_act_state_test);
 
-		mCurHotImg.setBackgroundResource(hot_act_img_url[mCurSel]);
+		Bitmap mPoster = null;
+		PictureGet mPictureGet = new PictureGet(this);
+		if(hot_act_img_url[mCurSel].startsWith("http://")) {
+		} else if(hot_act_img_url[mCurSel].startsWith("/mnt/sdcard/")) {
+			mPoster = mPictureGet.getPic(hot_act_img_url[mCurSel]);
+		}
+		//		mCurHotImg.setBackgroundResource(hot_act_img_url[mCurSel]);
+		mCurHotImg.setImageBitmap(mPoster);
 		mCurHotTime.setText(actTimeStrings[mCurSel]);
 		mCurHotLocation.setText(actLocationStrings[mCurSel]);
 		mCurHotClassifyTitle.setText(actClassifyTitleStrings[mCurSel]);
@@ -183,8 +190,8 @@ public class HotActivity extends Activity implements OnClickListener{
 		//		mCulValue.put("state", actStateStrings[mCurSel]);
 
 		mState.setText(actStateStrings[mCurSel]);
-		mInterestPeople.setText(mInterestCountTest[mCurSel].toString());
-		mAttendPeople.setText(mAttendCountTest[mCurSel].toString());
+		mInterestPeople.setText(String.valueOf(mInterestCountTest[mCurSel]));
+		mAttendPeople.setText(String.valueOf(mAttendCountTest[mCurSel]));
 		//		if (cursor != null && cursor.moveToPosition(mCurSel)) {
 		//			Log.i("test", "cursor getCount = " + cursor.getCount());
 		//			Log.i("test", "cursor.getInt(UtilString.hotActIdIndex) = " + cursor.getInt(UtilString.hotActIdIndex));
@@ -333,10 +340,10 @@ public class HotActivity extends Activity implements OnClickListener{
 					actClassifyIntroduceStrings[i] = cursor.getString(UtilString.actClassifyIntroduceIndex);
 					actClassifyTitleStrings[i] = cursor.getString(UtilString.actClassidyTitleIndex);
 					actStateStrings[i] = cursor.getString(UtilString.actStateIndex);
-					mInterestCountTest[i] = cursor.getString(UtilString.actInterestPeopleIndex);
-					mAttendCountTest[i] = cursor.getString(UtilString.actAttendPeopleIndex);
-					hot_act_img_url[i] = cursor.getInt(UtilString.actPosterIndex);
-					actTagIds[i] = cursor.getInt(UtilString.actTagIdIndex);
+					mInterestCountTest[i] = cursor.getInt(UtilString.actInterestPeopleIndex);
+					mAttendCountTest[i] = cursor.getInt(UtilString.actAttendPeopleIndex);
+					hot_act_img_url[i] = cursor.getString(UtilString.actPosterIndex);
+					actTagIds[i] = cursor.getLong(UtilString.actTagIdIndex);
 				}
 			}
 			isDataLoader = true;

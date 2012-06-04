@@ -10,6 +10,7 @@ import com.ile.icircle.ScrollLayout.OnViewChangeListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.AsyncQueryHandler;
 import android.content.ContentValues;
 import android.content.Context;
@@ -32,6 +33,7 @@ import android.widget.CursorAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -43,7 +45,7 @@ public class DetailActExtendActivity extends Activity  implements OnClickListene
 	private TextView mtitle;
 
 	private String extendContent; 
-	private int actTagId;
+	private long actTagId;
 
 	private static final String PANEL_CONTENT_IMAGE_KEY = "ItemImage";
 	private static final String PANEL_CONTENT_TEXT_KEY = "ItemText";
@@ -102,7 +104,7 @@ public class DetailActExtendActivity extends Activity  implements OnClickListene
 		mAdapter = new mCursorAdapter(this);
 
 		extendContent = mIntent.getStringExtra(UtilString.DETAILEXTEND);
-		actTagId = mIntent.getIntExtra(UtilString.ACTID, -1);
+		actTagId = mIntent.getLongExtra(UtilString.ACTID, -1);
 		Log.i("test", "actTagId = "+actTagId);
 		mQueryHandler = new QueryHandler(this);
 
@@ -351,5 +353,4 @@ public class DetailActExtendActivity extends Activity  implements OnClickListene
 		}
 
 	}
-
 }

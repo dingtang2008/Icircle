@@ -2,6 +2,7 @@ package com.ile.icircle;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -10,13 +11,20 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.AsyncQueryHandler;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Message;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -42,9 +50,10 @@ public class EditActActivity extends Activity implements OnClickListener {
 
 	private RelativeLayout mTitle;
 	private boolean islimited = false;
-	
+
 	private int userId;
 	private boolean isLogin = false;
+	private long peopleId = 1;
 
 	private static final int REQUESTFRIEND = 1;
 
@@ -82,35 +91,48 @@ public class EditActActivity extends Activity implements OnClickListener {
 	private int time_dialog_type = -1;
 	private int time_dialog_index = 0;
 	String[] mStrings;
+	private String actPosterUrl = "";
 
-	private Integer[] mFriedsImageIds = {
-			R.drawable.portrait_default,
-			R.drawable.portrait_default,
-			R.drawable.portrait_default,
-			R.drawable.portrait_default,
-			R.drawable.portrait_default,
-			R.drawable.portrait_default
-	}; //should be 37*37dip
-	private String[] mFriedsStrings = { "pjol","sss", "sdad", "sda", "sdad"};
+//	private Integer[] mFriedsImageIds = {
+//			R.drawable.portrait_default,
+//			R.drawable.portrait_default,
+//			R.drawable.portrait_default,
+//			R.drawable.portrait_default,
+//			R.drawable.portrait_default,
+//			R.drawable.portrait_default
+//	}; //should be 37*37dip
+//	private String[] mFriedsStrings = { "pjol","sss", "sdad", "sda", "sdad"};
+
+	private ContentValues mValues;
+
+	private ProgressDialog pd;
+	private QueryHandler mQueryHandler;
+	private static final int FRIENDS_QUERY_TOKEN = 101;
+	private int[] friendsId = new int[5];
+	private int[] friendsPortrait = new int[5];
+	private String[] friendsName =  new String[5];
+	private int tryloadtimes = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()       
-//		.detectDiskReads()       
-//		.detectDiskWrites()       
-//		.detectNetwork()   // or .detectAll() for all detectable problems       
-//		.penaltyLog()       
-//		.build());       
-//		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()       
-//		.detectLeakedSqlLiteObjects()    
-//		.penaltyLog()       
-//		.penaltyDeath()       
-//		.build());
+		//		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()       
+		//		.detectDiskReads()       
+		//		.detectDiskWrites()       
+		//		.detectNetwork()   // or .detectAll() for all detectable problems       
+		//		.penaltyLog()       
+		//		.build());       
+		//		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()       
+		//		.detectLeakedSqlLiteObjects()    
+		//		.penaltyLog()       
+		//		.penaltyDeath()       
+		//		.build());
 		setContentView(R.layout.act_edit_layout);
 		mPictureGet = new PictureGet(this);
-		
+		mValues = new ContentValues();
+		mQueryHandler = new QueryHandler(this);
 		init();
+		mCircleHandle.sendEmptyMessage(CircleHandle.LOADER_DATA);
 	}
 
 	private void init() {
@@ -141,13 +163,32 @@ public class EditActActivity extends Activity implements OnClickListener {
 
 
 		friendsView = (LinearLayout) findViewById(R.id.friends_list);
+		//		for (int i = 0; i < 5; i++) {
+		//			friend = (LinearLayout) friendsView.getChildAt(i);
+		//			friendIcon = (ImageView) friend.findViewById(R.id.ItemImage);
+		//			friendName = (TextView) friend.findViewById(R.id.ItemText);
+		//
+		//			friendIcon.setBackgroundResource(mFriedsImageIds[i]);
+		//			friendName.setText(mFriedsStrings[i]);
+		//		}
+	}
+
+	public void refreshFriendsView(){
+		Bitmap mPortraitBitmap;
 		for (int i = 0; i < 5; i++) {
 			friend = (LinearLayout) friendsView.getChildAt(i);
 			friendIcon = (ImageView) friend.findViewById(R.id.ItemImage);
 			friendName = (TextView) friend.findViewById(R.id.ItemText);
-
-			friendIcon.setBackgroundResource(mFriedsImageIds[i]);
-			friendName.setText(mFriedsStrings[i]);
+			mPortraitBitmap = BitmapFactory.decodeResource(getResources(), friendsPortrait[i]);
+			Log.i("test", "mPortraitBitmap = " + mPortraitBitmap);
+			mPortraitBitmap = mPictureGet.resizeBitmap(mPortraitBitmap, 56, 56);
+			if (mPortraitBitmap != null) {
+				friendIcon.setImageBitmap(mPortraitBitmap);
+			} else {
+				friendIcon.setBackgroundDrawable(getResources().getDrawable(R.drawable.portrait_default));
+			}
+//			friendIcon.setBackgroundResource(friendsPortrait[i]);
+			friendName.setText(friendsName[i]);
 		}
 	}
 
@@ -158,6 +199,14 @@ public class EditActActivity extends Activity implements OnClickListener {
 		actEndTimeView.setText(actEndTime);
 		posterPreview.setImageBitmap(actPoster);
 		locationEditor.setText(actLocation);
+		mValues.put(CircleContract.Activity.CLASSIFY_TITLE, actClassify);
+		mValues.put(CircleContract.Activity.CLASSIFY_INTRODUCE, actTitle);
+		mValues.put(CircleContract.Activity.ACT_INTRODUCE, actIntroduce);
+		mValues.put(CircleContract.Activity.START_TIME, actStartDate + " " + actStartTime);
+		mValues.put(CircleContract.Activity.END_TIME, actEndDate + " " + actEndTime);
+		mValues.put(CircleContract.Activity.LOCATION, actLocation);
+		mValues.put(CircleContract.Activity.ACT_INVITER_PERSONAL, islimited ? 0 : 1);
+		mValues.put(CircleContract.Activity.STATE, getString(R.string.act_publish_state));
 	}
 
 	public void cleanViews(){
@@ -175,7 +224,7 @@ public class EditActActivity extends Activity implements OnClickListener {
 		findViewById(R.id.bar_timestart).setOnClickListener(this);
 		findViewById(R.id.bar_timeend).setOnClickListener(this);
 		findViewById(R.id.bar_friends_editor).setOnClickListener(this);
-		
+
 		findViewById(R.id.btn_timestart_editor).setOnClickListener(this);
 		findViewById(R.id.btn_timeend_editor).setOnClickListener(this);
 		//findViewById(R.id.btn_location_editor).setOnClickListener(this);
@@ -257,7 +306,7 @@ public class EditActActivity extends Activity implements OnClickListener {
 		super.onPause();
 		forbiddenSomeFocuse();
 	}
-	
+
 	private void forbiddenSomeFocuse(){
 		locationEditor.setFocusableInTouchMode(false);
 		titleEditor.setFocusableInTouchMode(false);
@@ -267,7 +316,7 @@ public class EditActActivity extends Activity implements OnClickListener {
 		titleEditor.setFocusable(false);
 		introduceEditor.setFocusable(false);
 		classifySpinner.setFocusable(false);
-		
+
 	}
 
 	OnItemSelectedListener spinnerOnItemSelectedListener = new OnItemSelectedListener(){
@@ -421,20 +470,20 @@ public class EditActActivity extends Activity implements OnClickListener {
 			dialog = mPictureGet.creatDialog(getPicOnClick);
 			break;
 		case LOCATION_DIALOG:   
-//			if (places != null && places.length > 0) {
-//				//final ListAdapter adapter = new ArrayAdapter<String>(this,  
-//				//		android.R.layout.simple_list_item_1, places); 
-//
-//				final AlertDialog.Builder mbuilder = new AlertDialog.Builder(this);  
-//				mbuilder.setTitle(getString(R.string.get_location));  
-//				mbuilder.setSingleChoiceItems(places, 0, getLocationOnClick);
-//				dialog = mbuilder.create();
-//			}
+			//			if (places != null && places.length > 0) {
+			//				//final ListAdapter adapter = new ArrayAdapter<String>(this,  
+			//				//		android.R.layout.simple_list_item_1, places); 
+			//
+			//				final AlertDialog.Builder mbuilder = new AlertDialog.Builder(this);  
+			//				mbuilder.setTitle(getString(R.string.get_location));  
+			//				mbuilder.setSingleChoiceItems(places, 0, getLocationOnClick);
+			//				dialog = mbuilder.create();
+			//			}
 			break;
 		default:  
 			dialog = null;  
 		}
-		
+
 		return dialog; 
 	}
 
@@ -462,7 +511,9 @@ public class EditActActivity extends Activity implements OnClickListener {
 			startActivityForResult(intent, REQUESTFRIEND);
 			break;
 		case R.id.btn_publish:
-			//Do publish on services
+
+			mCircleHandle.sendEmptyMessage(CircleHandle.MSG_INSERT_DATA);
+
 			break;
 		case R.id.btn_cancel:
 			cleanViews();
@@ -481,11 +532,111 @@ public class EditActActivity extends Activity implements OnClickListener {
 		default:
 			break;
 		}
-	}  
+	}
+	
+	CircleHandle mCircleHandle = new CircleHandle(this){
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			switch(msg.what){
+			case CircleHandle.MSG_REFRESH_ACTPEOPLE:
+				Log.i("test", "MSG_REFRESH_ACTPEOPLE");
+				mCircleHandle.refreshFriendShip();
+				mCircleHandle.sendEmptyMessage(CircleHandle.LOADER_DATA);
+				break;
+			case CircleHandle.LOADER_DATA:
+				Log.i("test", "LOADER_DATA");
+				String[] selectionArgs = {String.valueOf(peopleId)};
+				String sortOrder = CircleContract.Friendship.TIME_MAKE_FRIEND;
+				String selection = CircleContract.Friendship.PEOPLE_ID + "= ?";
+				mQueryHandler.startQuery(FRIENDS_QUERY_TOKEN, null, CircleContract.Friendship.CONTENT_URI, UtilString.friendshipProjection, selection, selectionArgs, sortOrder);
+				break;
+			case CircleHandle.MSG_INSERT_DATA:
+				showProgress();
+				actPosterUrl = PictureGet.saveBitmap(actPoster);
+				mValues.put(CircleContract.Activity.POSTER, actPosterUrl);
+				Date myDate = new Date(System.currentTimeMillis());  
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				String date = format.format(myDate);
+				mValues.put(CircleContract.Activity.PUBLISH_TIME, date);
+				long tagId = System.currentTimeMillis() + peopleId;
+				mValues.put(CircleContract.Activity.TAG_ID, tagId);
+				mCircleHandle.insertNewAct(mValues);
+				mCircleHandle.uploadPicture(actPoster);
 
-	/* 
-	 * ѡ��ͼƬ�Ļش����� 
-	 */  
+				dismissProgress();
+				finish();
+				break;
+			default:
+				break;
+			}
+		}
+	};
+
+	class QueryHandler extends AsyncQueryHandler {
+		public final WeakReference<EditActActivity> mActivity;
+		public QueryHandler(Context context) {
+			super(context.getContentResolver());
+			mActivity = new WeakReference<EditActActivity>((EditActActivity) context);
+		}
+
+		@Override
+		protected void onQueryComplete(int token, Object cookie, Cursor cursor) {
+			Log.i("test", "token = "+token);
+			if (mActivity == null) {
+				return;
+			}
+			mActivity.get().loadFriendDataFromDB(cursor);
+
+		}
+	}
+
+	public void loadFriendDataFromDB(Cursor cursor) {
+		Log.i("test", "loadFriendDataFromDB");
+		if (cursor != null && cursor.getCount() != 0) {
+			Log.i("test", "cursor.getCount() = "+cursor.getCount());
+			//			friendsId = new int[5];
+			//			friendsPortrait = new int[5];
+			//			friendsName = new String[5];
+			for (int i = 0; i < 5; i++) {
+				if (cursor.moveToPosition(i)) {
+					friendsId[i] = cursor.getInt(UtilString.friendshipFriendIdIndex);
+					Log.i("test", "friendsId[i] = "+friendsId[i]);
+					if (friendsId[i] != 0) {
+						String[] selectionArgs = {String.valueOf(friendsId[i])};
+						String selection = CircleContract.People.PEOPLE_ID + "= ?";
+						Cursor mTempCursor = getContentResolver().query(CircleContract.People.CONTENT_URI, UtilString.peopleProjection, selection, selectionArgs, null);
+						if (mTempCursor != null && mTempCursor.moveToFirst()) {
+							friendsPortrait[i] = cursor.getInt(UtilString.peopleProtraitIndex);
+							Log.i("test", "friendsPortrait[i] = "+friendsPortrait[i]);
+							friendsName[i] = cursor.getString(UtilString.peopleNameIndex);
+						}
+					}
+				}
+			}
+			refreshFriendsView();
+			cursor.close();
+		} else if (tryloadtimes == 0){
+			Log.i("test", "loadActPeopleFromDB tryloadtimes = " + tryloadtimes);
+			tryloadtimes ++;
+			mCircleHandle.sendEmptyMessage(CircleHandle.MSG_REFRESH_ACTPEOPLE);
+		} else {
+			Toast.makeText(this, R.string.dialog_data_empty_title, 0);
+		}
+	}
+
+	private void showProgress(){
+		pd = new ProgressDialog(this);
+		pd.setTitle(R.string.refresh_data);
+		pd.show();
+	}
+	private void dismissProgress(){
+		if (pd != null) {
+			pd.dismiss();
+			pd = null;
+		}
+	}
+
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {  
 			switch (requestCode) {  

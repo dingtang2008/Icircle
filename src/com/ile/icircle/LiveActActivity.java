@@ -52,7 +52,7 @@ public class LiveActActivity extends Activity implements OnClickListener{
 	private LinearLayout mBottom;
 	private TextView mtitle;
 	private ListView livelist;
-	private int actTagId;
+	private long actTagId;
 
 	private Bitmap mSendBitmap;
 	private String mSendBitmapUrl;
@@ -104,7 +104,7 @@ public class LiveActActivity extends Activity implements OnClickListener{
 	}
 
 	private void newIntent(Intent mIntent) {
-		actTagId = mIntent.getIntExtra(UtilString.ACTID, -1);
+		actTagId = mIntent.getLongExtra(UtilString.ACTID, -1);
 		Log.i("test", "actId = "+actTagId);
 
 		mTitle = (RelativeLayout) findViewById(R.id.title);
@@ -176,6 +176,18 @@ public class LiveActActivity extends Activity implements OnClickListener{
 		bitmap = mPictureGet.resizeBitmap(bitmap, 400, 230);
 		return bitmap;
 	}
+	
+	private void showProgress(String title){
+		pd = new ProgressDialog(this);
+		pd.setTitle(R.string.refresh_data);
+		pd.show();
+	}
+	private void dismissProgress(){
+		if (pd != null) {
+			pd.dismiss();
+			pd = null;
+		}
+	}
 
 	CircleHandle mCircleHandle = new CircleHandle(this){
 		@Override
@@ -184,22 +196,21 @@ public class LiveActActivity extends Activity implements OnClickListener{
 			switch(msg.what){
 			case CircleHandle.MSG_REFRESH_ACTLIVE:
 				Log.i("test", this.toString() + "MSG_REFRESH_ACTLIVE");
-				if (pd != null) {
-					pd.setTitle(R.string.refresh_data);
-					pd.show();
-				}
 				mCircleHandle.refreshActLive();
-				if (pd != null) {
-					pd.dismiss();
-				}
+				dismissProgress();
+//				if (pd != null) {
+//					pd.dismiss();
+//				}
 				mCircleHandle.sendEmptyMessage(CircleHandle.LOADER_DATA);
 				break;
 			case CircleHandle.LOADER_DATA:
 				Log.i("test", "LOADER_DATA");
-				if (pd != null) {
-					pd.setTitle(R.string.loading_data);
-					pd.show();
-				}
+				dismissProgress();
+				showProgress(getResources().getString(R.string.loading_data));
+//				if (pd != null) {
+//					pd.setTitle(R.string.loading_data);
+//					pd.show();
+//				}
 				String[] selectionArgs = {String.valueOf(actTagId)};
 				String sortOrder = null;
 				String selection = null;
@@ -215,6 +226,7 @@ public class LiveActActivity extends Activity implements OnClickListener{
 				} else {
 					mSendBitmapUrl = PictureGet.saveBitmap(mSendBitmap);
 					mCircleHandle.insertActLive(1, actTagId, mSendBitmapUrl, mSendContent);
+					mCircleHandle.uploadPicture(mSendBitmap);
 					//need reflesh data from network
 					mCircleHandle.sendEmptyMessage(CircleHandle.LOADER_DATA);
 				}
@@ -248,9 +260,10 @@ public class LiveActActivity extends Activity implements OnClickListener{
 	public void loadActLiveFromDB(Cursor cursor) {
 		if (cursor != null && cursor.getCount() != 0) {
 			mAdapter.changeCursor(cursor);
-			if (pd != null) {
-				pd.dismiss();
-			}
+			dismissProgress();
+//			if (pd != null) {
+//				pd.dismiss();
+//			}
 		} else if (tryloadtimes == 0){
 			Log.i("test", "loadActPeopleFromDB tryloadtimes = " + tryloadtimes);
 			tryloadtimes ++;
@@ -410,9 +423,12 @@ public class LiveActActivity extends Activity implements OnClickListener{
 			mbuilder.setPositiveButton(R.string.act_confirm_editor, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					mCircleHandle.sendEmptyMessage(CircleHandle.MSG_REFRESH_ACTLIVE);
 					if (dialog != null) {
 						dialog.dismiss();
+						if (pd != null) {
+							showProgress(getResources().getString(R.string.refresh_data));
+						}
+						mCircleHandle.sendEmptyMessage(CircleHandle.MSG_REFRESH_ACTLIVE);
 					}
 				}
 			});
@@ -421,6 +437,7 @@ public class LiveActActivity extends Activity implements OnClickListener{
 				public void onClick(DialogInterface dialog, int which) {
 					if (dialog != null) {
 						dialog.dismiss();
+						dismissProgress();
 					}
 				}
 			});

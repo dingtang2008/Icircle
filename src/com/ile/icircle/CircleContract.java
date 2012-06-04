@@ -59,6 +59,8 @@ public class CircleContract {
 		public static final String PUBLISH_TIME = "publish_time";
 		public static final String TAG_ID = "tagId";
 		public static final String ACT_INTRODUCE = "actIntroduce";
+		
+		public static final String ACT_INVITER_PERSONAL = "actInviterPersonal";
 	}
 
 	public static class ActPeople {
@@ -130,23 +132,26 @@ public class CircleContract {
 		public static final String NAME = "name";
 	}
 
-	public static final class Friends extends People {
+	public static final class Friendship {
 
-		private Friends() {}
+		private Friendship() {}
 
 		/**
 		 * The content:// style URL for this table
 		 */
-		public static final Uri CONTENT_URI = AUTHORITY_URI.buildUpon().appendPath("friends").build();
+		public static final Uri CONTENT_URI = AUTHORITY_URI.buildUpon().appendPath("friendship").build();
 
-		public static final String CONTENT_TYPE = "vnd.android.cursor.dir/friends";
+		public static final String CONTENT_TYPE = "vnd.android.cursor.dir/friendship";
 
-		public static final String CONTENT_TYPE_ITEM = "vnd.android.cursor.item/friends";
+		public static final String CONTENT_TYPE_ITEM = "vnd.android.cursor.item/friendship";
 
-		public static final String TABLE_NAME = "friends";
+		public static final String TABLE_NAME = "friendship";
 		// columns
-		
+
+		public static final String _ID = "_id";
 		public static final String PEOPLE_ID= "peopleId";
+		public static final String FRIEND_ID= "friendId";
+		public static final String TIME_MAKE_FRIEND= "timeMakeFriend";
 	}
 
 	public static final class Personal extends People{

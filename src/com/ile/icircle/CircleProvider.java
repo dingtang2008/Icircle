@@ -5,6 +5,7 @@ import java.util.HashMap;
 import com.ile.icircle.CircleContract.ActLive;
 import com.ile.icircle.CircleContract.ActPeople;
 import com.ile.icircle.CircleContract.Activity;
+import com.ile.icircle.CircleContract.Friendship;
 import com.ile.icircle.CircleContract.People;
 import com.ile.icircle.CircleContract.Personal;
 import com.ile.icircle.CircleContract.School;
@@ -34,6 +35,7 @@ public class CircleProvider extends AbstractCircleProvider {
 	private static final int ACTLIVE = 104;
 	private static final int PEOPLE = 105;
 	private static final int PERSONAL = 106;
+	private static final int FRIENDSHIP = 107;
 
 	protected static final String SQL_WHERE_ID = Activity._ID + "=?";
 
@@ -44,6 +46,7 @@ public class CircleProvider extends AbstractCircleProvider {
 	private static final HashMap<String, String> sActPeopleProjectionMap;
 	private static final HashMap<String, String> sPeopleProjectionMap;
 	private static final HashMap<String, String> sActLiveProjectionMap;
+	private static final HashMap<String, String> sFriendsProjectionMap;
 	private static final HashMap<String, String> sPersonalProjectionMap;
 
 	static {
@@ -56,6 +59,7 @@ public class CircleProvider extends AbstractCircleProvider {
 		MATCHER.addURI(auth, "actlive", ACTLIVE);
 		MATCHER.addURI(auth, "actpeople", ACTPEOPLE);
 		MATCHER.addURI(auth, "people", PEOPLE);
+		MATCHER.addURI(auth, "friendship", FRIENDSHIP);
 
 		sSchoolProjectionMap = new HashMap<String, String>();
 		sSchoolProjectionMap.put(School._ID, School._ID);
@@ -77,6 +81,7 @@ public class CircleProvider extends AbstractCircleProvider {
 		sActivityProjectionMap.put(Activity.TAG_ID, Activity.TAG_ID);
 		sActivityProjectionMap.put(Activity.ACT_INTRODUCE, Activity.ACT_INTRODUCE);
 		sActivityProjectionMap.put(Activity.PUBLISH_TIME, Activity.PUBLISH_TIME);
+		sActivityProjectionMap.put(Activity.ACT_INVITER_PERSONAL, Activity.ACT_INVITER_PERSONAL);
 	
 		sActPeopleProjectionMap = new HashMap<String, String>();
 		sActPeopleProjectionMap.put(ActPeople._ID, ActPeople._ID);
@@ -100,6 +105,14 @@ public class CircleProvider extends AbstractCircleProvider {
 		sPeopleProjectionMap.put(People.PEOPLE_ID, People.PEOPLE_ID);
 		sPeopleProjectionMap.put(People.NAME, People.NAME);
 		sPeopleProjectionMap.put(People.PROTRAIT, People.PROTRAIT);
+		
+
+		sFriendsProjectionMap = new HashMap<String, String>();
+		sPeopleProjectionMap.put(Friendship._ID, Friendship._ID);
+		sPeopleProjectionMap.put(Friendship.PEOPLE_ID, Friendship.PEOPLE_ID);
+		sPeopleProjectionMap.put(Friendship.FRIEND_ID, Friendship.FRIEND_ID);
+		sPeopleProjectionMap.put(Friendship.TIME_MAKE_FRIEND, Friendship.TIME_MAKE_FRIEND);
+		
 		
 		sPersonalProjectionMap = sPeopleProjectionMap;
 	}
@@ -140,6 +153,10 @@ public class CircleProvider extends AbstractCircleProvider {
 
 		case PEOPLE: {
 			return People.CONTENT_TYPE;
+		}
+
+		case FRIENDSHIP: {
+			return Friendship.CONTENT_TYPE;
 		}
 
 		case PERSONAL: {
@@ -194,6 +211,12 @@ public class CircleProvider extends AbstractCircleProvider {
 			break;
 		}
 
+		case FRIENDSHIP: {
+			qb.setTables(Friendship.TABLE_NAME);
+			qb.setProjectionMap(sPeopleProjectionMap);
+			break;
+		}
+
 		case PERSONAL: {
 			qb.setTables(Personal.TABLE_NAME);
 			qb.setProjectionMap(sPersonalProjectionMap);
@@ -240,6 +263,11 @@ public class CircleProvider extends AbstractCircleProvider {
 
 		case PEOPLE: {
 			id = db.insert(People.TABLE_NAME, null, values);
+			break;
+		}
+
+		case FRIENDSHIP: {
+			id = db.insert(Friendship.TABLE_NAME, null, values);
 			break;
 		}
 
@@ -295,6 +323,11 @@ public class CircleProvider extends AbstractCircleProvider {
 			break;
 		}
 
+		case FRIENDSHIP: {
+			count = db.update(Friendship.TABLE_NAME, values, selection, selectionArgs);
+			break;
+		}
+
 		case PERSONAL: {
 			count = db.update(Personal.TABLE_NAME, values, selection, selectionArgs);
 			break;
@@ -342,6 +375,11 @@ public class CircleProvider extends AbstractCircleProvider {
 
 		case PEOPLE: {
 			count = db.delete(People.TABLE_NAME, selection, selectionArgs);
+			break;
+		}
+
+		case FRIENDSHIP: {
+			count = db.delete(Friendship.TABLE_NAME, selection, selectionArgs);
 			break;
 		}
 
