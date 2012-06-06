@@ -4,6 +4,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.ile.icircle.CircleHandle.RefreshFinishListener;
 import com.ile.icircle.DetailActActivity.QueryHandler;
 import com.ile.icircle.ScrollLayout.OnViewChangeListener;
 
@@ -19,6 +20,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
@@ -47,21 +49,21 @@ public class DetailActExtendActivity extends Activity  implements OnClickListene
 	private String extendContent; 
 	private long actTagId;
 
-	private static final String PANEL_CONTENT_IMAGE_KEY = "ItemImage";
-	private static final String PANEL_CONTENT_TEXT_KEY = "ItemText";
+//	private static final String PANEL_CONTENT_IMAGE_KEY = "ItemImage";
+//	private static final String PANEL_CONTENT_TEXT_KEY = "ItemText";
 	ArrayList<HashMap<String, Object>> peopleImageItem;
 	ArrayList<HashMap<String, Object>> attendImageItem;
 	private GridView peopleView;
 
-	private Integer[] mImageIds; //should be 37*37dip
-	private String[] mStrings = {
-			"pjol","sss", "sdad", "sda", "sdad","adad",
-			"pjol","sss", "sdad", "sda", "sdad","adad",	
-			"pjol","sss", "sdad", "sda", "sdad","adad",	
-			"pjol","sss", "sdad", "sda", "sdad","adad",	
-			"pjol","sss", "sdad", "sda", "sdad","adad",	
-			"pjol","sss", "sdad", "sda", "sdad","adad"	
-	};
+//	private Integer[] mImageIds; //should be 37*37dip
+//	private String[] mStrings = {
+//			"pjol","sss", "sdad", "sda", "sdad","adad",
+//			"pjol","sss", "sdad", "sda", "sdad","adad",	
+//			"pjol","sss", "sdad", "sda", "sdad","adad",	
+//			"pjol","sss", "sdad", "sda", "sdad","adad",	
+//			"pjol","sss", "sdad", "sda", "sdad","adad",	
+//			"pjol","sss", "sdad", "sda", "sdad","adad"	
+//	};
 
 
 	private QueryHandler mQueryHandler;
@@ -162,16 +164,24 @@ public class DetailActExtendActivity extends Activity  implements OnClickListene
 
 	}
 
-	CircleHandle mCircleHandle = new CircleHandle(this){
+	public CircleHandle mCircleHandle = new CircleHandle(this){
+		@SuppressWarnings("unchecked")
 		@Override
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 			switch(msg.what){
 			case CircleHandle.MSG_REFRESH_ACTPEOPLE:
 				Log.i("test", this.toString() + "MSG_REFRESH_ACTPEOPLE");
-				mCircleHandle.refreshActPeople();
-				mCircleHandle.refreshPeople();
-				mCircleHandle.sendEmptyMessage(CircleHandle.LOADER_DATA);
+//				mCircleHandle.refreshActPeople();
+//				mCircleHandle.refreshPeople();
+//				mCircleHandle.sendEmptyMessage(CircleHandle.LOADER_DATA);
+				mCircleHandle.refreshTask.execute(CircleHandle.MSG_REFRESH_ACTPEOPLE);
+				mCircleHandle.setRefreshFinishListener(new RefreshFinishListener() {
+					@Override
+					public void onRefreshFinish() {
+						mCircleHandle.sendEmptyMessage(CircleHandle.LOADER_DATA);
+					}
+				});
 				break;
 			case CircleHandle.LOADER_DATA:
 				Log.i("test", "LOADER_DATA");

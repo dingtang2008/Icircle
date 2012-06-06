@@ -7,9 +7,6 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.ile.icircle.DetailActExtendActivity.QueryHandler;
-import com.ile.icircle.DetailActExtendActivity.ViewHolder;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -67,7 +64,7 @@ public class LiveActActivity extends Activity implements OnClickListener{
 
 	private static final int MSG_INSERT_DATA = 201;
 
-	ProgressDialog pd;
+	private ProgressDialog pd;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -190,18 +187,26 @@ public class LiveActActivity extends Activity implements OnClickListener{
 	}
 
 	CircleHandle mCircleHandle = new CircleHandle(this){
+		@SuppressWarnings("unchecked")
 		@Override
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 			switch(msg.what){
 			case CircleHandle.MSG_REFRESH_ACTLIVE:
 				Log.i("test", this.toString() + "MSG_REFRESH_ACTLIVE");
-				mCircleHandle.refreshActLive();
-				dismissProgress();
+//				mCircleHandle.refreshActLive();
 //				if (pd != null) {
 //					pd.dismiss();
 //				}
-				mCircleHandle.sendEmptyMessage(CircleHandle.LOADER_DATA);
+				mCircleHandle.refreshTask.execute(CircleHandle.MSG_REFRESH_ACTLIVE);
+				mCircleHandle.setRefreshFinishListener(new RefreshFinishListener() {
+					@Override
+					public void onRefreshFinish() {
+						dismissProgress();
+						mCircleHandle.sendEmptyMessage(CircleHandle.LOADER_DATA);
+					}
+				});
+//				mCircleHandle.sendEmptyMessage(CircleHandle.LOADER_DATA);
 				break;
 			case CircleHandle.LOADER_DATA:
 				Log.i("test", "LOADER_DATA");
@@ -261,17 +266,13 @@ public class LiveActActivity extends Activity implements OnClickListener{
 		if (cursor != null && cursor.getCount() != 0) {
 			mAdapter.changeCursor(cursor);
 			dismissProgress();
-//			if (pd != null) {
-//				pd.dismiss();
-//			}
 		} else if (tryloadtimes == 0){
-			Log.i("test", "loadActPeopleFromDB tryloadtimes = " + tryloadtimes);
 			tryloadtimes ++;
 			showDialog(DIALOG_REFRESH_DATA);
-			//mCircleHandle.sendEmptyMessage(CircleHandle.MSG_REFRESH_ACTLIVE);
 		}  else {
 			Toast.makeText(this, R.string.dialog_data_empty_title, 0);
 		}
+		dismissProgress();
 	}
 
 	static class ViewHolder {
@@ -360,23 +361,6 @@ public class LiveActActivity extends Activity implements OnClickListener{
 					view.setVisibility(View.GONE);
 					//need remove this data because the people is null
 				}
-
-				/*
-				File file=new File("/sdcard/live" + position + ".png");
-		        try {
-		            FileOutputStream out=new FileOutputStream(file);
-		            if(bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)){
-		                out.flush();
-		                out.close();
-		            }
-		        } catch (FileNotFoundException e) {
-		           // TODO Auto-generated catch block
-		            e.printStackTrace();
-		        } catch (IOException e) {
-		           // TODO Auto-generated catch block
-		            e.printStackTrace();
-		        }
-				 */
 			}
 		}
 

@@ -30,6 +30,7 @@ public class UtilString {
 	public static final int MSG_LOCATION_FAIL = 2;
 	public static final String SCHOOLNAME = "SchoolName";
 	public static final String MSG_SHAREDPREFERENCES = "msg_SharedPreferences";
+	public static final String INVITER_FRIENDS = "inviter_friends";
 	public static final String[] hotActProjection = {
 		Activity._ID,
 		Activity.CLASSIFY_TITLE,
@@ -132,6 +133,21 @@ public class UtilString {
 	public static final int friendshipPeopleIdIndex = 1;
 	public static final int friendshipFriendIdIndex = 2;
 	public static final int friendshiptimeIndex = 3;
+
+	public static final String[] classifyProjection = {
+		Activity._ID,
+		Activity.CLASSIFY_TITLE,
+		Activity.INTEREST_PEOPLE,
+		Activity.ATTEND_PEOPLE,
+		Activity.POSTER,
+		Activity.TAG_ID
+	};
+	public static final int classifyIdIndex = 0;
+	public static final int classifyTypeIndex = 1;
+	public static final int classifyInterestIndex = 2;
+	public static final int classifyAttendIndex = 3;
+	public static final int classifyActPosterIndex = 4;
+	public static final int classifyActIdIndex = 5;
 	
     /**
      * Appends one set of selection args to another. This is useful when adding a selection

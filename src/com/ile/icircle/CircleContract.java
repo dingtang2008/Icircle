@@ -154,6 +154,26 @@ public class CircleContract {
 		public static final String TIME_MAKE_FRIEND= "timeMakeFriend";
 	}
 
+	public static final class FriendInviters{
+
+		private FriendInviters() {}
+
+		/**
+		 * The content:// style URL for this table
+		 */
+		public static final Uri CONTENT_URI = AUTHORITY_URI.buildUpon().appendPath("friendinviters").build();
+
+		public static final String CONTENT_TYPE = "vnd.android.cursor.dir/friendinviters";
+
+		public static final String CONTENT_TYPE_ITEM = "vnd.android.cursor.item/friendinviters";
+
+		public static final String TABLE_NAME = "friendinviters";
+		
+		public static final String _ID = "_id";
+		public static final String ACT_ID= "actId";
+		public static final String FRIEND_ID= "friendId";
+	}
+
 	public static final class Personal extends People{
 
 		private Personal() {}
@@ -169,4 +189,26 @@ public class CircleContract {
 
 		public static final String TABLE_NAME = "personal";
 	}
+
+
+	public static final class NearByPlaces{
+
+		private NearByPlaces() {}
+
+		/**
+		 * The content:// style URL for this table
+		 */
+		public static final Uri CONTENT_URI = AUTHORITY_URI.buildUpon().appendPath("nearbyplaces").build();
+
+		public static final String CONTENT_TYPE = "vnd.android.cursor.dir/nearbyplaces";
+
+		public static final String CONTENT_TYPE_ITEM = "vnd.android.cursor.item/nearbyplaces";
+
+		public static final String TABLE_NAME = "classify";
+		
+		public static final String _ID = "_id";
+		public static final String PLACE_ID= "placeId";
+		public static final String ADDRESS= "address";
+	}
+	
 }

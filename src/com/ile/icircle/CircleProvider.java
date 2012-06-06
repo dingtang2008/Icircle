@@ -5,6 +5,7 @@ import java.util.HashMap;
 import com.ile.icircle.CircleContract.ActLive;
 import com.ile.icircle.CircleContract.ActPeople;
 import com.ile.icircle.CircleContract.Activity;
+import com.ile.icircle.CircleContract.FriendInviters;
 import com.ile.icircle.CircleContract.Friendship;
 import com.ile.icircle.CircleContract.People;
 import com.ile.icircle.CircleContract.Personal;
@@ -36,6 +37,7 @@ public class CircleProvider extends AbstractCircleProvider {
 	private static final int PEOPLE = 105;
 	private static final int PERSONAL = 106;
 	private static final int FRIENDSHIP = 107;
+	private static final int FRIENDINVITERS = 108;
 
 	protected static final String SQL_WHERE_ID = Activity._ID + "=?";
 
@@ -46,7 +48,8 @@ public class CircleProvider extends AbstractCircleProvider {
 	private static final HashMap<String, String> sActPeopleProjectionMap;
 	private static final HashMap<String, String> sPeopleProjectionMap;
 	private static final HashMap<String, String> sActLiveProjectionMap;
-	private static final HashMap<String, String> sFriendsProjectionMap;
+	private static final HashMap<String, String> sFriendShipProjectionMap;
+	private static final HashMap<String, String> sFriendInvitersProjectionMap;
 	private static final HashMap<String, String> sPersonalProjectionMap;
 
 	static {
@@ -60,6 +63,7 @@ public class CircleProvider extends AbstractCircleProvider {
 		MATCHER.addURI(auth, "actpeople", ACTPEOPLE);
 		MATCHER.addURI(auth, "people", PEOPLE);
 		MATCHER.addURI(auth, "friendship", FRIENDSHIP);
+		MATCHER.addURI(auth, "friendinviters", FRIENDINVITERS);
 
 		sSchoolProjectionMap = new HashMap<String, String>();
 		sSchoolProjectionMap.put(School._ID, School._ID);
@@ -105,16 +109,20 @@ public class CircleProvider extends AbstractCircleProvider {
 		sPeopleProjectionMap.put(People.PEOPLE_ID, People.PEOPLE_ID);
 		sPeopleProjectionMap.put(People.NAME, People.NAME);
 		sPeopleProjectionMap.put(People.PROTRAIT, People.PROTRAIT);
-		
 
-		sFriendsProjectionMap = new HashMap<String, String>();
-		sPeopleProjectionMap.put(Friendship._ID, Friendship._ID);
-		sPeopleProjectionMap.put(Friendship.PEOPLE_ID, Friendship.PEOPLE_ID);
-		sPeopleProjectionMap.put(Friendship.FRIEND_ID, Friendship.FRIEND_ID);
-		sPeopleProjectionMap.put(Friendship.TIME_MAKE_FRIEND, Friendship.TIME_MAKE_FRIEND);
-		
-		
 		sPersonalProjectionMap = sPeopleProjectionMap;
+
+		sFriendShipProjectionMap = new HashMap<String, String>();
+		sFriendShipProjectionMap.put(Friendship._ID, Friendship._ID);
+		sFriendShipProjectionMap.put(Friendship.PEOPLE_ID, Friendship.PEOPLE_ID);
+		sFriendShipProjectionMap.put(Friendship.FRIEND_ID, Friendship.FRIEND_ID);
+		sFriendShipProjectionMap.put(Friendship.TIME_MAKE_FRIEND, Friendship.TIME_MAKE_FRIEND);
+		
+		sFriendInvitersProjectionMap = new HashMap<String, String>();
+		sFriendInvitersProjectionMap.put(FriendInviters._ID, FriendInviters._ID);
+		sFriendInvitersProjectionMap.put(FriendInviters.ACT_ID, FriendInviters.ACT_ID);
+		sFriendInvitersProjectionMap.put(FriendInviters.FRIEND_ID, FriendInviters.FRIEND_ID);
+		
 	}
 
 	@Override
@@ -157,6 +165,10 @@ public class CircleProvider extends AbstractCircleProvider {
 
 		case FRIENDSHIP: {
 			return Friendship.CONTENT_TYPE;
+		}
+
+		case FRIENDINVITERS: {
+			return FriendInviters.CONTENT_TYPE;
 		}
 
 		case PERSONAL: {
@@ -213,7 +225,13 @@ public class CircleProvider extends AbstractCircleProvider {
 
 		case FRIENDSHIP: {
 			qb.setTables(Friendship.TABLE_NAME);
-			qb.setProjectionMap(sPeopleProjectionMap);
+			qb.setProjectionMap(sFriendShipProjectionMap);
+			break;
+		}
+
+		case FRIENDINVITERS: {
+			qb.setTables(FriendInviters.TABLE_NAME);
+			qb.setProjectionMap(sFriendInvitersProjectionMap);
 			break;
 		}
 
@@ -268,6 +286,11 @@ public class CircleProvider extends AbstractCircleProvider {
 
 		case FRIENDSHIP: {
 			id = db.insert(Friendship.TABLE_NAME, null, values);
+			break;
+		}
+
+		case FRIENDINVITERS: {
+			id = db.insert(FriendInviters.TABLE_NAME, null, values);
 			break;
 		}
 
@@ -328,6 +351,11 @@ public class CircleProvider extends AbstractCircleProvider {
 			break;
 		}
 
+		case FRIENDINVITERS: {
+			count = db.update(FriendInviters.TABLE_NAME, values, selection, selectionArgs);
+			break;
+		}
+
 		case PERSONAL: {
 			count = db.update(Personal.TABLE_NAME, values, selection, selectionArgs);
 			break;
@@ -380,6 +408,10 @@ public class CircleProvider extends AbstractCircleProvider {
 
 		case FRIENDSHIP: {
 			count = db.delete(Friendship.TABLE_NAME, selection, selectionArgs);
+			break;
+		}
+		case FRIENDINVITERS: {
+			count = db.delete(FriendInviters.TABLE_NAME, selection, selectionArgs);
 			break;
 		}
 

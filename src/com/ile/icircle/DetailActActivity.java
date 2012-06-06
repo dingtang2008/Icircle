@@ -403,7 +403,8 @@ public class DetailActActivity extends Activity implements OnClickListener{
 		}
 	}
 
-	CircleHandle mCircleHandle = new CircleHandle(this){
+	public CircleHandle mCircleHandle = new CircleHandle(this){
+		@SuppressWarnings("unchecked")
 		@Override
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
@@ -414,9 +415,19 @@ public class DetailActActivity extends Activity implements OnClickListener{
 				break;
 			case CircleHandle.MSG_REFRESH_ACTPEOPLE:
 				Log.i("test", "MSG_REFRESH_ACTPEOPLE");
-				mCircleHandle.refreshActPeople();
-				mCircleHandle.refreshPeople();
-				mCircleHandle.sendEmptyMessage(CircleHandle.LOADER_DATA);
+				showProgress(interestLoadProgressbar);
+				showProgress(attendLoadProgressbar);
+//				refreshTask.execute(null);
+				mCircleHandle.refreshTask.execute(CircleHandle.MSG_REFRESH_ACTPEOPLE);
+				mCircleHandle.setRefreshFinishListener(new RefreshFinishListener() {
+					@Override
+					public void onRefreshFinish() {
+						mCircleHandle.sendEmptyMessage(CircleHandle.LOADER_DATA);
+					}
+				});
+//				mCircleHandle.refreshActPeople();
+//				mCircleHandle.refreshPeople();
+//				mCircleHandle.sendEmptyMessage(CircleHandle.LOADER_DATA);
 				break;
 			case CircleHandle.LOADER_DATA:
 				Log.i("test", "LOADER_DATA");
@@ -503,9 +514,9 @@ public class DetailActActivity extends Activity implements OnClickListener{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			cursor.close();
 			refreshView();
 		}
+		cursor.close();
 	}
 
 	public void loadActPeopleFromDB(Cursor cursor, int queryToken) {
@@ -533,16 +544,14 @@ public class DetailActActivity extends Activity implements OnClickListener{
 					}
 				}
 			}
-			cursor.close();
 		} else if (tryloadtimes == 0){
-			showProgress(interestLoadProgressbar);
-			showProgress(attendLoadProgressbar);
 			Log.i("test", "loadActPeopleFromDB tryloadtimes = " + tryloadtimes);
 			tryloadtimes ++;
 			mCircleHandle.sendEmptyMessage(CircleHandle.MSG_REFRESH_ACTPEOPLE);
 		} else {
 			Toast.makeText(this, R.string.dialog_data_empty_title, 0);
 		}
+		cursor.close();
 	}
 
 	public void loadPeopleFromDB(Cursor cursor, int queryToken) {
@@ -575,10 +584,10 @@ public class DetailActActivity extends Activity implements OnClickListener{
 					refreshAttendPeopleView();
 				}
 			}
-			cursor.close();
 		} else {
 			Toast.makeText(this, R.string.dialog_data_empty_title, 0);
 		}
+		cursor.close();
 	}
 	
 

@@ -51,7 +51,7 @@ public class CircleDBHeaper extends SQLiteOpenHelper {
 				Activity.ACT_INTRODUCE +" TEXT NOT NULL," +
 				Activity.HOTTAG +" INTEGER NOT NULL DEFAULT 0," +
 				Activity.PUBLISH_TIME +" DATATIME," +
-				Activity.TAG_ID + " LONG NOT NULL," +
+				Activity.TAG_ID + " INTEGER NOT NULL," +
 				Activity.ACT_INVITER_PERSONAL +" INTEGER NOT NULL DEFAULT 0," +
 				Activity.POSTER +" TEXT NOT NULL DEFAULT \"\"" +
 				");");
@@ -87,6 +87,12 @@ public class CircleDBHeaper extends SQLiteOpenHelper {
 				Friendship.FRIEND_ID + " INTEGER NOT NULL," +
 				Friendship.TIME_MAKE_FRIEND +" DATATIME" +
 				");");
+		
+		db.execSQL("CREATE TABLE " + FriendInviters.TABLE_NAME + " (" +
+				FriendInviters._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+				FriendInviters.ACT_ID + " INTEGER NOT NULL," +
+				FriendInviters.FRIEND_ID + " INTEGER NOT NULL" +
+				");");
 
 	}
 
@@ -97,6 +103,7 @@ public class CircleDBHeaper extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + ActPeople.TABLE_NAME + ";");
 		db.execSQL("DROP TABLE IF EXISTS " + People.TABLE_NAME + ";");
 		db.execSQL("DROP TABLE IF EXISTS " + Friendship.TABLE_NAME + ";");
+		db.execSQL("DROP TABLE IF EXISTS " + FriendInviters.TABLE_NAME + ";");
 		onCreate(db);
 	}
 

@@ -5,6 +5,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import com.ile.icircle.ScrollLayout;
+import com.ile.icircle.CircleHandle.RefreshFinishListener;
 import com.ile.icircle.ScrollLayout.OnViewChangeListener;
 
 import android.app.Activity;
@@ -183,31 +184,10 @@ public class HotActivity extends Activity implements OnClickListener{
 		mCurHotLocation.setText(actLocationStrings[mCurSel]);
 		mCurHotClassifyTitle.setText(actClassifyTitleStrings[mCurSel]);
 		mCurHotClassifyContent.setText(actClassifyIntroduceStrings[mCurSel]);
-		//		mCulValue.put("classifyintroduce", actClassifyIntroduceStrings[mCurSel]);
-		//		mCulValue.put("classifytitle", actClassifyTitleStrings[mCurSel]);
-		//		mCulValue.put("location", actLocationStrings[mCurSel]);
-		//		mCulValue.put("time", actTimeStrings[mCurSel]);
-		//		mCulValue.put("state", actStateStrings[mCurSel]);
 
 		mState.setText(actStateStrings[mCurSel]);
 		mInterestPeople.setText(String.valueOf(mInterestCountTest[mCurSel]));
 		mAttendPeople.setText(String.valueOf(mAttendCountTest[mCurSel]));
-		//		if (cursor != null && cursor.moveToPosition(mCurSel)) {
-		//			Log.i("test", "cursor getCount = " + cursor.getCount());
-		//			Log.i("test", "cursor.getInt(UtilString.hotActIdIndex) = " + cursor.getInt(UtilString.hotActIdIndex));
-		//			Log.i("test", "cursor.getString(UtilString.hotActLocationIndex) = " + cursor.getString(UtilString.hotActLocationIndex));
-		//			Log.i("test", "cursor.getInt(UtilString.hotActHotTagIndex) = " + cursor.getInt(UtilString.hotActHotTagIndex));
-		//			if (cursor.getInt(UtilString.hotActHotTagIndex) == 1) {
-		//				mCurHotTime.setText(cursor.getString(UtilString.hotActStartTimeIndex) + "-" + cursor.getString(UtilString.hotActEndTimeIndex));
-		//				mCurHotLocation.setText(cursor.getString(UtilString.hotActLocationIndex));
-		//				mCurHotClassifyTitle.setText(cursor.getString(UtilString.hotActClassidyTitleIndex));
-		//				mCurHotClassifyContent.setText(cursor.getString(UtilString.hotActClassifyIntroduceIndex));
-		//				mCurHotImg.setBackgroundResource(cursor.getInt(UtilString.hotActPosterURLIndex));
-		//				mState.setText(cursor.getString(UtilString.hotActStateIndex));
-		//				mInterestPeople.setText(cursor.getString(UtilString.hotInterestPeopleIndex));
-		//				mAttendPeople.setText(cursor.getString(UtilString.hotAttendPeopleIndex));
-		//			}
-		//		}
 
 		mImageViews[mCurSel].setEnabled(true);
 	}
@@ -272,35 +252,6 @@ public class HotActivity extends Activity implements OnClickListener{
 		}
 	}
 
-	//	public void testdata(){
-	//		if (firsttime) {
-	//			return;
-	//		}
-	//		Log.i("test", "testdata");
-	//		String[] actTimeStrings = getResources().getStringArray(R.array.hot_act_time_test);
-	//		String[] actLocationStrings = getResources().getStringArray(R.array.hot_act_location_test);
-	//		String[] actClassifyIntroduceStrings = getResources().getStringArray(R.array.hot_act_classify_introduce_test);
-	//		String[] actClassifyTitleStrings = getResources().getStringArray(R.array.hot_act_classify_title_test);
-	//		String[] actStateStrings = getResources().getStringArray(R.array.hot_act_state_test);
-	//		Integer[] mInterestCountTest = { 154,233, 444,111,123,72,29};
-	//		Integer[] mAttendCountTest = { 123,22, 33,12,5,44,65};
-	//		for (int i = 0; i < hot_act_view_id.length;i ++){
-	//			mCulValue.put(CircleContract.Activity.CLASSIFY_TITLE, actClassifyTitleStrings[i]);
-	//			mCulValue.put(CircleContract.Activity.CLASSIFY_INTRODUCE, actClassifyIntroduceStrings[i]);
-	//			mCulValue.put(CircleContract.Activity.LOCATION, actLocationStrings[i]);
-	//			mCulValue.put(CircleContract.Activity.START_TIME, actTimeStrings[i]);
-	//			mCulValue.put(CircleContract.Activity.END_TIME, actTimeStrings[i]);
-	//			mCulValue.put(CircleContract.Activity.STATE, actStateStrings[i]);
-	//			mCulValue.put(CircleContract.Activity.HOTTAG, 1);
-	//			mCulValue.put(CircleContract.Activity.INTEREST_PEOPLE, mInterestCountTest[i]);
-	//			mCulValue.put(CircleContract.Activity.ATTEND_PEOPLE, mAttendCountTest[i]);
-	//			mCulValue.put(CircleContract.Activity.POSTERURL, hot_act_img_test_id[i]);
-	//			Uri count = getContentResolver().insert(CircleContract.Activity.CONTENT_URI, mCulValue);
-	//			Log.i("test", "count = "+count);
-	//		}
-	//		firsttime = true;
-	//	}
-
 	ProgressDialog loaderpd;
 	ProgressDialog refreshpd;
 
@@ -316,7 +267,7 @@ public class HotActivity extends Activity implements OnClickListener{
 
 		@Override
 		protected Cursor doInBackground(Cursor... cursors) {
-			String selection = CircleContract.Activity.HOTTAG + "=1";
+			String selection = CircleContract.Activity.HOTTAG + "=1 AND " + CircleContract.Activity.ACT_INVITER_PERSONAL + "=0";
 			Cursor cursor = getContentResolver().query(CircleContract.Activity.CONTENT_URI, UtilString.hotActProjection, 
 					selection, null, null);
 			return cursor;
@@ -367,6 +318,7 @@ public class HotActivity extends Activity implements OnClickListener{
 	}
 
 	CircleHandle mCircleHandle = new CircleHandle(this){
+		@SuppressWarnings("unchecked")
 		@Override
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
@@ -375,12 +327,19 @@ public class HotActivity extends Activity implements OnClickListener{
 				refreshpd = new ProgressDialog(HotActivity.this); 
 				refreshpd.setTitle(R.string.refresh_data);
 				refreshpd.show();
-				mCircleHandle.refreshAct();
-				if (refreshpd != null) {
-					refreshpd.dismiss();
-					refreshpd = null;
-				}
-				mCircleHandle.sendEmptyMessage(CircleHandle.LOADER_DATA);
+//				mCircleHandle.refreshAct();
+				mCircleHandle.refreshTask.execute(CircleHandle.MSG_REFRESH_HOTACT);
+				mCircleHandle.setRefreshFinishListener(new RefreshFinishListener() {
+					@Override
+					public void onRefreshFinish() {
+						if (refreshpd != null) {
+							refreshpd.dismiss();
+							refreshpd = null;
+						}
+						mCircleHandle.sendEmptyMessage(CircleHandle.LOADER_DATA);
+					}
+				});
+//				mCircleHandle.sendEmptyMessage(CircleHandle.LOADER_DATA);
 				break;
 			case CircleHandle.LOADER_DATA:
 				HotActTask mHotActTask = new HotActTask(HotActivity.this);

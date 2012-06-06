@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.ile.icircle.CircleHandle.RefreshFinishListener;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -51,9 +53,8 @@ public class EditActActivity extends Activity implements OnClickListener {
 	private RelativeLayout mTitle;
 	private boolean islimited = false;
 
-	private int userId;
+	private int userId = 1;
 	private boolean isLogin = false;
-	private long peopleId = 1;
 
 	private static final int REQUESTFRIEND = 1;
 
@@ -93,17 +94,19 @@ public class EditActActivity extends Activity implements OnClickListener {
 	String[] mStrings;
 	private String actPosterUrl = "";
 
-//	private Integer[] mFriedsImageIds = {
-//			R.drawable.portrait_default,
-//			R.drawable.portrait_default,
-//			R.drawable.portrait_default,
-//			R.drawable.portrait_default,
-//			R.drawable.portrait_default,
-//			R.drawable.portrait_default
-//	}; //should be 37*37dip
-//	private String[] mFriedsStrings = { "pjol","sss", "sdad", "sda", "sdad"};
+	//	private Integer[] mFriedsImageIds = {
+	//			R.drawable.portrait_default,
+	//			R.drawable.portrait_default,
+	//			R.drawable.portrait_default,
+	//			R.drawable.portrait_default,
+	//			R.drawable.portrait_default,
+	//			R.drawable.portrait_default
+	//	}; //should be 37*37dip
+	//	private String[] mFriedsStrings = { "pjol","sss", "sdad", "sda", "sdad"};
 
 	private ContentValues mValues;
+	private ContentValues invitervalues;
+	private int[] Inviterfriends;
 
 	private ProgressDialog pd;
 	private QueryHandler mQueryHandler;
@@ -130,9 +133,28 @@ public class EditActActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.act_edit_layout);
 		mPictureGet = new PictureGet(this);
 		mValues = new ContentValues();
+		invitervalues = new ContentValues();
 		mQueryHandler = new QueryHandler(this);
 		init();
 		mCircleHandle.sendEmptyMessage(CircleHandle.LOADER_DATA);
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		mQueryHandler.removeCallbacksAndMessages(FRIENDS_QUERY_TOKEN);
+		mCircleHandle.removeMessages(CircleHandle.LOADER_DATA);
+		mCircleHandle.removeMessages(CircleHandle.MSG_REFRESH_FRIENDSHIP);
+		mCircleHandle.removeMessages(CircleHandle.MSG_INSERT_DATA);
+		if (pd != null) {
+			pd.dismiss();
+			pd = null;
+		}
+		if (actPoster != null) {
+			actPoster.recycle();
+			actPoster = null;
+		}
 	}
 
 	private void init() {
@@ -187,7 +209,7 @@ public class EditActActivity extends Activity implements OnClickListener {
 			} else {
 				friendIcon.setBackgroundDrawable(getResources().getDrawable(R.drawable.portrait_default));
 			}
-//			friendIcon.setBackgroundResource(friendsPortrait[i]);
+			//			friendIcon.setBackgroundResource(friendsPortrait[i]);
 			friendName.setText(friendsName[i]);
 		}
 	}
@@ -535,18 +557,27 @@ public class EditActActivity extends Activity implements OnClickListener {
 	}
 	
 	CircleHandle mCircleHandle = new CircleHandle(this){
+		@SuppressWarnings("unchecked")
 		@Override
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 			switch(msg.what){
-			case CircleHandle.MSG_REFRESH_ACTPEOPLE:
-				Log.i("test", "MSG_REFRESH_ACTPEOPLE");
-				mCircleHandle.refreshFriendShip();
-				mCircleHandle.sendEmptyMessage(CircleHandle.LOADER_DATA);
+			case CircleHandle.MSG_REFRESH_FRIENDSHIP:
+				Log.i("test", "MSG_REFRESH_FRIENDSHIP");
+//				mCircleHandle.refreshFriendShip();
+//				mCircleHandle.sendEmptyMessage(CircleHandle.LOADER_DATA);
+
+				mCircleHandle.refreshTask.execute(CircleHandle.MSG_REFRESH_FRIENDSHIP);
+				mCircleHandle.setRefreshFinishListener(new RefreshFinishListener() {
+					@Override
+					public void onRefreshFinish() {
+						mCircleHandle.sendEmptyMessage(CircleHandle.LOADER_DATA);
+					}
+				});
 				break;
 			case CircleHandle.LOADER_DATA:
 				Log.i("test", "LOADER_DATA");
-				String[] selectionArgs = {String.valueOf(peopleId)};
+				String[] selectionArgs = {String.valueOf(userId)};
 				String sortOrder = CircleContract.Friendship.TIME_MAKE_FRIEND;
 				String selection = CircleContract.Friendship.PEOPLE_ID + "= ?";
 				mQueryHandler.startQuery(FRIENDS_QUERY_TOKEN, null, CircleContract.Friendship.CONTENT_URI, UtilString.friendshipProjection, selection, selectionArgs, sortOrder);
@@ -559,10 +590,18 @@ public class EditActActivity extends Activity implements OnClickListener {
 				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 				String date = format.format(myDate);
 				mValues.put(CircleContract.Activity.PUBLISH_TIME, date);
-				long tagId = System.currentTimeMillis() + peopleId;
+				long tagId = System.currentTimeMillis() + userId;
 				mValues.put(CircleContract.Activity.TAG_ID, tagId);
 				mCircleHandle.insertNewAct(mValues);
 				mCircleHandle.uploadPicture(actPoster);
+				
+				if (Inviterfriends != null){
+					for (int i= 0; i < Inviterfriends.length; i ++) {
+						invitervalues.put(CircleContract.FriendInviters.ACT_ID, tagId);
+						invitervalues.put(CircleContract.FriendInviters.FRIEND_ID, Inviterfriends[i]);
+						mCircleHandle.insertInviters(invitervalues);
+					}
+				}
 
 				dismissProgress();
 				finish();
@@ -611,18 +650,19 @@ public class EditActActivity extends Activity implements OnClickListener {
 							Log.i("test", "friendsPortrait[i] = "+friendsPortrait[i]);
 							friendsName[i] = cursor.getString(UtilString.peopleNameIndex);
 						}
+						mTempCursor.close();
 					}
 				}
 			}
 			refreshFriendsView();
-			cursor.close();
 		} else if (tryloadtimes == 0){
 			Log.i("test", "loadActPeopleFromDB tryloadtimes = " + tryloadtimes);
 			tryloadtimes ++;
-			mCircleHandle.sendEmptyMessage(CircleHandle.MSG_REFRESH_ACTPEOPLE);
+			mCircleHandle.sendEmptyMessage(CircleHandle.MSG_REFRESH_FRIENDSHIP);
 		} else {
 			Toast.makeText(this, R.string.dialog_data_empty_title, 0);
 		}
+		cursor.close();
 	}
 
 	private void showProgress(){
@@ -630,6 +670,7 @@ public class EditActActivity extends Activity implements OnClickListener {
 		pd.setTitle(R.string.refresh_data);
 		pd.show();
 	}
+	
 	private void dismissProgress(){
 		if (pd != null) {
 			pd.dismiss();
@@ -653,7 +694,10 @@ public class EditActActivity extends Activity implements OnClickListener {
 					actPoster = mPictureGet.getPicFromDatabase(uri);
 				}  
 				break;  
-			}  
+			case REQUESTFRIEND:
+				Inviterfriends = data.getIntArrayExtra(UtilString.INVITER_FRIENDS);
+				return;  
+			}
 		}
 		if (actPoster != null){
 			actPoster = mPictureGet.resizeBitmap(actPoster, 202, 121);

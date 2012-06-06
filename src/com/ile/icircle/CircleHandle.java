@@ -1,31 +1,37 @@
 package com.ile.icircle;
 
-import java.io.ByteArrayOutputStream;
 import java.lang.ref.WeakReference;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 
 public class CircleHandle extends Handler {
 
+	public static final int RESULT_OK = 1;
+	public static final int RESULT_FAIL = 0;
+
 	public static final int LOADER_DATA = 0;
 	public static final int MSG_START_QUERY = 1;
+	public static final int MSG_LOGIN = 3;
 	public static final int MSG_REFRESH_HOTACT = 1001;
 	public static final int MSG_REFRESH_ACTPEOPLE = 1002;
 	public static final int MSG_REFRESH_PEOPLE = 1003;
 	public static final int MSG_REFRESH_ACTLIVE = 1004;
-	public static final int MSG_REFRESH_PERSONAL = 1007;
-	public static final int MSG_LOGIN = 1005;
+	public static final int MSG_REFRESH_FRIENDSHIP = 1005;
+	public static final int MSG_REFRESH_CLASSIFY = 1010;
+	public static final int MSG_REFRESH_PERSONAL = 1020;
 
 
 	public static final int MSG_INSERT_DATA = 2001;
@@ -37,6 +43,45 @@ public class CircleHandle extends Handler {
 		weakcontext =  new WeakReference<Context>(context);
 		mContext = weakcontext.get();
 	}
+
+	@SuppressWarnings("rawtypes")
+	public AsyncTask refreshTask = new AsyncTask<Object, Integer, Integer>() {
+
+		@Override
+		protected Integer doInBackground(Object... obj) {
+			int result = RESULT_FAIL;
+			Integer type = Integer.parseInt(obj[0].toString());
+			if (type == MSG_REFRESH_HOTACT) {
+				refreshAct();
+			} else if (type == MSG_REFRESH_ACTPEOPLE) {
+				refreshActPeople();
+				refreshPeople();
+			} else if (type == MSG_REFRESH_ACTLIVE) {
+				refreshActLive();
+			} else if (type == MSG_REFRESH_FRIENDSHIP) {
+				refreshFriendShip();
+			}
+			return result;
+		}
+
+		@Override
+		protected void onPostExecute(Integer result) {
+			if (mlistener != null){
+				mlistener.onRefreshFinish();
+			}
+		}
+
+	};
+
+	public RefreshFinishListener mlistener;
+	public interface RefreshFinishListener{
+		public void onRefreshFinish();
+	};
+
+	public void setRefreshFinishListener (RefreshFinishListener listener){
+		mlistener = listener;
+	};
+	
 
 	public void refreshAct(){
 		testActdata();
@@ -93,7 +138,7 @@ public class CircleHandle extends Handler {
 		if (mContext == null) {
 			return;
 		}
-		
+
 		Log.i("test", "testPeopledata");
 		ContentValues mCulValue = new ContentValues();
 		for (int i = 0; i < 50; i ++){
@@ -199,7 +244,7 @@ public class CircleHandle extends Handler {
 				R.drawable.test6,
 				R.drawable.test7
 		};
-		
+
 
 		Date myDate = new Date(System.currentTimeMillis());  
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -226,12 +271,12 @@ public class CircleHandle extends Handler {
 			Log.i("test", "count = "+count);
 		}
 	}
-	
+
 
 	public void refreshFriendShip() {
 		testFriendShipdata();
 	}
-	
+
 	private void testFriendShipdata() {
 		if (mContext == null) {
 			return;
@@ -282,16 +327,16 @@ public class CircleHandle extends Handler {
 
 	public void insertActAttendInterest(int peopleId, long actTagId, String type) {
 		ContentValues mCulValue = new ContentValues();
-		
-//		Calendar mCalendar = Calendar.getInstance();
-//		Date myDate = mCalendar.getTime();
+
+		//		Calendar mCalendar = Calendar.getInstance();
+		//		Date myDate = mCalendar.getTime();
 		Date myDate = new Date(System.currentTimeMillis());  
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		String date = format.format(myDate);
-		
+
 		mCulValue.put(CircleContract.ActPeople.PEOPLE_ID, peopleId);
 		mCulValue.put(CircleContract.ActPeople.ATTEND_ACT_TAGID, actTagId);
-		
+
 		if (type.equals(UtilString.ATTEND)){
 			mCulValue.put(CircleContract.ActPeople.ATTEND_ACT_TAGID, actTagId);
 			mCulValue.put(CircleContract.ActPeople.ATTEND_ACT_TIME, date);
@@ -313,7 +358,7 @@ public class CircleHandle extends Handler {
 			Log.i("test", "UtilString.INTEREST = "+UtilString.INTEREST);
 			selection = UtilString.concatenateWhere(selection, CircleContract.ActPeople.INTREST_ACT_TAGID + "= ?");
 		}
-		
+
 		int count = mContext.getContentResolver().delete(CircleContract.ActPeople.CONTENT_URI, selection, selectionArgs);
 		Log.i("test", "count = "+count);
 	}
@@ -325,5 +370,9 @@ public class CircleHandle extends Handler {
 
 	public void uploadPicture(Bitmap actPoster) {
 		
+	}
+
+	public void insertInviters(ContentValues mValues) {
+		Uri count = mContext.getContentResolver().insert(CircleContract.FriendInviters.CONTENT_URI, mValues);
 	}
 }
