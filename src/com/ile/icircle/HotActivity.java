@@ -75,8 +75,8 @@ public class HotActivity extends Activity implements OnClickListener{
 	private int[] mAttendCountTest = new int[7];
 	private String[] actTimeStrings = new String[7];
 	private String[] actLocationStrings = new String[7];
-	private String[] actClassifyIntroduceStrings = new String[7];
-	private String[] actClassifyTitleStrings = new String[7];
+	private String[] actTitleStrings = new String[7];
+	private String[] actClassifyStrings = new String[7];
 	private String[] actStateStrings = new String[7];
 	private long[] actTagIds = new long[7];
 
@@ -161,16 +161,8 @@ public class HotActivity extends Activity implements OnClickListener{
 		ImageView mCurHotImg = (ImageView)mCurView.findViewById(R.id.act_img);
 		TextView mCurHotTime = (TextView)mCurView.findViewById(R.id.time_content);
 		TextView mCurHotLocation = (TextView)mCurView.findViewById(R.id.location_content);
-		TextView mCurHotClassifyContent = (TextView)mCurView.findViewById(R.id.classify_content);
-		TextView mCurHotClassifyTitle = (TextView)mCurView.findViewById(R.id.classify_title);
-		//Bitmap bitmap = getHttpBitmap(hot_act_img_url[mCurSel]);
-		//mCurHotImg.setBackgroundResource(hot_act_img_test_id[mCurSel]);
-
-		String[] actTimeStrings = getResources().getStringArray(R.array.hot_act_time_test);
-		String[] actLocationStrings = getResources().getStringArray(R.array.hot_act_location_test);
-		String[] actClassifyIntroduceStrings = getResources().getStringArray(R.array.hot_act_classify_introduce_test);
-		String[] actClassifyTitleStrings = getResources().getStringArray(R.array.hot_act_classify_title_test);
-		String[] actStateStrings = getResources().getStringArray(R.array.hot_act_state_test);
+		TextView mCurHotTitle = (TextView)mCurView.findViewById(R.id.act_title);
+		TextView mCurHotClassify = (TextView)mCurView.findViewById(R.id.act_classify);
 
 		Bitmap mPoster = null;
 		PictureGet mPictureGet = new PictureGet(this);
@@ -182,8 +174,8 @@ public class HotActivity extends Activity implements OnClickListener{
 		mCurHotImg.setImageBitmap(mPoster);
 		mCurHotTime.setText(actTimeStrings[mCurSel]);
 		mCurHotLocation.setText(actLocationStrings[mCurSel]);
-		mCurHotClassifyTitle.setText(actClassifyTitleStrings[mCurSel]);
-		mCurHotClassifyContent.setText(actClassifyIntroduceStrings[mCurSel]);
+		mCurHotClassify.setText(actClassifyStrings[mCurSel]);
+		mCurHotTitle.setText(actTitleStrings[mCurSel]);
 
 		mState.setText(actStateStrings[mCurSel]);
 		mInterestPeople.setText(String.valueOf(mInterestCountTest[mCurSel]));
@@ -288,8 +280,8 @@ public class HotActivity extends Activity implements OnClickListener{
 				if (cursor.moveToPosition(i)) {
 					actTimeStrings[i] = cursor.getString(UtilString.actStartTimeIndex) + "-" + cursor.getString(UtilString.actEndTimeIndex);
 					actLocationStrings[i] = cursor.getString(UtilString.actLocationIndex);
-					actClassifyIntroduceStrings[i] = cursor.getString(UtilString.actClassifyIntroduceIndex);
-					actClassifyTitleStrings[i] = cursor.getString(UtilString.actClassidyTitleIndex);
+					actTitleStrings[i] = cursor.getString(UtilString.actTitleIndex);
+					actClassifyStrings[i] = cursor.getString(UtilString.actClassidyIndex);
 					actStateStrings[i] = cursor.getString(UtilString.actStateIndex);
 					mInterestCountTest[i] = cursor.getInt(UtilString.actInterestPeopleIndex);
 					mAttendCountTest[i] = cursor.getInt(UtilString.actAttendPeopleIndex);

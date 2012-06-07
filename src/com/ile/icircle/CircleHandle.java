@@ -31,6 +31,7 @@ public class CircleHandle extends Handler {
 	public static final int MSG_REFRESH_ACTLIVE = 1004;
 	public static final int MSG_REFRESH_FRIENDSHIP = 1005;
 	public static final int MSG_REFRESH_CLASSIFY = 1010;
+	public static final int MSG_REFRESH_ACTLIST = 1011;
 	public static final int MSG_REFRESH_PERSONAL = 1020;
 
 
@@ -60,7 +61,9 @@ public class CircleHandle extends Handler {
 				refreshActLive();
 			} else if (type == MSG_REFRESH_FRIENDSHIP) {
 				refreshFriendShip();
-			}
+			} else if (type == MSG_REFRESH_ACTLIST) {
+				refreshActList();
+			} 
 			return result;
 		}
 
@@ -207,6 +210,70 @@ public class CircleHandle extends Handler {
 		}
 
 	}
+	
+	private void refreshActList() {
+		if (mContext == null) {
+			return;
+		}
+		Log.i("test", "testdata");
+		String[] actTimeStrings = mContext.getResources().getStringArray(R.array.hot_act_time_test);
+		String[] actLocationStrings = mContext.getResources().getStringArray(R.array.hot_act_location_test);
+		String[] actClassifyIntroduceStrings = mContext.getResources().getStringArray(R.array.hot_act_classify_introduce_test);
+		String[] actClassifyTitleStrings = mContext.getResources().getStringArray(R.array.hot_act_classify_title_test);
+		String[] actStateStrings = mContext.getResources().getStringArray(R.array.hot_act_state_test);
+		Integer[] mInterestCountTest = { 154,233, 444,111,123,72,29};
+		Integer[] mAttendCountTest = { 123,22, 33,12,5,44,65};
+		Integer[] TagIdTest = { 10008,10009, 10010,10014,10015,10016,10017};
+		String[] actIntroduceTest = { "测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试" +
+				"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试",
+				"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试" +
+						"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试", 
+						"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试" +
+								"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试",
+								"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试" +
+										"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试",
+										"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试" +
+												"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试",
+												"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试" +
+														"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试",
+														"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试" +
+		"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试"};
+		int[] hot_act_img_test_id = {
+				R.drawable.test1,
+				R.drawable.test2,
+				R.drawable.test3,
+				R.drawable.test4,
+				R.drawable.test5,
+				R.drawable.test6,
+				R.drawable.test7
+		};
+
+
+		Date myDate = new Date(System.currentTimeMillis());  
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String date = format.format(myDate);
+
+		ContentValues mCulValue = new ContentValues();
+		for (int i = 0; i < 7;i ++){
+			mCulValue.put(CircleContract.Activity.CLASSIFY, actClassifyTitleStrings[i]);
+			mCulValue.put(CircleContract.Activity.TITLE, actClassifyIntroduceStrings[i]);
+			mCulValue.put(CircleContract.Activity.LOCATION, actLocationStrings[i]);
+			mCulValue.put(CircleContract.Activity.START_TIME, actTimeStrings[i]);
+			mCulValue.put(CircleContract.Activity.END_TIME, actTimeStrings[i]);
+			mCulValue.put(CircleContract.Activity.STATE, actStateStrings[i]);
+			mCulValue.put(CircleContract.Activity.HOTTAG, 0);
+			mCulValue.put(CircleContract.Activity.INTEREST_PEOPLE, mInterestCountTest[i]);
+			mCulValue.put(CircleContract.Activity.ATTEND_PEOPLE, mAttendCountTest[i]);
+			Bitmap actPoster = BitmapFactory.decodeResource(mContext.getResources(), hot_act_img_test_id[i]);
+			String mSendBitmapUrl = PictureGet.saveBitmap(actPoster);
+			mCulValue.put(CircleContract.Activity.POSTER, mSendBitmapUrl);
+			mCulValue.put(CircleContract.Activity.TAG_ID, TagIdTest[i]);
+			mCulValue.put(CircleContract.Activity.ACT_INTRODUCE, actIntroduceTest[i]);
+			mCulValue.put(CircleContract.Activity.PUBLISH_TIME, date);
+			Uri count = mContext.getContentResolver().insert(CircleContract.Activity.CONTENT_URI, mCulValue);
+			Log.i("test", "count = "+count);
+		}
+	}
 
 	public void testActdata(){
 		if (mContext == null) {
@@ -252,8 +319,8 @@ public class CircleHandle extends Handler {
 
 		ContentValues mCulValue = new ContentValues();
 		for (int i = 0; i < 7;i ++){
-			mCulValue.put(CircleContract.Activity.CLASSIFY_TITLE, actClassifyTitleStrings[i]);
-			mCulValue.put(CircleContract.Activity.CLASSIFY_INTRODUCE, actClassifyIntroduceStrings[i]);
+			mCulValue.put(CircleContract.Activity.CLASSIFY, actClassifyTitleStrings[i]);
+			mCulValue.put(CircleContract.Activity.TITLE, actClassifyIntroduceStrings[i]);
 			mCulValue.put(CircleContract.Activity.LOCATION, actLocationStrings[i]);
 			mCulValue.put(CircleContract.Activity.START_TIME, actTimeStrings[i]);
 			mCulValue.put(CircleContract.Activity.END_TIME, actTimeStrings[i]);

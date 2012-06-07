@@ -31,10 +31,22 @@ public class UtilString {
 	public static final String SCHOOLNAME = "SchoolName";
 	public static final String MSG_SHAREDPREFERENCES = "msg_SharedPreferences";
 	public static final String INVITER_FRIENDS = "inviter_friends";
+	public static final String act_starting = "#ff6c00";
+	public static final String act_living = "#85e705";
+	public static final String act_ending = "#829581";
+	public static final String grey_color = "#829581";
+	public static final String green_color = "#829581";
+
+	public static Integer[] mStringIds = { R.string.str_act_all,
+			R.string.str_act_music,R.string.str_act_welfare, 
+			R.string.str_act_lecture,R.string.str_act_life,
+			R.string.str_act_sport,R.string.str_act_travel,
+			R.string.str_act_other};
+	
 	public static final String[] hotActProjection = {
 		Activity._ID,
-		Activity.CLASSIFY_TITLE,
-		Activity.CLASSIFY_INTRODUCE,
+		Activity.CLASSIFY,
+		Activity.TITLE,
 		Activity.LOCATION,
 		Activity.START_TIME,
 		Activity.END_TIME,
@@ -48,8 +60,8 @@ public class UtilString {
 
 	public static final String[] detailActProjection = {
 		Activity._ID,
-		Activity.CLASSIFY_TITLE,
-		Activity.CLASSIFY_INTRODUCE,
+		Activity.CLASSIFY,
+		Activity.TITLE,
 		Activity.LOCATION,
 		Activity.START_TIME,
 		Activity.END_TIME,
@@ -65,8 +77,8 @@ public class UtilString {
 	};
 	
 	public static final int actIdIndex = 0;
-	public static final int actClassidyTitleIndex = 1;
-	public static final int actClassifyIntroduceIndex = 2;
+	public static final int actClassidyIndex = 1;
+	public static final int actTitleIndex = 2;
 	public static final int actLocationIndex = 3;
 	public static final int actStartTimeIndex = 4;
 	public static final int actEndTimeIndex = 5;
@@ -136,7 +148,7 @@ public class UtilString {
 
 	public static final String[] classifyProjection = {
 		Activity._ID,
-		Activity.CLASSIFY_TITLE,
+		Activity.CLASSIFY,
 		Activity.INTEREST_PEOPLE,
 		Activity.ATTEND_PEOPLE,
 		Activity.POSTER,
@@ -148,6 +160,27 @@ public class UtilString {
 	public static final int classifyAttendIndex = 3;
 	public static final int classifyActPosterIndex = 4;
 	public static final int classifyActIdIndex = 5;
+
+	public static final String[] actListProjection = {
+		Activity._ID,
+		Activity.CLASSIFY,
+		Activity.INTEREST_PEOPLE,
+		Activity.ATTEND_PEOPLE,
+		Activity.POSTER,
+		Activity.TAG_ID,
+		Activity.TITLE,
+		Activity.STATE,
+		Activity.PUBLISH_TIME
+	};
+	public static final int actListIdIndex = 0;
+	public static final int actListTypeIndex = 1;
+	public static final int actListInterestIndex = 2;
+	public static final int actListAttendIndex = 3;
+	public static final int actListActPosterIndex = 4;
+	public static final int actListActIdIndex = 5;
+	public static final int actListActTitleIndex = 6;
+	public static final int actListActStateIndex = 7;
+	public static final int actListActTimeIndex = 8;
 	
     /**
      * Appends one set of selection args to another. This is useful when adding a selection

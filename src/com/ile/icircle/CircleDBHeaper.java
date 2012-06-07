@@ -40,8 +40,8 @@ public class CircleDBHeaper extends SQLiteOpenHelper {
 		
 		db.execSQL("CREATE TABLE " + Activity.TABLE_NAME + " (" +
 				Activity._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-				Activity.CLASSIFY_TITLE +" TEXT NOT NULL," +
-				Activity.CLASSIFY_INTRODUCE +" TEXT NOT NULL," +
+				Activity.CLASSIFY +" TEXT NOT NULL," +
+				Activity.TITLE +" TEXT NOT NULL," +
 				Activity.START_TIME +" TEXT NOT NULL," +
 				Activity.END_TIME +" TEXT NOT NULL," +
 				Activity.STATE +" TEXT NOT NULL," +

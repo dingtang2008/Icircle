@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +19,17 @@ import android.widget.TextView;
 public class AllActivityAdapter extends BaseAdapter {
 
 	private LayoutInflater mInflater;
-	private List<Map<String, Object>> mData;
+	private List<Map<String, Object>> mData = new ArrayList<Map<String, Object>>();
+
+	private Context mContext;
 
 	public AllActivityAdapter(Context context) {
+		Log.i("test", "AllActivityAdapter");
 		this.mInflater = LayoutInflater.from(context);
-		mData = getData();
+		Log.i("test", "mData = " +mData);
+		mContext = context;
+		//		mData = getData();
+		//		mData = new ArrayList<Map<String, Object>>();
 	}
 
 	public int getCount() {
@@ -46,6 +54,7 @@ public class AllActivityAdapter extends BaseAdapter {
 		public TextView title;
 		public TextView info;
 		public ImageView ic_status;
+		public int actId;
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -68,9 +77,18 @@ public class AllActivityAdapter extends BaseAdapter {
 
 			holder = (ViewHolder) convertView.getTag();
 		}
-		if (mData.get(position).get("img") != null)
-			holder.img.setBackgroundResource((Integer) mData.get(position).get(
-					"img"));
+		
+		PictureGet mPictureGet = new PictureGet(mContext);
+		if (mData.get(position).get("img") != null) {
+			String posterUrl = (String) mData.get(position).get("img");
+			Bitmap mPoster = null;
+			if(posterUrl.startsWith("http://")) {
+
+			} else if(posterUrl.startsWith("/mnt/sdcard/")) {
+				mPoster = mPictureGet.getPic(posterUrl);
+			}
+			holder.img.setImageBitmap(mPoster);
+		}
 		holder.status.setText((String) mData.get(position).get("status"));
 		holder.status.setTextColor(Color.parseColor((String) mData
 				.get(position).get("status_color")));
@@ -80,6 +98,8 @@ public class AllActivityAdapter extends BaseAdapter {
 		if (mData.get(position).get("ic") != null)
 			holder.ic_status.setBackgroundResource((Integer) mData
 					.get(position).get("ic"));
+		
+		holder.actId = (Integer) mData.get(position).get("actid");
 		/*
 		 * holder.ic_status.setOnClickListener(new View.OnClickListener() {
 		 * 
@@ -99,7 +119,7 @@ public class AllActivityAdapter extends BaseAdapter {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("status", "正在进行");
-		map.put("status_color", "#85e705");
+		map.put("status_color", UtilString.act_living);
 		map.put("title", "达州一中加拿大留学专题讲座");
 		map.put("info", "29人感兴趣   17人参加");
 		map.put("img", R.drawable.test_list_icon);
@@ -108,7 +128,7 @@ public class AllActivityAdapter extends BaseAdapter {
 
 		map = new HashMap<String, Object>();
 		map.put("status", "已经结束");
-		map.put("status_color", "#829581");
+		map.put("status_color", UtilString.act_ending);
 		map.put("title", "达州一中加拿大留学专题讲座");
 		map.put("info", "229人感兴趣   117人参加");
 		map.put("img", R.drawable.btn_cal);
@@ -117,7 +137,7 @@ public class AllActivityAdapter extends BaseAdapter {
 
 		map = new HashMap<String, Object>();
 		map.put("status", "即将开始");
-		map.put("status_color", "#ff6c00");
+		map.put("status_color", UtilString.act_starting);
 		map.put("title", "达州一中加拿大留学专题讲座");
 		map.put("info", "229人感兴趣   17人参加");
 		map.put("img", R.drawable.btn_cal);

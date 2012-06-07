@@ -45,8 +45,8 @@ public class CircleContract {
 		public static final String TABLE_NAME = "activity";
 		// columns
 		public static final String _ID = "_id";
-		public static final String CLASSIFY_TITLE = "classifyTitle";
-		public static final String CLASSIFY_INTRODUCE = "classifyIntroduce";
+		public static final String CLASSIFY = "classify";
+		public static final String TITLE = "title";
 		public static final String START_TIME = "startTime";
 		public static final String END_TIME = "endTime";
 		public static final String LOCATION = "location";

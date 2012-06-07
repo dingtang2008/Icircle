@@ -221,8 +221,8 @@ public class EditActActivity extends Activity implements OnClickListener {
 		actEndTimeView.setText(actEndTime);
 		posterPreview.setImageBitmap(actPoster);
 		locationEditor.setText(actLocation);
-		mValues.put(CircleContract.Activity.CLASSIFY_TITLE, actClassify);
-		mValues.put(CircleContract.Activity.CLASSIFY_INTRODUCE, actTitle);
+		mValues.put(CircleContract.Activity.CLASSIFY, actClassify);
+		mValues.put(CircleContract.Activity.TITLE, actTitle);
 		mValues.put(CircleContract.Activity.ACT_INTRODUCE, actIntroduce);
 		mValues.put(CircleContract.Activity.START_TIME, actStartDate + " " + actStartTime);
 		mValues.put(CircleContract.Activity.END_TIME, actEndDate + " " + actEndTime);

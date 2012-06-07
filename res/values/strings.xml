@@ -24,7 +24,7 @@
     <string name="str_act_sport">体育</string>
     <string name="str_act_travel">旅行</string>
     <string name="str_act_other">其他</string>
-    <string name="default_search_hint">请输入</string>
+    <string name="default_search_hint">请输入...</string>
     <string name="search_button_description">搜索按钮</string>
     <string name="interest_people">感兴趣的人：</string>
     <string name="attend_people">参加的人：</string>
@@ -85,6 +85,8 @@
     <string name="pull_to_refresh_release_label">松开刷新...</string>
     <string name="pull_to_refresh_refreshing_label">加载中...</string>
     <string name="pull_to_refresh_tap_label">点击刷新...</string>
+    <string name="pull_refresh_wait">请稍等</string>
+    <string name="pull_refreshing">正在读取数据中!</string>
     <string name="set_portrait_pic">设置照片头像</string>
     
     

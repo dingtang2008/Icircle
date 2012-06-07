@@ -35,11 +35,11 @@ public class DetailActActivity extends Activity implements OnClickListener{
 
 	private RelativeLayout mTitle;
 	private TextView mtitle;
-	private TextView classifyContent;
+	private TextView actTitle;
 	private TextView timeContent;
 	private TextView locationContent;
 	private TextView actState;
-	private TextView classifyTitle;
+	private TextView actClassify;
 	private TextView actIntroduce;
 	private TextView detailInterstate;
 	private TextView detailAttend;
@@ -109,8 +109,8 @@ public class DetailActActivity extends Activity implements OnClickListener{
 
 		mPoster = (ImageView) findViewById(R.id.act_poster_img);//should be 135*81dip
 
-		classifyTitle = (TextView) findViewById(R.id.classify_title);
-		classifyContent = (TextView) findViewById(R.id.classify_content);
+		actClassify = (TextView) findViewById(R.id.act_classify);
+		actTitle = (TextView) findViewById(R.id.act_detail_title);
 		timeContent = (TextView) findViewById(R.id.time_content);
 		locationContent = (TextView) findViewById(R.id.location_content);
 		actState = (TextView) findViewById(R.id.act_state);
@@ -209,8 +209,8 @@ public class DetailActActivity extends Activity implements OnClickListener{
 	}
 
 	private void refreshView() {
-		classifyTitle.setText(actClassifyTitleString);
-		classifyContent.setText(actClassifyIntroduceString);
+		actClassify.setText(actClassifyString);
+		actTitle.setText(actTitleString);
 		timeContent.setText(actTimeString);
 		locationContent.setText(actLocationString);
 		actState.setText(actStateString);
@@ -474,8 +474,8 @@ public class DetailActActivity extends Activity implements OnClickListener{
 	private int mAttendCount;
 	private String actTimeString;
 	private String actLocationString;
-	private String actClassifyIntroduceString;
-	private String actClassifyTitleString;
+	private String actTitleString;
+	private String actClassifyString;
 	private String actStateString;
 
 	private String actIntroduceString;
@@ -494,8 +494,8 @@ public class DetailActActivity extends Activity implements OnClickListener{
 		if (length != 0) {
 			actTimeString = cursor.getString(UtilString.actStartTimeIndex) + "-" + cursor.getString(UtilString.actEndTimeIndex);
 			actLocationString = cursor.getString(UtilString.actLocationIndex);
-			actClassifyIntroduceString = cursor.getString(UtilString.actClassifyIntroduceIndex);
-			actClassifyTitleString = cursor.getString(UtilString.actClassidyTitleIndex);
+			actTitleString = cursor.getString(UtilString.actTitleIndex);
+			actClassifyString = cursor.getString(UtilString.actClassidyIndex);
 			actStateString = cursor.getString(UtilString.actStateIndex);
 			mInterestCount = cursor.getInt(UtilString.actInterestPeopleIndex);
 			mAttendCount = cursor.getInt(UtilString.actAttendPeopleIndex);

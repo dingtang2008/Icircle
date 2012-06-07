@@ -71,8 +71,8 @@ public class CircleProvider extends AbstractCircleProvider {
 		
 		sActivityProjectionMap = new HashMap<String, String>();
 		sActivityProjectionMap.put(Activity._ID, Activity._ID);
-		sActivityProjectionMap.put(Activity.CLASSIFY_TITLE, Activity.CLASSIFY_TITLE);
-		sActivityProjectionMap.put(Activity.CLASSIFY_INTRODUCE, Activity.CLASSIFY_INTRODUCE);
+		sActivityProjectionMap.put(Activity.CLASSIFY, Activity.CLASSIFY);
+		sActivityProjectionMap.put(Activity.TITLE, Activity.TITLE);
 		sActivityProjectionMap.put(Activity.LOCATION, Activity.LOCATION);
 		sActivityProjectionMap.put(Activity.START_TIME, Activity.START_TIME);
 		sActivityProjectionMap.put(Activity.END_TIME, Activity.END_TIME);
